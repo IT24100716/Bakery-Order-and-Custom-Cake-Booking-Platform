@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>My Orders - BakeNest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#331f11", secondary: "#725b29", background: "#fff8f3",
+                        surface: "#fff8f3", "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#fff2e1", "on-background": "#211b11",
+                        "on-surface": "#211b11", "on-surface-variant": "#4f453f",
+                        "outline-variant": "#d3c3bb"
+                    },
+                    fontFamily: {
+                        "label-lg": ["Inter"], "headline-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"], "body-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .tracking-step {
+            position: relative;
+            flex: 1;
+            text-align: center;
+        }
+
+        .tracking-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #d3c3bb;
+            z-index: 1;
+        }
+
+        .tracking-step.active:not(:last-child)::after {
+            background: #725b29;
+        }
+
+        .tracking-step.completed:not(:last-child)::after {
+            background: #725b29;
+        }
+
+        .step-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #d3c3bb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+
+        .tracking-step.active .step-icon {
+            border-color: #725b29;
+            color: #725b29;
+            background: #fff2e1;
+        }
+
+        .tracking-step.completed .step-icon {
+            background: #725b29;
+            border-color: #725b29;
+            color: #fff;
+        }
+
+        .order-card.expanded {
+            ring: 2px solid #331f11;
+        }
+
+        .detail-pane {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .order-card.expanded .detail-pane {
+            max-height: 1000px;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased">
+
+    <header
+        class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm transition-all duration-300">
+        <div class="max-w-[1440px] mx-auto px-8 flex justify-between items-center h-20">
+            <a class="font-headline-md text-3xl font-bold text-primary hover:scale-105 transition-transform duration-300"
+                href="/">BakeNest</a>
+            <div class="flex gap-4 items-center">
+                <a id="nav-orders" href="/my-orders.html"
+                    class="text-primary hover:scale-105 transition-all duration-300 flex items-center gap-1"
+                    title="My Orders">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                    <span
+                        class="hidden lg:inline text-sm font-semibold uppercase tracking-widest border-b-2 border-primary">Orders</span>
+                </a>
+                <a id="nav-account" href="#"
+                    class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 flex items-center gap-1">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span id="nav-account-text" class="text-sm font-semibold uppercase tracking-widest">Sign Out</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl mx-auto px-6 pt-32 pb-12 w-full">
+        <div class="flex justify-between items-end mb-8 border-b border-outline-variant/30 pb-4">
+            <h1 class="font-headline-lg text-4xl text-primary">My Orders</h1>
+            <div class="flex gap-4">
+                <button onclick="switchTab('active')" id="tab-active"
+                    class="pb-4 px-2 border-b-2 border-primary font-semibold text-primary transition-all">Active</button>
+                <button onclick="switchTab('history')" id="tab-history"
+                    class="pb-4 px-2 border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all">History</button>
+            </div>
+        </div>
+
+        <div id="orders-container" class="space-y-6">
+            <div class="text-center py-12 text-on-surface-variant animate-pulse">
+                Loading your orders...
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const token = localStorage.getItem('token');
+        if (!token) window.location.href = '/auth.html';
+
+        document.getElementById('nav-account').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            window.location.href = '/';
+        });
+
+        let allOrders = [];
+        let currentTab = 'active';
+
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('tab-active').className = tab === 'active' ? 'pb-4 px-2 border-b-2 border-primary font-semibold text-primary transition-all' : 'pb-4 px-2 border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all';
+            document.getElementById('tab-history').className = tab === 'history' ? 'pb-4 px-2 border-b-2 border-primary font-semibold text-primary transition-all' : 'pb-4 px-2 border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all';
+            renderOrders();
+        }
+
+        function getStatusBadge(status) {
+            const styles = {
+                'PENDING': 'bg-yellow-100 text-yellow-800',
+                'PAID': 'bg-green-100 text-green-800',
+                'BAKING': 'bg-orange-100 text-orange-800',
+                'OUT_FOR_DELIVERY': 'bg-blue-100 text-blue-800',
+                'DELIVERED': 'bg-green-100 text-green-800',
+                'CANCELLED': 'bg-red-100 text-red-800'
+            };
+            return `<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${styles[status] || 'bg-gray-100'}">${status.replace('_', ' ')}</span>`;
+        }
+
+        function renderTracking(status) {
+            const steps = [
+                { id: 'PENDING', label: 'Placed', icon: 'receipt' },
+                { id: 'BAKING', label: 'Baking', icon: 'bakery_dining' },
+                { id: 'OUT_FOR_DELIVERY', label: 'On Way', icon: 'delivery_dining' },
+                { id: 'DELIVERED', label: 'Arrived', icon: 'check_circle' }
+            ];
+
+            let currentIdx = steps.findIndex(s => s.id === status);
+            if (status === 'PAID') currentIdx = 0;
+
+            return `
+            <div class="flex justify-between mt-6 pt-6 border-t border-outline-variant/20">
+                ${steps.map((step, idx) => {
+                let state = '';
+                if (idx < currentIdx) state = 'completed';
+                else if (idx === currentIdx) state = 'active';
+                return `
+                        <div class="tracking-step ${state}">
+                            <div class="step-icon"><span class="material-symbols-outlined text-[18px]">${step.icon}</span></div>
+                            <div class="text-[10px] uppercase tracking-tighter font-bold ${state ? 'text-primary' : 'text-outline-variant'}">${step.label}</div>
+                        </div>
+                    `;
+            }).join('')}
+            </div>
+        `;
+        }
+
+        async function loadOrders() {
+            try {
+                const res = await fetch('/api/v1/customer/orders', { headers: { 'Authorization': `Bearer ${token}` } });
+                if (!res.ok) throw new Error();
+                allOrders = await res.json();
+                renderOrders();
+            } catch (e) {
+                document.getElementById('orders-container').innerHTML = `<div class="text-center py-12 text-red-500">Failed to load orders.</div>`;
+            }
+        }
+
+        function renderOrders() {
+            const container = document.getElementById('orders-container');
+            const activeStatuses = ['PENDING', 'PAID', 'BAKING', 'OUT_FOR_DELIVERY'];
+
+            const filtered = allOrders.filter(o => {
+                const isActive = activeStatuses.includes(o.status);
+                return currentTab === 'active' ? isActive : !isActive;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="text-center py-16 text-on-surface-variant opacity-60">No ${currentTab} orders found.</div>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(order => `
+            <div class="order-card bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm transition-all hover:shadow-md cursor-pointer group overflow-hidden" onclick="this.classList.toggle('expanded')">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold mb-1">Order #${String(order.id).padStart(5, '0')}</div>
+                            <div class="text-xs text-on-surface-variant font-medium">${new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                            ${getStatusBadge(order.status)}
+                            <div class="text-[10px] text-on-surface-variant uppercase font-bold group-[.expanded]:rotate-180 transition-transform">View Details ▼</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="flex -space-x-3 overflow-hidden">
+                            ${order.items.slice(0, 3).map(item => `<img src="${item.productImageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80'}" class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover">`).join('')}
+                            ${order.items.length > 3 ? `<div class="flex items-center justify-center h-10 w-10 rounded-full bg-surface-container-low ring-2 ring-white text-[10px] font-bold">+${order.items.length - 3}</div>` : ''}
+                        </div>
+                        <div class="flex-grow">
+                            <div class="text-sm font-semibold text-primary">${order.items.length} ${order.items.length === 1 ? 'item' : 'items'}</div>
+                            <div class="text-xs text-on-surface-variant">Rs. ${order.totalAmount.toFixed(2)}</div>
+                        </div>
+                    </div>
+
+                    ${activeStatuses.includes(order.status) ? renderTracking(order.status) : ''}
+                    
+                    <!-- Detail Pane -->
+                    <div class="detail-pane pt-6 mt-6 border-t border-outline-variant/20">
+                        <h4 class="text-xs uppercase tracking-widest font-bold text-primary mb-4">Items Summary</h4>
+                        <div class="space-y-3">
+                            ${order.items.map(item => `
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-on-surface-variant">${item.productName} <span class="text-[10px] font-bold">x${item.quantity}</span></span>
+                                    <span class="font-semibold text-primary">Rs. ${(item.price * item.quantity).toFixed(2)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-dashed border-outline-variant/30 flex justify-between items-center">
+                            <div class="text-xs text-on-surface-variant">Payment: <span class="font-bold text-primary uppercase">${order.paymentStatus || 'Pending'}</span></div>
+                            <div class="text-right">
+                                <span class="text-xs text-on-surface-variant uppercase tracking-widest">Total</span>
+                                <div class="text-lg font-bold text-primary">Rs. ${order.totalAmount.toFixed(2)}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        }
+
+        loadOrders();
+    </script>
+</body>
+
+</html>

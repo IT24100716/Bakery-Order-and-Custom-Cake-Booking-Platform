@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>BakeNest - Luxury Patisserie</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#331f11",
+                        "secondary": "#725b29",
+                        "background": "#fff8f3",
+                        "surface": "#fff8f3",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#fff2e1",
+                        "on-background": "#211b11",
+                        "on-surface": "#211b11",
+                        "on-surface-variant": "#4f453f",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#d3c3bb"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-left: 1px solid rgba(255, 255, 255, 0.4);
+            border-right: 1px solid rgba(114, 91, 41, 0.1);
+            border-bottom: 1px solid rgba(114, 91, 41, 0.1);
+        }
+        .liquid-shadow {
+            box-shadow: 0 30px 60px -15px rgba(114, 91, 41, 0.08);
+        }
+        .viscous-transition {
+            transition: all 400ms cubic-bezier(0.2, 0, 0, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased">
+
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/20 shadow-[0_30px_60px_-15px_rgba(114,91,41,0.08)] transition-all duration-300">
+    <div class="max-w-[1440px] mx-auto px-8 flex justify-between items-center h-20">
+        <a class="font-headline-md text-3xl font-bold text-primary hover:scale-105 transition-transform duration-300" href="/">
+            BakeNest
+        </a>
+        <nav class="hidden md:flex gap-8 items-center h-full">
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="#">Shop</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="#">Custom Cakes</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="#">About</a>
+        </nav>
+        <div class="flex gap-4 items-center">
+            <a id="nav-orders" href="/my-orders.html" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 hidden items-center gap-1" title="My Orders">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="hidden lg:inline text-sm font-semibold uppercase tracking-widest">Orders</span>
+            </a>
+            <button id="nav-cart-btn" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 relative">
+                <span class="material-symbols-outlined">shopping_bag</span>
+                <span id="nav-cart-count" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+            </button>
+            <a id="nav-account" href="/auth.html" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 hidden md:flex items-center gap-1">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span id="nav-account-text" class="text-sm font-semibold uppercase tracking-widest">Sign In</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main class="flex-grow pt-20">
+    <!-- Hero Section -->
+    <section class="relative min-h-[700px] flex items-center justify-center overflow-hidden bg-surface-container-low">
+        <div class="absolute inset-0 z-0">
+            <img class="w-full h-full object-cover opacity-60" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=2000&auto=format&fit=crop" alt="Luxury Cake"/>
+            <div class="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/80"></div>
+        </div>
+        <div class="relative z-10 max-w-[1440px] mx-auto px-8 text-center flex flex-col items-center">
+            <span class="font-label-lg uppercase tracking-widest text-primary mb-6 block glass-panel px-6 py-2 rounded-full">Artisanal Excellence</span>
+            <h1 class="font-display-lg text-6xl md:text-7xl text-primary max-w-4xl mb-8 leading-tight">
+                Elevating Pastry to an <span class="italic font-light">Art Form</span>
+            </h1>
+            <p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+                Experience the delicate balance of flavor, texture, and uncompromising aesthetic. Every creation is a masterpiece designed to indulge the senses.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <button class="bg-primary text-white font-label-lg px-8 py-4 rounded-[32px] viscous-transition hover:bg-primary/90 shadow-lg uppercase tracking-widest">
+                    Explore Collections
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curated Indulgence (Static Banners) -->
+    <section class="max-w-[1440px] mx-auto px-8 py-24">
+        <div class="text-center mb-16">
+            <h2 class="font-headline-lg text-4xl text-primary mb-4">Curated Indulgence</h2>
+            <p class="font-body-md text-on-surface-variant">Discover our signature categories</p>
+        </div>
+        <div id="categories-container" class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
+            <!-- Dynamic categories will be injected here -->
+        </div>
+    </section>
+
+    <!-- Dynamic Featured Products -->
+    <section class="max-w-[1440px] mx-auto px-8 py-12 mb-24">
+        <div class="text-center mb-12">
+            <h2 class="font-headline-lg text-4xl text-primary mb-4">Fresh from the Oven</h2>
+            <p class="font-body-md text-on-surface-variant">Our latest exquisite creations</p>
+        </div>
+        
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            <!-- Dynamic products will be injected here -->
+            <div class="col-span-full text-center py-12 text-on-surface-variant" id="products-loading">
+                Loading masterpieces...
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Cart Drawer -->
+<div id="cart-drawer-overlay" class="fixed inset-0 bg-black/50 z-[60] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-surface z-[70] transform translate-x-full transition-transform duration-400 ease-[cubic-bezier(0.2,0,0,1)] shadow-2xl flex flex-col">
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-lowest">
+        <h2 class="font-headline-md text-2xl text-primary flex items-center gap-2">
+            Cart <span id="cart-drawer-count" class="text-sm bg-secondary/10 text-secondary w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+        </h2>
+        <button id="close-cart-btn" class="text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    
+    <!-- Items Container -->
+    <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 flex flex-col gap-6">
+        <!-- Cart Items Injected Here -->
+    </div>
+    
+    <!-- Footer -->
+    <div class="p-6 border-t border-outline-variant/30 bg-surface-container-lowest">
+        <div class="flex justify-between items-center mb-6">
+            <span class="font-body-md text-on-surface-variant">Estimated total</span>
+            <span id="cart-subtotal" class="font-headline-md text-2xl text-primary">Rs. 0.00</span>
+        </div>
+        <p class="text-[10px] text-on-surface-variant mb-4 text-center uppercase tracking-widest">Taxes and shipping calculated at checkout</p>
+        <button id="btn-checkout" class="w-full bg-primary text-white font-label-lg py-4 rounded-full hover:bg-primary/90 transition-colors uppercase tracking-widest">
+            Check out
+        </button>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="w-full pt-24 pb-8 bg-surface-container-lowest text-primary">
+    <div class="max-w-[1440px] mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+        <div>
+            <div class="font-headline-lg text-3xl mb-4">BakeNest</div>
+            <p class="text-on-surface-variant text-sm max-w-xs">Elevating pastry to an art form through uncompromising material honesty and precision craft.</p>
+        </div>
+        <div>
+            <h4 class="font-label-lg uppercase tracking-widest mb-6">Explore</h4>
+            <ul class="space-y-4 text-sm text-on-surface-variant">
+                <li><a href="#" class="hover:text-primary transition-colors">Shop</a></li>
+                <li><a href="#" class="hover:text-primary transition-colors">Custom Cakes</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-label-lg uppercase tracking-widest mb-6">Legal</h4>
+            <ul class="space-y-4 text-sm text-on-surface-variant">
+                <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-label-lg uppercase tracking-widest mb-6">Connect</h4>
+            <ul class="space-y-4 text-sm text-on-surface-variant">
+                <li><a href="#" class="hover:text-primary transition-colors">Instagram</a></li>
+                <li><a href="#" class="hover:text-primary transition-colors">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-[1440px] mx-auto px-8 border-t border-outline-variant/30 pt-8 text-center text-sm text-on-surface-variant">
+        © 2024 BakeNest Artisanal Patisserie. All rights reserved.
+    </div>
+</footer>
+
+<script>
+    // Authentication State Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token');
+        const navAccountBtn = document.getElementById('nav-account');
+        const navAccountText = document.getElementById('nav-account-text');
+
+        if (token) {
+            navAccountText.textContent = "Sign Out";
+            navAccountBtn.href = "#";
+            document.getElementById('nav-orders').classList.remove('hidden');
+            document.getElementById('nav-orders').classList.add('flex');
+            navAccountBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('token');
+                window.location.reload();
+            });
+        }
+    });
+
+    // Fetch and render products
+    async function loadProducts() {
+        const grid = document.getElementById('products-grid');
+        const loader = document.getElementById('products-loading');
+
+        try {
+            const response = await fetch('/api/v1/public/products');
+            if (!response.ok) throw new Error("Failed to load products");
+            
+            const products = await response.json();
+            loader.style.display = 'none';
+
+            if (products.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-12 text-on-surface-variant">More creations coming soon!</div>';
+                return;
+            }
+
+            // Store products globally for easy Add To Cart lookup
+            window.globalProductsMap = new Map(products.map(p => [p.id, p]));
+
+            // Display up to 4 products on the homepage
+            const displayProducts = products.slice(0, 4);
+            grid.innerHTML = displayProducts.map(product => `
+                <div onclick="window.location.href='/product-details.html?id=${product.id}'" class="glass-panel rounded-xl overflow-hidden group cursor-pointer hover:scale-[1.02] viscous-transition liquid-shadow flex flex-col relative">
+                    <div class="h-64 overflow-hidden relative bg-white/50">
+                        <!-- We use a placeholder image if product.imageUrl is empty -->
+                        <img src="${product.imageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=600&auto=format&fit=crop'}" 
+                             alt="${product.name}" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-widest text-secondary mb-2 block">${product.category || 'Bakery'}</span>
+                            <h3 class="font-headline-md text-xl text-primary mb-2">${product.name}</h3>
+                        </div>
+                        <div class="flex justify-between items-center mt-4 border-t border-outline-variant/30 pt-4">
+                            <span class="font-body-md font-semibold text-primary">Rs. ${product.price.toFixed(2)}</span>
+                            <button onclick="event.stopPropagation(); addToCartFromMap(${product.id})" class="text-primary hover:text-secondary transition-colors relative z-10">
+                                <span class="material-symbols-outlined">add_shopping_cart</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+        } catch (error) {
+            console.error("Error loading products:", error);
+            loader.textContent = "Unable to load creations at this time.";
+        }
+    }
+
+    async function loadCategories() {
+        const container = document.getElementById('categories-container');
+        try {
+            const res = await fetch('/api/v1/public/categories');
+            const categories = await res.json();
+            
+            if (!categories || categories.length === 0) {
+                container.innerHTML = `<div class="col-span-full py-12 text-center text-on-surface-variant opacity-70">New collections coming soon...</div>`;
+                return;
+            }
+
+            let html = '';
+            
+            // First category is the main hero
+            if (categories.length > 0) {
+                const c1 = categories[0];
+                html += `
+                    <a class="md:col-span-8 glass-panel rounded-xl overflow-hidden group relative flex items-end viscous-transition hover:scale-[1.01] liquid-shadow min-h-[400px]" href="#">
+                        <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" src="${c1.imageUrl || 'https://images.unsplash.com/photo-1519340333755-56e9c1d04579?q=80'}" alt="${c1.name}"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                        <div class="relative z-10 p-10 w-full">
+                            <span class="text-white/80 font-label-sm uppercase tracking-wider mb-2 block">Signature</span>
+                            <h3 class="font-headline-md text-3xl text-white mb-2">${c1.name}</h3>
+                            <p class="text-white/70 line-clamp-2 max-w-lg">${c1.description || ''}</p>
+                        </div>
+                    </a>
+                `;
+            }
+
+            // Remaining categories go to the right side column
+            if (categories.length > 1) {
+                html += `<div class="md:col-span-4 flex flex-col gap-6">`;
+                for (let i = 1; i < Math.min(categories.length, 3); i++) { // Max 2 more
+                    const c = categories[i];
+                    html += `
+                        <a class="flex-1 glass-panel rounded-xl overflow-hidden group relative flex items-end viscous-transition hover:scale-[1.02] liquid-shadow min-h-[250px]" href="#">
+                            <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" src="${c.imageUrl || 'https://images.unsplash.com/photo-1555507036-ab1f40ce88ca?q=80'}" alt="${c.name}"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                            <div class="relative z-10 p-6 w-full">
+                                <h3 class="font-headline-md text-2xl text-white">${c.name}</h3>
+                            </div>
+                        </a>
+                    `;
+                }
+                html += `</div>`;
+            }
+
+            container.innerHTML = html;
+
+        } catch (e) {
+            console.error("Error loading categories:", e);
+        }
+    }
+
+    loadCategories();
+    loadProducts();
+
+    // --- Cart State Management ---
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    function saveCart() {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        renderCart();
+    }
+
+    function addToCartFromMap(productId) {
+        if (!window.globalProductsMap) return;
+        const product = window.globalProductsMap.get(productId);
+        if (product) addToCart(product);
+    }
+
+    function addToCart(product) {
+        const existing = cartItems.find(item => item.productId === product.id);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cartItems.push({
+                productId: product.id,
+                name: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl,
+                quantity: 1
+            });
+        }
+        saveCart();
+        openCart();
+    }
+
+    function updateQuantity(productId, delta) {
+        const item = cartItems.find(item => item.productId === productId);
+        if (item) {
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cartItems = cartItems.filter(i => i.productId !== productId);
+            }
+            saveCart();
+        }
+    }
+
+    function removeFromCart(productId) {
+        cartItems = cartItems.filter(item => item.productId !== productId);
+        saveCart();
+    }
+
+    // --- Cart UI Logic ---
+    const cartOverlay = document.getElementById('cart-drawer-overlay');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const navCartBtn = document.getElementById('nav-cart-btn');
+    const closeCartBtn = document.getElementById('close-cart-btn');
+    const navCartCount = document.getElementById('nav-cart-count');
+    const drawerCartCount = document.getElementById('cart-drawer-count');
+    const cartItemsContainer = document.getElementById('cart-items-container');
+    const cartSubtotal = document.getElementById('cart-subtotal');
+    const btnCheckout = document.getElementById('btn-checkout');
+
+    function openCart() {
+        cartOverlay.classList.remove('hidden');
+        // trigger reflow
+        void cartOverlay.offsetWidth;
+        cartOverlay.classList.remove('opacity-0');
+        cartDrawer.classList.remove('translate-x-full');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+        cartOverlay.classList.add('opacity-0');
+        cartDrawer.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+        setTimeout(() => cartOverlay.classList.add('hidden'), 300);
+    }
+
+    navCartBtn.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    function renderCart() {
+        const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+        navCartCount.textContent = totalItems;
+        drawerCartCount.textContent = totalItems;
+
+        if (cartItems.length === 0) {
+            cartItemsContainer.innerHTML = `
+                <div class="h-full flex flex-col items-center justify-center text-on-surface-variant opacity-70 gap-4">
+                    <span class="material-symbols-outlined text-4xl">shopping_bag</span>
+                    <p>Your cart is empty.</p>
+                    <button onclick="closeCart()" class="mt-4 border-b border-primary text-primary pb-1 font-label-lg uppercase tracking-widest text-sm hover:text-secondary hover:border-secondary transition-colors">Continue Shopping</button>
+                </div>
+            `;
+            cartSubtotal.textContent = 'Rs. 0.00';
+            btnCheckout.disabled = true;
+            btnCheckout.classList.add('opacity-50', 'cursor-not-allowed');
+            return;
+        }
+
+        btnCheckout.disabled = false;
+        btnCheckout.classList.remove('opacity-50', 'cursor-not-allowed');
+
+        let subtotal = 0;
+        cartItemsContainer.innerHTML = cartItems.map(item => {
+            subtotal += item.price * item.quantity;
+            return `
+                <div class="flex gap-4">
+                    <div class="w-20 h-20 bg-white/50 rounded-lg overflow-hidden shrink-0 border border-outline-variant/30">
+                        <img src="${item.imageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80'}" alt="${item.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex flex-col justify-between flex-grow">
+                        <div class="flex justify-between items-start gap-2">
+                            <h4 class="font-body-md font-semibold text-primary leading-tight">${item.name}</h4>
+                            <span class="font-body-md font-semibold text-primary shrink-0">Rs. ${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between items-end mt-2">
+                            <div class="flex items-center border border-outline-variant rounded-md overflow-hidden bg-white">
+                                <button onclick="updateQuantity(${item.productId}, -1)" class="w-7 h-7 flex items-center justify-center hover:bg-outline-variant/20 transition-colors text-on-surface-variant">-</button>
+                                <span class="w-7 text-center font-body-sm text-primary font-semibold">${item.quantity}</span>
+                                <button onclick="updateQuantity(${item.productId}, 1)" class="w-7 h-7 flex items-center justify-center hover:bg-outline-variant/20 transition-colors text-on-surface-variant">+</button>
+                            </div>
+                            <button onclick="removeFromCart(${item.productId})" class="text-on-surface-variant hover:text-red-500 transition-colors" title="Remove">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        cartSubtotal.textContent = 'Rs. ' + subtotal.toFixed(2);
+    }
+
+    btnCheckout.addEventListener('click', () => {
+        window.location.href = '/checkout.html';
+    });
+
+    // Initial render
+    renderCart();
+
+</script>
+</body>
+</html>

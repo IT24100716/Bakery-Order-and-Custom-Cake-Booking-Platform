@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BakeNest - Product Management Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-background": "#2a170a",
+                      "on-secondary": "#ffffff",
+                      "on-tertiary-fixed": "#261a00",
+                      "on-tertiary-fixed-variant": "#584413",
+                      "surface-container-low": "#fff1ea",
+                      "surface-variant": "#ffdcc7",
+                      "on-error-container": "#93000a",
+                      "inverse-surface": "#412b1d",
+                      "tertiary-container": "#fff8f1",
+                      "on-primary-fixed-variant": "#4a4641",
+                      "on-secondary-fixed": "#251a04",
+                      "tertiary-fixed": "#ffdf9f",
+                      "primary-fixed": "#e8e1db",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#fff8f1",
+                      "on-primary-fixed": "#1e1b17",
+                      "surface": "#fff8f5",
+                      "surface-container-highest": "#ffdcc7",
+                      "inverse-primary": "#cbc5bf",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed-dim": "#cbc5bf",
+                      "surface-bright": "#fff8f5",
+                      "inverse-on-surface": "#ffede4",
+                      "surface-dim": "#f7d3bd",
+                      "on-primary-container": "#76726c",
+                      "surface-tint": "#625e59",
+                      "error-container": "#ffdad6",
+                      "background": "#fff8f5",
+                      "error": "#ba1a1a",
+                      "on-secondary-container": "#726044",
+                      "outline-variant": "#cdc5bc",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container": "#ffeade",
+                      "tertiary": "#725b29",
+                      "surface-container-high": "#ffe3d3",
+                      "on-error": "#ffffff",
+                      "secondary-container": "#f4dcb9",
+                      "on-surface": "#2a170a",
+                      "on-surface-variant": "#4a463f",
+                      "primary": "#625e59",
+                      "on-tertiary-container": "#876f3a",
+                      "outline": "#7c766e",
+                      "secondary-fixed": "#f7dfbc",
+                      "secondary-fixed-dim": "#dac3a1",
+                      "secondary": "#6d5c40",
+                      "on-secondary-fixed-variant": "#54442a",
+                      "tertiary-fixed-dim": "#e1c386"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "80px",
+                      "container-padding": "64px",
+                      "lg": "48px",
+                      "sm": "16px",
+                      "md": "24px",
+                      "xs": "8px",
+                      "unit": "4px",
+                      "gutter": "32px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Bodoni Moda"
+                      ],
+                      "headline-md": [
+                              "Bodoni Moda"
+                      ],
+                      "headline-sm": [
+                              "Bodoni Moda"
+                      ],
+                      "headline-lg-mobile": [
+                              "Bodoni Moda"
+                      ],
+                      "display-lg": [
+                              "Bodoni Moda"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-md": [
+                              "Hanken Grotesk"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "36px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(75, 52, 37, 0.04);
+        }
+        
+        .glass-modal {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 24px 64px rgba(75, 52, 37, 0.08);
+        }
+
+        .smooth-transition {
+            transition: all 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Subtle scrollbar for elegant feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(109, 92, 64, 0.2);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(109, 92, 64, 0.4);
+        }
+      </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex selection:bg-secondary-container selection:text-on-secondary-container font-body-md text-body-md antialiased overflow-x-hidden">
+<!-- SideNavBar (JSON Component) -->
+<nav class="bg-white/60 dark:bg-surface/60 backdrop-blur-[50px] font-label-md text-label-md uppercase tracking-widest fixed left-6 top-6 bottom-6 w-72 rounded-lg border border-white/40 shadow-[0_24px_64px_rgba(75,52,37,0.08)] flex flex-col p-md z-50 smooth-transition hidden md:flex">
+<!-- Header -->
+<div class="mb-xl flex flex-col items-center justify-center text-center mt-md">
+<div class="w-20 h-20 rounded-full bg-secondary-container/30 mb-sm flex items-center justify-center border border-secondary/20 shadow-sm overflow-hidden">
+<img alt="Bakery Logo" class="w-full h-full object-cover" data-alt="A close up shot of a beautifully crafted artisanal loaf of sourdough bread resting on a polished marble countertop. The lighting is soft and natural, emphasizing the golden, crusty texture of the bread against the smooth, elegant stone surface in a high-end bakery setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiDYCwBHuoZUwGpBLDh0c3XUhxaWfTkQCEMFDFx_Y_-VPPTeRiC2Rkn2AbchA0nQ-50zHTQ5HubIPe7nCk0k1q0Qhsx-lF6nPICvncJYuvx_x24lnNXql6S13XMQqdrr2pnoxzTisEiH_fSKV988al6hOwb4YkIx3DJRje_LGPOtNajEne-aNl5xFTdsVbJDnsD0ldzRwuQtrC4ZO8VrZSXYYKDPqbtZ2M-pncULNe3Wxg1EoIW4rQ7tlCQRw1XPkFqtpoT0sltW4I"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-on-surface dark:text-surface-bright tracking-tight">BakeNest</h1>
+<p class="text-[10px] text-on-surface-variant/70 mt-1 uppercase tracking-[0.15em]">Artisan Management</p>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-2 flex-grow">
+<!-- Dashboard -->
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] transition-all duration-300 smooth-transition rounded-xl" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Products (Active State) -->
+<a class="flex items-center gap-sm px-md py-sm bg-secondary-container/50 text-on-secondary-container shadow-[0_0_15px_rgba(114,96,68,0.1)] rounded-xl hover:scale-[1.02] transition-all duration-300 smooth-transition" href="#">
+<span class="material-symbols-outlined text-[20px] fill" data-icon="bakery_dining" data-weight="fill">bakery_dining</span>
+<span>Products</span>
+</a>
+<!-- Inventory -->
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] transition-all duration-300 smooth-transition rounded-xl" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="inventory_2">inventory_2</span>
+<span>Inventory</span>
+</a>
+<!-- Analytics -->
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] transition-all duration-300 smooth-transition rounded-xl" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="monitoring">monitoring</span>
+<span>Analytics</span>
+</a>
+<!-- Orders -->
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] transition-all duration-300 smooth-transition rounded-xl" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="receipt_long">receipt_long</span>
+<span>Orders</span>
+</a>
+</div>
+<!-- CTA & Footer -->
+<div class="mt-auto flex flex-col gap-sm">
+<button class="w-full py-md bg-gradient-to-r from-secondary to-tertiary text-on-primary rounded-xl font-label-md text-label-md uppercase tracking-widest shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 smooth-transition">
+                New Collection
+            </button>
+<a class="flex items-center gap-sm px-md py-sm text-on-surface-variant hover:text-on-surface hover:bg-white/40 transition-all duration-300 smooth-transition rounded-xl mt-sm justify-center" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-[320px] relative min-h-screen flex flex-col w-full max-w-[1600px] mx-auto">
+<!-- TopNavBar (JSON Component) -->
+<header class="bg-white/60 dark:bg-surface/60 backdrop-blur-[40px] font-body-md text-body-md w-full h-20 sticky top-0 border-b border-white/40 shadow-[0_8px_32px_rgba(75,52,37,0.04)] flex justify-between items-center px-lg w-full max-w-[1600px] mx-auto z-40 transition-all cubic-bezier(0.2,0.8,0.2,1)">
+<!-- Mobile Menu Toggle (Visible only on small screens) -->
+<div class="md:hidden flex items-center">
+<button class="text-on-surface-variant hover:text-on-surface p-2 rounded-full hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+<!-- Search Bar (on_left) -->
+<div class="hidden md:flex items-center relative w-64 lg:w-96">
+<span class="material-symbols-outlined absolute left-4 text-on-surface-variant/50 z-10 text-[20px]">search</span>
+<input class="w-full pl-11 pr-4 py-2.5 bg-surface-container-low/50 border border-outline-variant/30 rounded-[28px] focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/50 focus:bg-white/80 transition-all duration-300 backdrop-blur-md text-on-surface placeholder:text-on-surface-variant/50 text-sm shadow-inner" placeholder="Search products, orders..." type="text"/>
+</div>
+<!-- Brand Logo (Mobile Only) -->
+<div class="md:hidden flex items-center justify-center flex-1">
+<span class="font-headline-sm text-headline-sm tracking-tight text-on-surface dark:text-surface-bright">BakeNest</span>
+</div>
+<!-- Right Actions -->
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-2 mr-2">
+<button class="text-on-surface-variant p-2 rounded-full hover:bg-surface-variant/50 hover:text-on-surface transition-colors relative hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined text-[22px]" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full border border-white"></span>
+</button>
+<button class="text-on-surface-variant p-2 rounded-full hover:bg-surface-variant/50 hover:text-on-surface transition-colors hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined text-[22px]" data-icon="settings">settings</span>
+</button>
+</div>
+<button class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-secondary to-[#877254] text-white px-5 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 font-label-md text-[13px] tracking-wide">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Add Product</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-secondary-container border-2 border-white shadow-sm overflow-hidden ml-2 cursor-pointer hover:scale-105 transition-transform duration-300">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A smiling woman with shoulder-length hair wearing a casual, elegant light beige blouse, standing against a blurred, warmly lit background suggestive of a modern cafe or bakery setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCw9h-WmryVbwgNtszOzy0QRPSnW4oG13lAj8dlnJMk8-5xYUTtxRVUwunQDibuJSFKAmbpvFE_oCBN_2GRq1v29JuIK6uytkw5-47IhbDguGCbQq4uVWfRp0b_2GuqaU_ihO_-2QU0lnFQ9MIxqWKOVkOrxBZ-DvL6aDOy1xKQWXdO24rKwlqza3TbfMqnX-vRyFQeJYKtmd3-RBqzwKnri9VZOMq9LUDfp53YFoJYC1y2l1_OCBA9K6aJr3Ny2hZ5cYXaIM7X18xu"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-4 md:p-lg lg:p-container-padding flex-1">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-xl gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-2">Product Performance</h2>
+<p class="text-on-surface-variant font-body-lg text-body-lg max-w-2xl">A curated overview of your artisanal offerings and their market resonance.</p>
+</div>
+<div class="flex gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/40 bg-white/30 backdrop-blur-md text-on-surface shadow-sm hover:bg-white/60 hover:scale-[1.02] transition-all duration-300 font-label-md text-label-md tracking-wider">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Export</span>
+</button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-on-background text-white shadow-md hover:bg-on-background/90 hover:scale-[1.02] transition-all duration-300 font-label-md text-label-md tracking-wider">
+<span class="material-symbols-outlined text-[18px]">summarize</span>
+<span>Generate Report</span>
+</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- KPI Glass Cards (Top Row) -->
+<div class="md:col-span-4 glass-panel rounded-xl p-md flex flex-col justify-between relative overflow-hidden group smooth-transition hover:shadow-[0_12px_48px_rgba(75,52,37,0.06)]">
+<div class="absolute -right-6 -top-6 w-32 h-32 bg-secondary-container/20 rounded-full blur-2xl group-hover:bg-secondary-container/40 transition-all duration-500"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
+<span class="material-symbols-outlined text-secondary text-[24px]">inventory</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50/50 border border-emerald-100 px-2 py-1 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +12%
+                        </span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-1">Total Offerings</p>
+<p class="font-headline-md text-headline-md text-on-background">142</p>
+</div>
+</div>
+<div class="md:col-span-4 glass-panel rounded-xl p-md flex flex-col justify-between relative overflow-hidden group smooth-transition hover:shadow-[0_12px_48px_rgba(75,52,37,0.06)]">
+<div class="absolute -right-6 -top-6 w-32 h-32 bg-tertiary-container/30 rounded-full blur-2xl group-hover:bg-tertiary-container/50 transition-all duration-500"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
+<span class="material-symbols-outlined text-tertiary text-[24px]">check_circle</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50/50 border border-emerald-100 px-2 py-1 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span> +5%
+                        </span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-1">Active Batches</p>
+<p class="font-headline-md text-headline-md text-on-background">118</p>
+</div>
+</div>
+<div class="md:col-span-4 glass-panel rounded-xl p-md flex flex-col justify-between relative overflow-hidden group smooth-transition hover:shadow-[0_12px_48px_rgba(75,52,37,0.06)]">
+<div class="absolute -right-6 -top-6 w-32 h-32 bg-error-container/20 rounded-full blur-2xl group-hover:bg-error-container/30 transition-all duration-500"></div>
+<div class="flex justify-between items-start mb-6">
+<div class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
+<span class="material-symbols-outlined text-error text-[24px]">warning</span>
+</div>
+<span class="flex items-center text-xs font-semibold text-error bg-error-container/30 border border-error-container px-2 py-1 rounded-full backdrop-blur-sm">
+                            Requires Action
+                        </span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-1">Out of Stock</p>
+<p class="font-headline-md text-headline-md text-on-background">6</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

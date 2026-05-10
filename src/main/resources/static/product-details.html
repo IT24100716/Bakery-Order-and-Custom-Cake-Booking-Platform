@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Product Details - BakeNest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#331f11", secondary: "#725b29", background: "#fff8f3",
+                        surface: "#fff8f3", "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#fff2e1", "on-background": "#211b11",
+                        "on-surface": "#211b11", "on-surface-variant": "#4f453f",
+                        "outline-variant": "#d3c3bb"
+                    },
+                    fontFamily: {
+                        "label-lg": ["Inter"], "headline-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"], "body-md": ["Inter"], "body-lg": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased">
+
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm transition-all duration-300">
+    <div class="max-w-[1440px] mx-auto px-8 flex justify-between items-center h-20">
+        <a class="font-headline-md text-3xl font-bold text-primary hover:scale-105 transition-transform duration-300" href="/">BakeNest</a>
+        <nav class="hidden md:flex gap-8 items-center h-full">
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="/">Shop</a>
+        </nav>
+        <div class="flex gap-4 items-center">
+            <a id="nav-orders" href="/my-orders.html" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 hidden items-center gap-1" title="My Orders">
+                <span class="material-symbols-outlined">receipt_long</span>
+                <span class="hidden lg:inline text-sm font-semibold uppercase tracking-widest">Orders</span>
+            </a>
+            <button id="nav-cart-btn" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 relative">
+                <span class="material-symbols-outlined">shopping_bag</span>
+                <span id="nav-cart-count" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+            </button>
+            <a id="nav-account" href="/auth.html" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 hidden md:flex items-center gap-1">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span id="nav-account-text" class="text-sm font-semibold uppercase tracking-widest">Sign In</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<main class="flex-grow pt-32 pb-24 max-w-7xl mx-auto px-6 w-full">
+    <div id="loading" class="text-center py-24 text-on-surface-variant">Loading masterpiece details...</div>
+    
+    <div id="product-container" class="hidden grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24">
+        <!-- Images -->
+        <div class="space-y-4">
+            <div class="w-full h-[500px] bg-surface-container-low rounded-2xl overflow-hidden border border-outline-variant/30">
+                <img id="main-image" src="" alt="Product" class="w-full h-full object-cover">
+            </div>
+            <div id="thumbnails" class="flex gap-4 overflow-x-auto pb-2">
+                <!-- thumbnails injected here -->
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div class="flex flex-col justify-center">
+            <div class="mb-6 border-b border-outline-variant/30 pb-6">
+                <span id="p-category" class="text-xs font-semibold uppercase tracking-widest text-secondary mb-3 block">Category</span>
+                <h1 id="p-name" class="font-headline-lg text-4xl md:text-5xl text-primary mb-4 leading-tight">Product Name</h1>
+                <div class="flex items-center gap-4 mb-4">
+                    <span id="p-price" class="font-headline-md text-3xl text-primary">Rs. 0.00</span>
+                    <span id="p-stock-badge" class="px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold uppercase tracking-widest rounded-full">In Stock</span>
+                </div>
+            </div>
+
+            <div class="mb-8 prose prose-sm text-on-surface-variant font-body-lg">
+                <p id="p-desc">Description loading...</p>
+            </div>
+
+            <div class="flex items-center gap-6 mb-8">
+                <div class="flex items-center border border-outline-variant rounded-full overflow-hidden bg-white">
+                    <button id="qty-minus" class="w-12 h-12 flex items-center justify-center hover:bg-outline-variant/20 transition-colors text-on-surface-variant text-xl">-</button>
+                    <input type="text" id="qty-input" value="1" class="w-12 text-center font-body-lg text-primary font-semibold border-0 focus:ring-0 bg-transparent p-0" readonly>
+                    <button id="qty-plus" class="w-12 h-12 flex items-center justify-center hover:bg-outline-variant/20 transition-colors text-on-surface-variant text-xl">+</button>
+                </div>
+                <div class="text-sm text-on-surface-variant uppercase tracking-widest font-semibold">Quantity</div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button id="btn-add-to-cart" class="flex-1 bg-primary text-white font-label-lg px-8 py-4 rounded-full hover:bg-primary/90 transition-colors uppercase tracking-widest flex justify-center items-center gap-2 shadow-lg">
+                    <span class="material-symbols-outlined">shopping_bag</span> Add to Cart
+                </button>
+                <button id="btn-buy-now" class="flex-1 border-2 border-primary text-primary bg-transparent font-label-lg px-8 py-4 rounded-full hover:bg-primary/5 transition-colors uppercase tracking-widest flex justify-center items-center gap-2">
+                    Buy it now
+                </button>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-outline-variant/30 space-y-4">
+                <div class="flex gap-2 items-center text-on-surface-variant text-sm">
+                    <span class="material-symbols-outlined text-[20px]">local_shipping</span> Nationwide carefully controlled delivery available.
+                </div>
+                <div class="flex gap-2 items-center text-on-surface-variant text-sm">
+                    <span class="material-symbols-outlined text-[20px]">verified</span> 100% Quality guarantee. Baked fresh.
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Cart Drawer -->
+<div id="cart-drawer-overlay" class="fixed inset-0 bg-black/50 z-[60] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
+<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-surface z-[70] transform translate-x-full transition-transform duration-400 ease-[cubic-bezier(0.2,0,0,1)] shadow-2xl flex flex-col">
+    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-lowest">
+        <h2 class="font-headline-md text-2xl text-primary flex items-center gap-2">
+            Cart <span id="cart-drawer-count" class="text-sm bg-secondary/10 text-secondary w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+        </h2>
+        <button id="close-cart-btn" class="text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+    
+    <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 flex flex-col gap-6"></div>
+    
+    <div class="p-6 border-t border-outline-variant/30 bg-surface-container-lowest">
+        <div class="flex justify-between items-center mb-6">
+            <span class="font-body-md text-on-surface-variant">Estimated total</span>
+            <span id="cart-subtotal" class="font-headline-md text-2xl text-primary">Rs. 0.00</span>
+        </div>
+        <p class="text-[10px] text-on-surface-variant mb-4 text-center uppercase tracking-widest">Taxes and shipping calculated at checkout</p>
+        <button id="btn-checkout" class="w-full bg-primary text-white font-label-lg py-4 rounded-full hover:bg-primary/90 transition-colors uppercase tracking-widest">
+            Check out
+        </button>
+    </div>
+</div>
+
+<script>
+    // Auth logic
+    const token = localStorage.getItem('token');
+    if (token) {
+        document.getElementById('nav-account-text').textContent = "Sign Out";
+        document.getElementById('nav-account').href = "#";
+        document.getElementById('nav-orders').classList.remove('hidden');
+        document.getElementById('nav-orders').classList.add('flex');
+        document.getElementById('nav-account').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('token');
+            window.location.reload();
+        });
+    }
+
+    // Load Product Details
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    let currentProduct = null;
+    let selectedQuantity = 1;
+
+    async function loadProduct() {
+        if (!productId) {
+            window.location.href = '/';
+            return;
+        }
+
+        try {
+            const res = await fetch(`/api/v1/public/products/${productId}`);
+            if (!res.ok) throw new Error("Product not found");
+            const product = await res.json();
+            currentProduct = product;
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('product-container').classList.remove('hidden');
+
+            document.getElementById('p-category').textContent = product.category || 'Collection';
+            document.getElementById('p-name').textContent = product.name;
+            document.getElementById('p-price').textContent = `Rs. ${product.price.toFixed(2)}`;
+            document.getElementById('p-desc').textContent = product.description || 'A stunning creation from our master bakers.';
+
+            const badge = document.getElementById('p-stock-badge');
+            if (product.stockType === 'MADE_TO_ORDER') {
+                badge.textContent = 'Made to Order';
+                badge.className = 'px-3 py-1 bg-secondary/10 text-secondary text-xs font-bold uppercase tracking-widest rounded-full';
+            } else if (product.stock > 0) {
+                badge.textContent = 'In Stock';
+                badge.className = 'px-3 py-1 bg-green-100 text-green-800 text-xs font-bold uppercase tracking-widest rounded-full';
+            } else {
+                badge.textContent = 'Out of Stock';
+                badge.className = 'px-3 py-1 bg-red-100 text-red-800 text-xs font-bold uppercase tracking-widest rounded-full';
+                document.getElementById('btn-add-to-cart').disabled = true;
+                document.getElementById('btn-add-to-cart').classList.add('opacity-50', 'cursor-not-allowed');
+                document.getElementById('btn-buy-now').disabled = true;
+                document.getElementById('btn-buy-now').classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
+            const mainImg = document.getElementById('main-image');
+            mainImg.src = product.imageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=600&auto=format&fit=crop';
+            
+            // Thumbnails
+            const images = [product.imageUrl, product.imageUrl2, product.imageUrl3].filter(Boolean);
+            const thumbContainer = document.getElementById('thumbnails');
+            if (images.length > 1) {
+                thumbContainer.innerHTML = images.map((img, i) => `
+                    <div onclick="document.getElementById('main-image').src='${img}'" class="w-24 h-24 rounded-lg overflow-hidden border border-outline-variant/30 cursor-pointer hover:border-secondary transition-colors shrink-0">
+                        <img src="${img}" class="w-full h-full object-cover">
+                    </div>
+                `).join('');
+            } else {
+                thumbContainer.style.display = 'none';
+            }
+
+        } catch (e) {
+            document.getElementById('loading').textContent = "Product not found or unavailable.";
+        }
+    }
+
+    // Quantity selector
+    const qtyInput = document.getElementById('qty-input');
+    document.getElementById('qty-plus').addEventListener('click', () => {
+        selectedQuantity++;
+        qtyInput.value = selectedQuantity;
+    });
+    document.getElementById('qty-minus').addEventListener('click', () => {
+        if (selectedQuantity > 1) {
+            selectedQuantity--;
+            qtyInput.value = selectedQuantity;
+        }
+    });
+
+    document.getElementById('btn-add-to-cart').addEventListener('click', () => {
+        if (currentProduct) addToCart(currentProduct, selectedQuantity);
+    });
+
+    document.getElementById('btn-buy-now').addEventListener('click', () => {
+        if (currentProduct) {
+            addToCart(currentProduct, selectedQuantity);
+            window.location.href = '/checkout.html';
+        }
+    });
+
+    // --- Cart Logic (Shared with index) ---
+    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+    function saveCart() {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        renderCart();
+    }
+
+    function addToCart(product, quantity = 1) {
+        const existing = cartItems.find(item => item.productId === product.id);
+        if (existing) {
+            existing.quantity += quantity;
+        } else {
+            cartItems.push({
+                productId: product.id,
+                name: product.name,
+                price: product.price,
+                imageUrl: product.imageUrl,
+                quantity: quantity
+            });
+        }
+        saveCart();
+        openCart();
+    }
+
+    function updateCartQuantity(productId, delta) {
+        const item = cartItems.find(item => item.productId === productId);
+        if (item) {
+            item.quantity += delta;
+            if (item.quantity <= 0) cartItems = cartItems.filter(i => i.productId !== productId);
+            saveCart();
+        }
+    }
+
+    function removeFromCart(productId) {
+        cartItems = cartItems.filter(item => item.productId !== productId);
+        saveCart();
+    }
+
+    const cartOverlay = document.getElementById('cart-drawer-overlay');
+    const cartDrawer = document.getElementById('cart-drawer');
+    const navCartBtn = document.getElementById('nav-cart-btn');
+    const closeCartBtn = document.getElementById('close-cart-btn');
+    const navCartCount = document.getElementById('nav-cart-count');
+    const drawerCartCount = document.getElementById('cart-drawer-count');
+    const cartItemsContainer = document.getElementById('cart-items-container');
+    const cartSubtotal = document.getElementById('cart-subtotal');
+    const btnCheckout = document.getElementById('btn-checkout');
+
+    function openCart() {
+        cartOverlay.classList.remove('hidden');
+        void cartOverlay.offsetWidth;
+        cartOverlay.classList.remove('opacity-0');
+        cartDrawer.classList.remove('translate-x-full');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeCart() {
+        cartOverlay.classList.add('opacity-0');
+        cartDrawer.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+        setTimeout(() => cartOverlay.classList.add('hidden'), 300);
+    }
+
+    navCartBtn.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+
+    function renderCart() {
+        const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+        navCartCount.textContent = totalItems;
+        drawerCartCount.textContent = totalItems;
+
+        if (cartItems.length === 0) {
+            cartItemsContainer.innerHTML = `
+                <div class="h-full flex flex-col items-center justify-center text-on-surface-variant opacity-70 gap-4">
+                    <span class="material-symbols-outlined text-4xl">shopping_bag</span>
+                    <p>Your cart is empty.</p>
+                    <button onclick="closeCart()" class="mt-4 border-b border-primary text-primary pb-1 font-label-lg uppercase tracking-widest text-sm hover:text-secondary hover:border-secondary transition-colors">Continue Shopping</button>
+                </div>
+            `;
+            cartSubtotal.textContent = 'Rs. 0.00';
+            btnCheckout.disabled = true;
+            btnCheckout.classList.add('opacity-50', 'cursor-not-allowed');
+            return;
+        }
+
+        btnCheckout.disabled = false;
+        btnCheckout.classList.remove('opacity-50', 'cursor-not-allowed');
+
+        let subtotal = 0;
+        cartItemsContainer.innerHTML = cartItems.map(item => {
+            subtotal += item.price * item.quantity;
+            return `
+                <div class="flex gap-4">
+                    <div class="w-20 h-20 bg-white/50 rounded-lg overflow-hidden shrink-0 border border-outline-variant/30">
+                        <img src="${item.imageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80'}" alt="${item.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex flex-col justify-between flex-grow">
+                        <div class="flex justify-between items-start gap-2">
+                            <h4 class="font-body-md font-semibold text-primary leading-tight">${item.name}</h4>
+                            <span class="font-body-md font-semibold text-primary shrink-0">Rs. ${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                        <div class="flex justify-between items-end mt-2">
+                            <div class="flex items-center border border-outline-variant rounded-md overflow-hidden bg-white">
+                                <button onclick="updateCartQuantity(${item.productId}, -1)" class="w-7 h-7 flex items-center justify-center hover:bg-outline-variant/20 transition-colors text-on-surface-variant">-</button>
+                                <span class="w-7 text-center font-body-sm text-primary font-semibold">${item.quantity}</span>
+                                <button onclick="updateCartQuantity(${item.productId}, 1)" class="w-7 h-7 flex items-center justify-center hover:bg-outline-variant/20 transition-colors text-on-surface-variant">+</button>
+                            </div>
+                            <button onclick="removeFromCart(${item.productId})" class="text-on-surface-variant hover:text-red-500 transition-colors" title="Remove">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        cartSubtotal.textContent = 'Rs. ' + subtotal.toFixed(2);
+    }
+
+    btnCheckout.addEventListener('click', () => { window.location.href = '/checkout.html'; });
+
+    loadProduct();
+    renderCart();
+
+</script>
+</body>
+</html>

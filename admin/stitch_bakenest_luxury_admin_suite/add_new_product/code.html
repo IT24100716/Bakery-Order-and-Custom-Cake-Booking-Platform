@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>BakeNest - Add Product</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#2a170a",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#261a00",
+                        "on-tertiary-fixed-variant": "#584413",
+                        "surface-container-low": "#fff1ea",
+                        "surface-variant": "#ffdcc7",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#412b1d",
+                        "tertiary-container": "#fff8f1",
+                        "on-primary-fixed-variant": "#4a4641",
+                        "on-secondary-fixed": "#251a04",
+                        "tertiary-fixed": "#ffdf9f",
+                        "primary-fixed": "#e8e1db",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#fff8f1",
+                        "on-primary-fixed": "#1e1b17",
+                        "surface": "#fff8f5",
+                        "surface-container-highest": "#ffdcc7",
+                        "inverse-primary": "#cbc5bf",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#cbc5bf",
+                        "surface-bright": "#fff8f5",
+                        "inverse-on-surface": "#ffede4",
+                        "surface-dim": "#f7d3bd",
+                        "on-primary-container": "#76726c",
+                        "surface-tint": "#625e59",
+                        "error-container": "#ffdad6",
+                        "background": "#fff8f5",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#726044",
+                        "outline-variant": "#cdc5bc",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#ffeade",
+                        "tertiary": "#725b29",
+                        "surface-container-high": "#ffe3d3",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#f4dcb9",
+                        "on-surface": "#2a170a",
+                        "on-surface-variant": "#4a463f",
+                        "primary": "#625e59",
+                        "on-tertiary-container": "#876f3a",
+                        "outline": "#7c766e",
+                        "secondary-fixed": "#f7dfbc",
+                        "secondary-fixed-dim": "#dac3a1",
+                        "secondary": "#6d5c40",
+                        "on-secondary-fixed-variant": "#54442a",
+                        "tertiary-fixed-dim": "#e1c386"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "80px",
+                        "container-padding": "64px",
+                        "lg": "48px",
+                        "sm": "16px",
+                        "md": "24px",
+                        "xs": "8px",
+                        "unit": "4px",
+                        "gutter": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Bodoni Moda"],
+                        "headline-md": ["Bodoni Moda"],
+                        "headline-sm": ["Bodoni Moda"],
+                        "headline-lg-mobile": ["Bodoni Moda"],
+                        "display-lg": ["Bodoni Moda"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "headline-md": ["32px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "headline-sm": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["36px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-surface {
+            background-color: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(75, 52, 37, 0.04);
+        }
+
+        .glass-input {
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .glass-input:focus {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-color: #f4dcb9;
+            /* secondary-container */
+            box-shadow: inset 0 2px 4px rgba(75, 52, 37, 0.05), 0 0 0 2px rgba(244, 220, 185, 0.3);
+            outline: none;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased">
+    <!-- TopNavBar (Web Only) -->
+    <nav
+        class="hidden md:flex justify-between items-center px-lg w-full max-w-[1600px] mx-auto z-40 bg-white/60 dark:bg-surface/60 backdrop-blur-[40px] w-full h-20 sticky top-0 shadow-[0_8px_32px_rgba(75,52,37,0.04)] transition-all cubic-bezier(0.2,0.8,0.2,1)">
+        <div class="flex items-center gap-md">
+            <span
+                class="font-headline-sm text-headline-sm tracking-tight text-on-surface dark:text-surface-bright">BakeNest</span>
+        </div>
+        <div class="flex items-center gap-md text-primary dark:text-primary-fixed font-body-md text-body-md">
+            <button
+                class="hover:scale-105 transition-transform duration-300 hover:text-on-surface flex items-center justify-center p-2 rounded-full">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+            </button>
+            <button
+                class="hover:scale-105 transition-transform duration-300 hover:text-on-surface flex items-center justify-center p-2 rounded-full">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+            </button>
+            <img alt="User profile" class="w-10 h-10 rounded-full object-cover border-2 border-white/40 shadow-sm"
+                data-alt="A close-up portrait of a user in a professional setting, well-lit with soft, natural light, suitable for a sophisticated profile image in a luxury patisserie app."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNhnBy2KCysrWg4jozXoxnYBkqXpIEcH1lj47bajtRZan2MgQwuSyz0XUVDKVUO7H7cS4uXImkWGMP4MO7RjHdYnLF2tiXheE323bxg7d9mMHK1fHrULX8Iu3V_RrrQuMeuO-qhhLWfKzPhSt9Na0OTDQedkrbs8GPKXyWnr3N4kEkN5kl39c5fEWtNc4imT630bXtKo87C3mpBrnlzAYjsKF5C33tGKENaUMRQdRZKSkZBolXW8kHxeqoQxE_wCcAOzfPuv4WzqyD" />
+            <button
+                class="bg-secondary text-on-secondary px-6 py-2 rounded-full font-label-md text-label-md tracking-wider hover:scale-105 transition-transform shadow-md">Add
+                Product</button>
+        </div>
+    </nav>
+    <div class="flex flex-1 relative max-w-[1600px] mx-auto w-full">
+        <!-- SideNavBar (Web Only) -->
+        <aside
+            class="hidden md:flex flex-col p-md z-50 fixed left-6 top-6 bottom-6 w-72 rounded-lg bg-white/60 dark:bg-surface/60 backdrop-blur-[50px] border border-white/40 shadow-[0_24px_64px_rgba(75,52,37,0.08)]">
+            <div class="flex items-center gap-4 mb-xl">
+                <div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center">
+                    <span class="material-symbols-outlined text-on-secondary-container">bakery_dining</span>
+                </div>
+                <div>
+                    <h2 class="font-headline-md text-[20px] text-on-surface dark:text-surface-bright leading-tight">
+                        BakeNest</h2>
+                    <p class="text-on-surface-variant text-[12px] uppercase tracking-widest font-label-md">Artisan
+                        Management</p>
+                </div>
+            </div>
+            <nav
+                class="flex-1 flex flex-col gap-2 font-label-md text-label-md uppercase tracking-widest text-primary dark:text-primary-fixed">
+                <a class="flex items-center gap-4 p-4 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] transition-all duration-300"
+                    href="#">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+                <a class="flex items-center gap-4 p-4 rounded-xl bg-secondary-container/50 text-on-secondary-container shadow-[0_0_15px_rgba(114,96,68,0.1)] transition-all duration-300"
+                    href="#">
+                    <span class="material-symbols-outlined">bakery_dining</span>
+                    <span>Products</span>
+                </a>
+                <a class="flex items-center gap-4 p-4 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] transition-all duration-300"
+                    href="#">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                    <span>Inventory</span>
+                </a>
+                <a class="flex items-center gap-4 p-4 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] transition-all duration-300"
+                    href="#">
+                    <span class="material-symbols-outlined">monitoring</span>
+                    <span>Analytics</span>
+                </a>
+                <a class="flex items-center gap-4 p-4 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] transition-all duration-300"
+                    href="#">
+                    <span class="material-symbols-outlined">receipt_long</span>
+                    <span>Orders</span>
+                </a>
+            </nav>
+            <div class="mt-auto flex flex-col gap-4">
+                <button
+                    class="w-full bg-surface-variant text-on-surface py-3 rounded-xl font-label-md uppercase tracking-widest hover:bg-white/60 transition-all border border-white/20">New
+                    Collection</button>
+                <a class="flex items-center gap-4 p-4 rounded-xl text-on-surface-variant hover:text-on-surface hover:bg-white/40 transition-all font-label-md uppercase tracking-widest"
+                    href="#">
+                    <span class="material-symbols-outlined">logout</span>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        <!-- Main Content Canvas -->
+        <main class="flex-1 md:ml-[320px] p-md md:p-xl pb-32">
+            <header class="mb-lg">
+                <h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Add Product</h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant">Add a new creation to your digital display
+                    case.</p>
+            </header>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+                <!-- Form Area -->
+                <div class="lg:col-span-8 flex flex-col gap-lg">
+                    <!-- Basic Info -->
+                    <section class="glass-surface p-lg rounded-xl">
+                        <h3
+                            class="font-headline-sm text-headline-sm text-on-surface border-b border-surface-variant pb-4 mb-6">
+                            Basic Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="flex flex-col gap-2">
+                                <label class="font-label-md text-label-md text-on-surface-variant">Product Name</label>
+                                <input
+                                    class="glass-input rounded-[28px] px-6 py-4 font-body-md text-on-surface placeholder:text-on-surface-variant/50"
+                                    placeholder="e.g. Hazelnut Praline Croissant" type="text" />
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label class="font-label-md text-label-md text-on-surface-variant">Category</label>
+                                <select
+                                    class="glass-input rounded-[28px] px-6 py-4 font-body-md text-on-surface appearance-none">
+                                    <option>Viennoiserie</option>
+                                    <option>Patisserie</option>
+                                    <option>Breads</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Image Upload -->
+                    <section
+                        class="glass-surface p-lg rounded-xl flex flex-col items-center justify-center min-h-[300px] border-dashed border-2 border-outline-variant hover:border-secondary transition-colors cursor-pointer group">
+                        <div
+                            class="w-20 h-20 rounded-full bg-surface-container flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-secondary text-3xl">add_photo_alternate</span>
+                        </div>
+                        <h4 class="font-headline-sm text-headline-sm text-on-surface mb-2">Drag &amp; Drop Masterpiece
+                        </h4>
+                        <p class="font-body-md text-on-surface-variant text-center max-w-sm">Upload high-resolution
+                            imagery. Optimal size: 2000x2000px. PNG or JPG.</p>
+                    </section>
+                </div>
+                <!-- Preview Area -->
+                <div class="lg:col-span-4">
+                    <div class="sticky top-[100px] flex flex-col gap-6">
+                        <h3 class="font-headline-sm text-headline-sm text-on-surface">Live Preview</h3>
+                        <!-- Cinematic Card -->
+                        <div class="glass-surface rounded-xl overflow-hidden shadow-lg border border-white/50 relative">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10 pointer-events-none">
+                            </div>
+                            <div class="h-64 bg-surface-container relative">
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-on-surface-variant/30">
+                                    <span class="material-symbols-outlined text-6xl">image</span>
+                                </div>
+                            </div>
+                            <div class="p-6 relative z-20 bg-white/40 backdrop-blur-md">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-headline-sm text-on-surface">Product Name</h4>
+                                    <span class="font-label-md text-secondary">$0.00</span>
+                                </div>
+                                <p class="font-body-sm text-on-surface-variant line-clamp-2">Awaiting description...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Floating Action Panel -->
+    <div class="fixed bottom-0 left-0 right-0 p-6 z-50 md:pl-[320px] pointer-events-none">
+        <div class="max-w-[1200px] mx-auto flex justify-end pointer-events-auto">
+            <div
+                class="glass-surface p-4 rounded-full flex items-center gap-4 shadow-[0_24px_64px_rgba(75,52,37,0.15)]">
+                <button
+                    class="px-6 py-3 rounded-full font-label-md text-on-surface-variant hover:bg-white/40 transition-colors">Cancel</button>
+                <button
+                    class="bg-gradient-to-r from-[#d4af37] to-[#aa8c2c] text-white px-8 py-3 rounded-full font-label-md tracking-wider hover:scale-105 transition-transform shadow-lg flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">check_circle</span>
+                    Publish Masterpiece
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

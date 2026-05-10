@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Order Success - BakeNest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#331f11", secondary: "#725b29", background: "#fff8f3",
+                        surface: "#fff8f3", "surface-container-lowest": "#ffffff"
+                    },
+                    fontFamily: {
+                        "label-lg": ["Inter"], "headline-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"], "body-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-primary font-body-md min-h-screen flex flex-col items-center justify-center p-6 antialiased text-center">
+
+    <div class="bg-surface-container-lowest p-12 rounded-3xl shadow-xl max-w-lg w-full border border-secondary/10">
+        <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-green-600 text-5xl">check_circle</span>
+        </div>
+        
+        <h1 class="font-headline-lg text-4xl mb-4">Thank You!</h1>
+        <p class="text-primary/70 mb-8">Your order has been placed successfully. Our master bakers are preparing your creations.</p>
+        
+        <div class="bg-background p-4 rounded-xl border border-secondary/20 mb-8 flex justify-between items-center">
+            <span class="font-semibold">Order ID:</span>
+            <span id="order-id" class="font-mono text-secondary font-bold text-lg">#0000</span>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/my-orders.html" class="bg-primary text-white font-label-lg px-8 py-3 rounded-full hover:bg-primary/90 transition-colors uppercase tracking-widest text-sm">
+                Track Order
+            </a>
+            <a href="/" class="border border-primary text-primary font-label-lg px-8 py-3 rounded-full hover:bg-primary/5 transition-colors uppercase tracking-widest text-sm">
+                Return Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        if (id) {
+            document.getElementById('order-id').textContent = '#' + String(id).padStart(5, '0');
+        }
+    </script>
+</body>
+</html>

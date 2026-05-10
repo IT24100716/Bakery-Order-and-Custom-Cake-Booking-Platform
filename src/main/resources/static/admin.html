@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>BakeNest - Product Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fff8f5",
+                        "surface": "#fff8f5",
+                        "surface-variant": "#ffdcc7",
+                        "surface-container-low": "#fff1ea",
+                        "surface-container": "#ffeade",
+                        "surface-container-highest": "#ffdcc7",
+                        "on-background": "#2a170a",
+                        "on-surface": "#2a170a",
+                        "on-surface-variant": "#4a463f",
+                        "primary": "#625e59",
+                        "secondary": "#6d5c40",
+                        "tertiary": "#725b29",
+                        "secondary-container": "#f4dcb9",
+                        "on-secondary-container": "#726044",
+                        "tertiary-container": "#fff8f1",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#cdc5bc",
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "headline-sm": ["Montserrat"],
+                        "body-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "label-md": ["Montserrat"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(75, 52, 37, 0.04);
+        }
+        .smooth-transition {
+            transition: all 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex font-body-md antialiased overflow-x-hidden">
+
+<!-- SideNavBar -->
+<nav class="bg-[#ebd8c3]/90 backdrop-blur-[50px] font-label-md text-xs font-semibold uppercase tracking-widest fixed left-0 top-0 bottom-0 h-screen w-72 border-r border-white/40 shadow-[4px_0_24px_rgba(75,52,37,0.04)] flex flex-col p-6 z-50 smooth-transition hidden md:flex">
+    <div class="mb-12 flex flex-col items-center justify-center text-center mt-6">
+        <div class="w-20 h-20 rounded-full bg-secondary-container/30 mb-4 flex items-center justify-center border border-secondary/20 shadow-sm overflow-hidden">
+            <span class="material-symbols-outlined text-4xl text-secondary">bakery_dining</span>
+        </div>
+        <h1 class="font-headline-md text-2xl text-on-surface tracking-tight">BakeNest</h1>
+        <p class="text-[10px] text-on-surface-variant/70 mt-1 uppercase tracking-[0.15em]" id="user-role-badge">Admin Panel</p>
+    </div>
+
+    <div class="flex flex-col gap-2 flex-grow">
+        <a class="flex items-center gap-4 px-6 py-3 bg-secondary-container/50 text-on-secondary-container shadow-sm rounded-xl smooth-transition" href="/admin.html">
+            <span class="material-symbols-outlined text-[20px] fill">dashboard</span>
+            <span>Dashboard</span>
+        </a>
+        <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="/admin-products.html">
+            <span class="material-symbols-outlined text-[20px]">inventory_2</span>
+            <span>Products</span>
+        </a>
+        <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="/admin-categories.html">
+            <span class="material-symbols-outlined text-[20px]">category</span>
+            <span>Categories</span>
+        </a>
+        <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="#">
+            <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+            <span>Orders</span>
+        </a>
+        
+        <!-- Super Admin Only Link -->
+        <a id="nav-users" class="hidden items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="#">
+            <span class="material-symbols-outlined text-[20px]">group</span>
+            <span>Users & Roles</span>
+        </a>
+    </div>
+
+    <div class="mt-auto flex flex-col gap-4">
+        <a id="btn-logout" class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 smooth-transition rounded-xl justify-center cursor-pointer">
+            <span class="material-symbols-outlined text-[20px]">logout</span>
+            <span>Logout</span>
+        </a>
+    </div>
+</nav>
+
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-72 relative min-h-screen flex flex-col w-full">
+    <!-- TopNavBar -->
+    <header class="bg-white/60 backdrop-blur-[40px] font-body-md w-full h-20 sticky top-0 border-b border-white/40 flex justify-between items-center px-12 z-40">
+        <div class="hidden md:flex items-center relative w-64 lg:w-96">
+            <span class="material-symbols-outlined absolute left-4 text-on-surface-variant/50 z-10">search</span>
+            <input class="w-full pl-11 pr-4 py-2.5 bg-surface-container-low/50 border border-outline-variant/30 rounded-[28px] focus:outline-none focus:border-secondary focus:ring-1 text-sm shadow-inner" placeholder="Search products..." type="text"/>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <button class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-secondary to-[#877254] text-white px-5 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all text-[13px] tracking-wide uppercase font-bold">
+                <span class="material-symbols-outlined text-[18px]">add</span>
+                <span>Add Product</span>
+            </button>
+            <div class="w-10 h-10 rounded-full bg-secondary-container border-2 border-white shadow-sm overflow-hidden ml-2 flex items-center justify-center">
+                <span class="material-symbols-outlined text-secondary">person</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="p-4 md:p-12 flex-1">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+            <div>
+                <h2 class="font-headline-lg text-2xl font-bold text-on-background mb-1 tracking-tight">Product Performance</h2>
+                <p class="text-on-surface-variant font-body-lg text-sm max-w-2xl opacity-80">A curated overview of your artisanal offerings and their market resonance.</p>
+            </div>
+        </div>
+
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+            
+            <div class="md:col-span-4 glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden group smooth-transition">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
+                        <span class="material-symbols-outlined text-secondary text-[24px]">inventory</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest mb-1 opacity-70">Total Offerings</p>
+                    <p id="kpi-total" class="font-headline-md text-2xl font-bold text-on-background">Loading...</p>
+                </div>
+            </div>
+
+            <div class="md:col-span-4 glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden group smooth-transition">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
+                        <span class="material-symbols-outlined text-tertiary text-[24px]">check_circle</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest mb-1 opacity-70">Active Batches</p>
+                    <p id="kpi-active" class="font-headline-md text-2xl font-bold text-on-background">Loading...</p>
+                </div>
+            </div>
+
+            <div class="md:col-span-4 glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden group smooth-transition">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
+                        <span class="material-symbols-outlined text-error text-[24px]">warning</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest mb-1 opacity-70">Out of Stock</p>
+                    <p id="kpi-oos" class="font-headline-md text-2xl font-bold text-error">Loading...</p>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Table Area -->
+        <div class="mt-8 glass-panel rounded-xl p-6">
+            <h3 class="font-headline-sm text-xl font-bold mb-4 tracking-tight">Recent Products</h3>
+            <div id="products-table" class="text-on-surface-variant text-sm">Loading data...</div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/auth.html'; // Protect page
+    }
+
+    // Logout
+    document.getElementById('btn-logout').addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = '/auth.html';
+    });
+
+    async function initDashboard() {
+        try {
+            // 1. Verify Role
+            const authRes = await fetch('/api/v1/auth/me', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!authRes.ok) throw new Error("Unauthorized");
+            const user = await authRes.json();
+            
+            if (user.role === 'USER') {
+                alert("Access Denied. Admins only.");
+                window.location.href = '/';
+                return;
+            }
+
+            document.getElementById('user-role-badge').textContent = user.role.replace('_', ' ');
+
+            if (user.role === 'SUPER_ADMIN') {
+                document.getElementById('nav-users').classList.remove('hidden');
+                document.getElementById('nav-users').classList.add('flex');
+            }
+
+            // 2. Fetch KPI Data
+            const prodRes = await fetch('/api/v1/public/products');
+            const products = await prodRes.json();
+            
+            const total = products.length;
+            const oos = products.filter(p => p.stock === 0).length;
+            const active = total - oos;
+
+            document.getElementById('kpi-total').textContent = total;
+            document.getElementById('kpi-active').textContent = active;
+            document.getElementById('kpi-oos').textContent = oos;
+
+            // 3. Render Table
+            const tableContainer = document.getElementById('products-table');
+            if (products.length === 0) {
+                tableContainer.innerHTML = "No products found.";
+            } else {
+                let html = `<table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="border-b border-outline-variant/20 uppercase tracking-widest text-[10px] text-on-surface-variant/70">
+                            <th class="py-3 font-semibold">Name</th>
+                            <th class="py-3 font-semibold">Category</th>
+                            <th class="py-3 font-semibold">Price</th>
+                            <th class="py-3 font-semibold">Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                products.slice(0, 5).forEach(p => {
+                    html += `<tr class="border-b border-outline-variant/5 hover:bg-white/20 transition-colors">
+                        <td class="py-3 font-medium text-primary">${p.name}</td>
+                        <td class="py-3 opacity-80">${p.category}</td>
+                        <td class="py-3 font-medium">Rs. ${p.price.toFixed(2)}</td>
+                        <td class="py-3 ${p.stock === 0 ? 'text-error font-bold' : 'opacity-80'}">${p.stock}</td>
+                    </tr>`;
+                });
+                html += `</tbody></table>`;
+                tableContainer.innerHTML = html;
+            }
+        } catch (err) {
+            console.error(err);
+            localStorage.removeItem('token');
+            window.location.href = '/auth.html';
+        }
+    }
+
+    initDashboard();
+</script>
+</body>
+</html>

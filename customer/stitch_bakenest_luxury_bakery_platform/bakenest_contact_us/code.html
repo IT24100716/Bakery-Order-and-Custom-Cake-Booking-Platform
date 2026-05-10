@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contact Us - BakeNest</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#584413",
+                      "secondary-fixed": "#ffdf9f",
+                      "on-error": "#ffffff",
+                      "background": "#fff8f3",
+                      "on-surface-variant": "#4f453f",
+                      "on-primary-fixed-variant": "#5a4132",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#745948",
+                      "on-secondary-fixed": "#261a00",
+                      "on-tertiary-fixed-variant": "#54442a",
+                      "on-primary-container": "#bd9c88",
+                      "on-tertiary-fixed": "#251a04",
+                      "surface-dim": "#e5d8c9",
+                      "tertiary-fixed": "#f7dfbc",
+                      "primary-fixed-dim": "#e3bfab",
+                      "inverse-on-surface": "#fcefdf",
+                      "secondary-container": "#ffdf9f",
+                      "error": "#ba1a1a",
+                      "surface": "#fff8f3",
+                      "tertiary-container": "#45371e",
+                      "surface-container": "#f9ecdc",
+                      "secondary-fixed-dim": "#e1c386",
+                      "on-secondary-container": "#78612e",
+                      "outline": "#81756e",
+                      "secondary": "#725b29",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#fff2e1",
+                      "surface-bright": "#fff8f3",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#e3bfab",
+                      "on-surface": "#211b11",
+                      "inverse-surface": "#362f25",
+                      "primary-fixed": "#ffdcc7",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#dac3a1",
+                      "primary": "#331f11",
+                      "outline-variant": "#d3c3bb",
+                      "on-tertiary-container": "#b5a080",
+                      "on-primary-fixed": "#2a170a",
+                      "tertiary": "#2e220b",
+                      "primary-container": "#4b3425",
+                      "on-background": "#211b11",
+                      "surface-container-high": "#f3e6d6",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#ede1d1",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-variant": "#ede1d1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin-mobile": "20px",
+                      "container-max": "1440px",
+                      "margin-desktop": "80px",
+                      "unit": "8px",
+                      "section-padding": "120px"
+              },
+              "fontFamily": {
+                      "label-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Playfair Display"
+                      ],
+                      "display-lg-mobile": [
+                              "Playfair Display"
+                      ],
+                      "display-lg": [
+                              "Playfair Display"
+                      ],
+                      "headline-md": [
+                              "Playfair Display"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Playfair Display"
+                      ]
+              },
+              "fontSize": {
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(114, 91, 41, 0.1);
+            border-right: 1px solid rgba(114, 91, 41, 0.1);
+            box-shadow: 0 30px 60px -15px rgba(114, 91, 41, 0.08);
+        }
+        .custom-ease {
+            transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/15 backdrop-blur-xl border-b border-white/20 shadow-[0_30px_60px_-15px_rgba(114,91,41,0.08)] transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)] hidden md:block">
+<div class="max-w-container-max mx-auto px-margin-desktop flex justify-between items-center h-20">
+<div class="font-headline-md text-headline-md font-bold text-primary">
+                BakeNest
+            </div>
+<div class="flex items-center space-x-8">
+<ul class="flex space-x-8">
+<li>
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Shop</a>
+</li>
+<li>
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Custom Cakes</a>
+</li>
+<li>
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">About</a>
+</li>
+<li>
+<a class="font-label-lg text-label-lg uppercase tracking-widest text-primary border-b-2 border-primary pb-1" href="#">Contact</a>
+</li>
+</ul>
+<div class="flex space-x-4 items-center">
+<button aria-label="favorite" class="text-primary hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">favorite</span>
+</button>
+<button aria-label="shopping_bag" class="text-primary hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shopping_bag</span>
+</button>
+<button aria-label="account_circle" class="text-primary hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Mobile Header -->
+<header class="md:hidden fixed top-0 w-full z-50 glass-panel h-16 flex items-center justify-center">
+<div class="font-headline-md text-headline-md font-bold text-primary">
+            BakeNest
+        </div>
+</header>
+<main class="pt-24 md:pt-32 pb-section-padding">
+<!-- Hero Section -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-24 md:mb-section-padding text-center">
+<h1 class="font-display-lg-mobile text-display-lg-mobile md:font-display-lg md:text-display-lg text-primary mb-6">Get in Touch</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">We're here to answer any questions you have about our artisanal pastries, custom cake orders, or visiting our patisserie.</p>
+</section>
+<!-- Support Cards Grid -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-24 md:mb-section-padding">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Chat Card -->
+<div class="glass-panel rounded-xl p-8 flex flex-col items-center text-center hover:scale-[1.02] transition-transform duration-500 custom-ease cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-6 group-hover:bg-primary-fixed-dim transition-colors duration-500">
+<span class="material-symbols-outlined text-primary text-3xl">chat</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Live Chat</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Chat with our pastry concierges for quick answers.</p>
+<span class="font-label-lg text-label-lg text-secondary uppercase tracking-widest mt-auto">Start Chat</span>
+</div>
+<!-- Email Card -->
+<div class="glass-panel rounded-xl p-8 flex flex-col items-center text-center hover:scale-[1.02] transition-transform duration-500 custom-ease cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-6 group-hover:bg-primary-fixed-dim transition-colors duration-500">
+<span class="material-symbols-outlined text-primary text-3xl">mail</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Email Us</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">For detailed inquiries or bespoke cake requests.</p>
+<span class="font-label-lg text-label-lg text-secondary uppercase tracking-widest mt-auto">hello@bakenest.com</span>
+</div>
+<!-- Visit Card -->
+<div class="glass-panel rounded-xl p-8 flex flex-col items-center text-center hover:scale-[1.02] transition-transform duration-500 custom-ease cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-6 group-hover:bg-primary-fixed-dim transition-colors duration-500">
+<span class="material-symbols-outlined text-primary text-3xl">location_on</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-3">Visit Us</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Experience our patisserie in person.</p>
+<span class="font-label-lg text-label-lg text-secondary uppercase tracking-widest mt-auto">View Directions</span>
+</div>
+</div>
+</section>
+<!-- Contact Form & Map Asymmetric Layout -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mb-24 md:mb-section-padding">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Floating Glass Contact Form -->
+<div class="lg:col-span-5 lg:col-start-2 glass-panel rounded-xl p-8 md:p-12 relative z-10 lg:-mr-12 lg:mt-12">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-8">Send a Message</h2>
+<form class="space-y-8">
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant text-on-surface font-body-lg focus:ring-0 focus:border-primary transition-colors duration-300 peer py-2" id="name" placeholder=" " type="text"/>
+<label class="absolute left-0 top-2 font-body-lg text-on-surface-variant transition-all duration-300 peer-focus:-top-5 peer-focus:text-label-sm peer-focus:text-primary peer-not-placeholder-shown:-top-5 peer-not-placeholder-shown:text-label-sm" for="name">Your Name</label>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-0 border-b border-outline-variant text-on-surface font-body-lg focus:ring-0 focus:border-primary transition-colors duration-300 peer py-2" id="email" placeholder=" " type="email"/>
+<label class="absolute left-0 top-2 font-body-lg text-on-surface-variant transition-all duration-300 peer-focus:-top-5 peer-focus:text-label-sm peer-focus:text-primary peer-not-placeholder-shown:-top-5 peer-not-placeholder-shown:text-label-sm" for="email">Email Address</label>
+</div>
+<div class="relative group">
+<select class="w-full bg-transparent border-0 border-b border-outline-variant text-on-surface font-body-lg focus:ring-0 focus:border-primary transition-colors duration-300 py-2 appearance-none" id="inquiry">
+<option class="text-on-surface-variant" disabled="" selected="" value="">Select Inquiry Type</option>
+<option value="general">General Question</option>
+<option value="custom">Custom Cake Order</option>
+<option value="press">Press &amp; Media</option>
+</select>
+<span class="material-symbols-outlined absolute right-0 top-3 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+<div class="relative group">
+<textarea class="w-full bg-transparent border-0 border-b border-outline-variant text-on-surface font-body-lg focus:ring-0 focus:border-primary transition-colors duration-300 peer py-2 resize-none" id="message" placeholder=" " rows="4"></textarea>
+<label class="absolute left-0 top-2 font-body-lg text-on-surface-variant transition-all duration-300 peer-focus:-top-5 peer-focus:text-label-sm peer-focus:text-primary peer-not-placeholder-shown:-top-5 peer-not-placeholder-shown:text-label-sm" for="message">Your Message</label>
+</div>
+<button class="bg-primary text-on-primary font-label-lg text-label-lg rounded-[32px] px-8 py-4 w-full uppercase tracking-widest hover:bg-inverse-surface transition-colors duration-500 custom-ease" type="button">
+                            Send Message
+                        </button>
+</form>
+</div>
+<!-- Stylized Map Section -->
+<div class="lg:col-span-6 lg:col-start-7 mt-12 lg:mt-0 relative aspect-square md:aspect-[4/3] rounded-xl overflow-hidden glass-panel border-none p-2">
+<img alt="Map" class="w-full h-full object-cover rounded-lg opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700" data-alt="A highly stylized, minimalist map interface showing city streets in a soft, light-mode color palette. The map utilizes pale creamy whites and subtle beige tones for landmasses, with delicate thin lines representing roads. The aesthetic is clean, professional, and sophisticated, avoiding bright saturated colors to align with a luxury editorial brand. The lighting is bright and flat, creating an abstract, artistic interpretation of urban geography." data-location="Paris" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqnoMz_FLSbLN1Rp_7QIvbJ7tr9Odmw1BxIoBSTX1psVjesvu9SrXOxNf_hIncC-edDBKe8zoidsJsAtGl7jloGTVJZhYUIH3XteSrj9c8O8-k5ew8ZvbelzdIjQYp__tf9Z-7Gf1afPelAcPtPuh_4A2H6t1dKY6J0ZV7D1WPuBODABwUF-deGYnuMa9YYEilmWfSB7cMGsETjHl1NyqCSfNeex3W-dMJu81SrfP6SN3bScH283reWI6bjfqK3jNkdChNo57e"/>
+<!-- Custom Gold Marker -->
+<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+<div class="bg-secondary text-on-secondary p-3 rounded-full shadow-lg flex items-center justify-center relative z-10 animate-bounce">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">storefront</span>
+</div>
+<div class="w-4 h-4 bg-secondary rotate-45 transform -translate-y-2 relative z-0"></div>
+<div class="glass-panel mt-2 px-4 py-2 rounded-lg text-center whitespace-nowrap">
+<p class="font-label-sm text-label-sm text-primary font-bold">BakeNest Patisserie</p>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">123 Artisan Way, Paris</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Accordion -->
+<section class="max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop">
+<h2 class="font-headline-md text-headline-md text-primary text-center mb-12">Frequently Asked Questions</h2>
+<div class="space-y-4">
+<details class="group glass-panel rounded-xl overflow-hidden cursor-pointer" open="">
+<summary class="flex justify-between items-center p-6 font-body-lg text-body-lg font-medium text-primary list-none">
+                        How far in advance should I order a custom cake?
+                        <span class="material-symbols-outlined text-primary transition-transform duration-300 group-open:-rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 font-body-md text-body-md text-on-surface-variant leading-relaxed opacity-0 group-open:opacity-100 transition-opacity duration-500 custom-ease">
+                        For bespoke creations, we recommend placing your order at least 3 weeks in advance. During peak wedding season (May-September), 6-8 weeks is preferred to ensure we can dedicate the necessary time to craft your perfect piece.
+                    </div>
+</details>
+<details class="group glass-panel rounded-xl overflow-hidden cursor-pointer">
+<summary class="flex justify-between items-center p-6 font-body-lg text-body-lg font-medium text-primary list-none">
+                        Do you offer gluten-free or vegan options?
+                        <span class="material-symbols-outlined text-primary transition-transform duration-300 group-open:-rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 font-body-md text-body-md text-on-surface-variant leading-relaxed opacity-0 group-open:opacity-100 transition-opacity duration-500 custom-ease">
+                        Yes, we have a curated selection of gluten-free and vegan pastries available daily. Custom cakes can also be adapted to meet these dietary requirements without compromising our signature taste and texture.
+                    </div>
+</details>
+<details class="group glass-panel rounded-xl overflow-hidden cursor-pointer">
+<summary class="flex justify-between items-center p-6 font-body-lg text-body-lg font-medium text-primary list-none">
+                        What are your opening hours?
+                        <span class="material-symbols-outlined text-primary transition-transform duration-300 group-open:-rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 font-body-md text-body-md text-on-surface-variant leading-relaxed opacity-0 group-open:opacity-100 transition-opacity duration-500 custom-ease">
+                        Our flagship patisserie is open Tuesday through Saturday, from 8:00 AM to 6:00 PM, and Sundays from 9:00 AM to 3:00 PM. We are closed on Mondays to prepare for the week ahead.
+                    </div>
+</details>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full pt-section-padding pb-8 bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="col-span-1 md:col-span-4">
+<div class="font-headline-lg text-headline-lg text-primary mb-8">
+                    BakeNest
+                </div>
+</div>
+<div class="col-span-1 md:col-span-3 flex flex-wrap gap-6 items-center">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Shipping Info</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Sustainability</a>
+</div>
+<div class="col-span-1 flex items-center justify-start md:justify-end">
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 BakeNest Artisanal Patisserie. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<!-- Floating Cart Pill -->
+<div class="fixed bottom-8 right-8 z-50">
+<div class="glass-panel rounded-full px-6 py-3 flex items-center space-x-3 cursor-pointer hover:scale-105 transition-transform duration-500 custom-ease">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+<span class="font-label-lg text-label-lg text-secondary font-bold">2</span>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BakeNest - Luxury Patisserie</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#584413",
+                        "secondary-fixed": "#ffdf9f",
+                        "on-error": "#ffffff",
+                        "background": "#fff8f3",
+                        "on-surface-variant": "#4f453f",
+                        "on-primary-fixed-variant": "#5a4132",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#745948",
+                        "on-secondary-fixed": "#261a00",
+                        "on-tertiary-fixed-variant": "#54442a",
+                        "on-primary-container": "#bd9c88",
+                        "on-tertiary-fixed": "#251a04",
+                        "surface-dim": "#e5d8c9",
+                        "tertiary-fixed": "#f7dfbc",
+                        "primary-fixed-dim": "#e3bfab",
+                        "inverse-on-surface": "#fcefdf",
+                        "secondary-container": "#ffdf9f",
+                        "error": "#ba1a1a",
+                        "surface": "#fff8f3",
+                        "tertiary-container": "#45371e",
+                        "surface-container": "#f9ecdc",
+                        "secondary-fixed-dim": "#e1c386",
+                        "on-secondary-container": "#78612e",
+                        "outline": "#81756e",
+                        "secondary": "#725b29",
+                        "on-primary": "#ffffff",
+                        "surface-container-low": "#fff2e1",
+                        "surface-bright": "#fff8f3",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#e3bfab",
+                        "on-surface": "#211b11",
+                        "inverse-surface": "#362f25",
+                        "primary-fixed": "#ffdcc7",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#dac3a1",
+                        "primary": "#331f11",
+                        "outline-variant": "#d3c3bb",
+                        "on-tertiary-container": "#b5a080",
+                        "on-primary-fixed": "#2a170a",
+                        "tertiary": "#2e220b",
+                        "primary-container": "#4b3425",
+                        "on-background": "#211b11",
+                        "surface-container-high": "#f3e6d6",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#ede1d1",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#ede1d1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "container-max": "1440px",
+                        "margin-desktop": "80px",
+                        "unit": "8px",
+                        "section-padding": "120px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Playfair Display"],
+                        "display-lg-mobile": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "display-lg-mobile": ["40px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "display-lg": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["32px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "label-sm": ["12px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-left: 1px solid rgba(255, 255, 255, 0.4);
+            border-right: 1px solid rgba(114, 91, 41, 0.1);
+            border-bottom: 1px solid rgba(114, 91, 41, 0.1);
+        }
+        .liquid-shadow {
+            box-shadow: 0 30px 60px -15px rgba(114, 91, 41, 0.08);
+        }
+        .viscous-transition {
+            transition: all 400ms cubic-bezier(0.2, 0, 0, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/15 backdrop-blur-xl border-b border-white/20 shadow-[0_30px_60px_-15px_rgba(114,91,41,0.08)] transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]">
+<div class="max-w-container-max mx-auto px-margin-desktop flex justify-between items-center h-20">
+<!-- Brand -->
+<a class="font-headline-md text-headline-md font-bold text-primary hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)]" href="#">
+                BakeNest
+            </a>
+<!-- Navigation Links (Desktop) -->
+<nav class="hidden md:flex gap-8 items-center h-full">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg text-label-lg uppercase tracking-widest h-full flex items-center hover:scale-105 ease-[cubic-bezier(0.2,0,0,1)]" href="#">Shop</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg text-label-lg uppercase tracking-widest h-full flex items-center hover:scale-105 ease-[cubic-bezier(0.2,0,0,1)]" href="#">Custom Cakes</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg text-label-lg uppercase tracking-widest h-full flex items-center hover:scale-105 ease-[cubic-bezier(0.2,0,0,1)]" href="#">About</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg text-label-lg uppercase tracking-widest h-full flex items-center hover:scale-105 ease-[cubic-bezier(0.2,0,0,1)]" href="#">Contact</a>
+</nav>
+<!-- Trailing Icons -->
+<div class="flex gap-4 items-center">
+<button class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)] relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-secondary text-on-secondary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">2</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)] hidden md:block">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+<button class="md:hidden text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow pt-20">
+<!-- Hero Section -->
+<section class="relative min-h-[921px] flex items-center justify-center overflow-hidden bg-surface-container-low">
+<div class="absolute inset-0 z-0">
+<img alt="" class="w-full h-full object-cover opacity-60" data-alt="A cinematic, ultra-high-resolution photograph of a luxurious, multi-tiered artisanal cake placed centrally on a minimalist marble pedestal. The scene is bathed in soft, natural window light creating a bright, editorial light-mode aesthetic. The background is a vast, unhurried space in warm beige and cream tones with gentle liquid glassmorphic reflections. The cake features delicate spun sugar decorations and fresh cream layers, emphasizing the high-end patisserie craftsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEvhMxa1w23qenN7oYvw0sX6_qkLruE9p76lqKnxlfLZVeHV1aN8mL-FxzWIlToNLsg80SEaOuzZl6rleppO1kDFiKB1ni47ZzY2eVaSkH35L-lma1lFyUZqVCr1_5q2aK02T_Fl6nGqrwrMqmE8FfjnZfaplNB25oS-ZR876V5xrZvHUlsh9e8zemW2ITrFm5SXv4mpmZ-K68EVHNaS1eJ7oksUeTVsnaFMgkRzRkyYWo2NnVeLJUZT2I5M00IzQnYVfnF9wK"/>
+<div class="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/80"></div>
+</div>
+<div class="relative z-10 max-w-container-max mx-auto px-margin-desktop md:px-margin-desktop px-margin-mobile text-center flex flex-col items-center">
+<span class="font-label-lg text-label-lg uppercase tracking-widest text-primary mb-6 block glass-panel px-6 py-2 rounded-full inline-block">Artisanal Excellence</span>
+<h1 class="font-display-lg text-display-lg md:text-display-lg text-display-lg-mobile text-primary max-w-4xl mb-8 leading-tight">
+                    Elevating Pastry to an <span class="italic font-light">Art Form</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+                    Experience the delicate balance of flavor, texture, and uncompromising aesthetic. Every creation is a masterpiece designed to indulge the senses.
+                </p>
+<div class="flex flex-col sm:flex-row gap-6 justify-center">
+<button class="bg-primary text-on-primary font-label-lg text-label-lg px-8 py-4 rounded-[32px] viscous-transition hover:bg-primary/90 hover:scale-[1.02] shadow-lg">
+                        Explore Collections
+                    </button>
+<button class="glass-panel text-primary font-label-lg text-label-lg px-8 py-4 rounded-[32px] viscous-transition hover:bg-white/40 hover:scale-[1.02] flex items-center gap-2">
+                        Commission a Cake <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Spacer -->
+<div class="h-section-padding"></div>
+<!-- Featured Collections Bento Grid -->
+<section class="max-w-container-max mx-auto px-margin-desktop md:px-margin-desktop px-margin-mobile">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg md:text-headline-lg text-headline-lg-mobile text-primary mb-4">Curated Indulgence</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Discover our signature categories</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter h-auto md:h-[600px]">
+<!-- Main Feature -->
+<a class="md:col-span-8 glass-panel rounded-xl overflow-hidden group relative flex items-end viscous-transition hover:scale-[1.01] liquid-shadow min-h-[400px]" href="#">
+<img alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-alt="Close-up of an elegant, dark chocolate entremet cake with a flawless mirror glaze, resting on a frosted glass surface. The setting is minimal and luxurious, adhering to an Apple-inspired clean aesthetic with soft ambient shadows. Warm, subtle light reflects off the glossy surface, highlighting the precision of the pastry work. A pristine beige background provides vast negative space." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9Npk7Q4mVHNzqejKRYWhMELYUyJr8QEOB9aCJ5zZxanbmbfnRt5YMv7-hbr1Wtj3XZbiSl6oG6D3efqUD35arzGyaTHpuxb3TYMh31rrgHM2AN6dvj8pdbjX111UNVyzGEpoIglsH9MA4155MtnLSvdQef868QRAAELI4rKSk9d7F962POLZLCKwb_r4Mv8PBus0hZjucr5TYUy-X69tjK9oAl3RfAeIDWBpD-9-_2Gu7Gso3O4GoZObfojAe42cIQFfDbYaa"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+<div class="relative z-10 p-10 w-full">
+<span class="text-white/80 font-label-sm text-label-sm uppercase tracking-wider mb-2 block">Signature</span>
+<h3 class="font-headline-md text-headline-md text-white mb-2">The Mirror Glaze Collection</h3>
+<p class="text-white/90 font-body-md max-w-md hidden md:block">Flawless execution meets intense, complex flavor profiles.</p>
+</div>
+</a>
+<!-- Side Features -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<a class="flex-1 glass-panel rounded-xl overflow-hidden group relative flex items-end viscous-transition hover:scale-[1.02] liquid-shadow min-h-[250px]" href="#">
+<img alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-alt="A perfectly baked, flaky croissant captured in high-key macro photography, resting on a piece of parchment over a light marble table. The visual style is unhurried and editorial, featuring soft warm light and a crisp depth of field. The background is a soft, blurred beige, creating a tranquil morning mood that emphasizes material honesty." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2cSY37V_wVTijoCrOjt3aBRM4TvyMvufz3uT1Ibal8jfvTeaOhyJDHLEAtWwCuymiqBgAnGzrQ2RW0buXIoI-NVy7ZEbcTMYgzGKZCviNZdhO3z8Y4avFfqHksniZUC3QEPMHaOBOxPFsh97zJ1GmN0n4DyHC4aHLSRwRg8pAmpWqRdA4_mDcAmVuggUErSWVqYrdnkL5BMDGpZx6tDtbuIH2bDJBNj0mz5OiFReSyj-06RhEO7IXFlRRIhgqY_PQstsDW6l8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+<div class="relative z-10 p-6 w-full">
+<h3 class="font-headline-md text-headline-md text-white text-2xl">Viennoiserie</h3>
+</div>
+</a>
+<a class="flex-1 glass-panel rounded-xl overflow-hidden group relative flex items-end viscous-transition hover:scale-[1.02] liquid-shadow min-h-[250px]" href="#">
+<img alt="" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" data-alt="A delicate, colorful array of handcrafted macarons displayed as a gallery piece on a clear, frosted glass tier. The layout is expansive, utilizing vast white space and liquid glassmorphic elements in the background. The lighting is bright and modern, showcasing the smooth shells and rich fillings against a sophisticated warm cream environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-439ooYhtGczBUWxyCLleEQ9l8_sM6IF9RPvvrMxHIqqDfkhQePApYpgpHOTyauRDkvNlskjyRIJfJcc1rkwlwYDWgoxXXaH7o1LQnLaHoTVh-aSUFGf8Za6KFfhKdIHCK_D0kCElpn5l-jCDGwFXvK9Vlk3kM_st8Z0J28BuR3v3ItCZ9OFbsayiS7jWHBFfBr1B5E-lFhdUa_Oygfh2Rmg8hEVU3Nu6zvdmhkdwJoHC74dYnJOTS4dZGIE1ocfRxIcRH1wP"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+<div class="relative z-10 p-6 w-full">
+<h3 class="font-headline-md text-headline-md text-white text-2xl">Petits Fours</h3>
+</div>
+</a>
+</div>
+</div>
+</section>
+<!-- Spacer -->
+<div class="h-section-padding"></div>
+</main>
+<!-- Footer -->
+<footer class="w-full pt-section-padding pb-8 bg-surface-container-lowest text-primary font-body-md text-body-md flat no shadows">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter mb-16">
+<div class="md:col-span-1">
+<div class="font-headline-lg text-headline-lg text-primary mb-8 opacity-80 hover:opacity-100 transition-opacity">BakeNest</div>
+<p class="text-on-surface-variant mb-6 opacity-80 max-w-xs">Elevating pastry to an art form through uncompromising material honesty and precision craft.</p>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-6">Explore</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Shop</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Custom Cakes</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Collections</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-6">Legal</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Terms of Service</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Shipping Info</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg uppercase tracking-widest mb-6">Connect</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Instagram</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Pinterest</a></li>
+<li><a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Contact Us</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop border-t border-outline-variant/30 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-on-surface-variant text-sm opacity-80">© 2024 BakeNest Artisanal Patisserie. All rights reserved.</p>
+<div class="flex gap-4">
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 text-sm" href="#">Sustainability</a>
+</div>
+</div>
+</footer>
+</body></html>

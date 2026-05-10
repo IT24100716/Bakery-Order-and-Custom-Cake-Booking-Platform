@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>BakeNest - All Categories</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fff8f5",
+                        "surface": "#fff8f5",
+                        "surface-variant": "#ffdcc7",
+                        "surface-container-low": "#fff1ea",
+                        "surface-container": "#ffeade",
+                        "surface-container-highest": "#ffdcc7",
+                        "on-background": "#2a170a",
+                        "on-surface": "#2a170a",
+                        "on-surface-variant": "#4a463f",
+                        "primary": "#625e59",
+                        "secondary": "#6d5c40",
+                        "tertiary": "#725b29",
+                        "secondary-container": "#f4dcb9",
+                        "on-secondary-container": "#726044",
+                        "tertiary-container": "#fff8f1",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#cdc5bc",
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "headline-sm": ["Montserrat"],
+                        "body-md": ["Montserrat"],
+                        "body-lg": ["Montserrat"],
+                        "label-md": ["Montserrat"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(75, 52, 37, 0.04);
+        }
+        .smooth-transition {
+            transition: all 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex font-body-md antialiased overflow-x-hidden">
+
+<!-- SideNavBar -->
+<nav class="bg-[#ebd8c3]/90 backdrop-blur-[50px] font-label-md text-xs font-semibold uppercase tracking-widest fixed left-0 top-0 bottom-0 h-screen w-72 border-r border-white/40 shadow-[4px_0_24px_rgba(75,52,37,0.04)] flex flex-col p-6 z-50 smooth-transition hidden md:flex">
+    <div class="mb-12 flex flex-col items-center justify-center text-center mt-6">
+        <div class="w-20 h-20 rounded-full bg-secondary-container/30 mb-4 flex items-center justify-center border border-secondary/20 shadow-sm overflow-hidden">
+            <span class="material-symbols-outlined text-4xl text-secondary">bakery_dining</span>
+        </div>
+        <h1 class="font-headline-md text-2xl tracking-tight text-on-surface">BakeNest</h1>
+        <p class="text-[10px] text-on-surface-variant/70 mt-1 uppercase tracking-[0.15em]" id="user-role-badge">Admin Panel</p>
+    </div>
+
+    <div class="flex flex-col gap-2 flex-grow">
+        <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="/admin.html">
+            <span class="material-symbols-outlined text-[20px]">dashboard</span>
+            <span>Dashboard</span>
+        </a>
+        <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="/admin-products.html">
+            <span class="material-symbols-outlined text-[20px]">inventory_2</span>
+            <span>Products</span>
+        </a>
+        <a class="flex items-center gap-4 px-6 py-3 bg-secondary-container/50 text-on-secondary-container shadow-sm rounded-xl smooth-transition" href="/admin-categories.html">
+            <span class="material-symbols-outlined text-[20px] fill">category</span>
+            <span>Categories</span>
+        </a>
+        <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="#">
+            <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+            <span>Orders</span>
+        </a>
+        
+        <a id="nav-users" class="hidden items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="#">
+            <span class="material-symbols-outlined text-[20px]">group</span>
+            <span>Users & Roles</span>
+        </a>
+    </div>
+
+    <div class="mt-auto flex flex-col gap-4">
+        <a id="btn-logout" class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 smooth-transition rounded-xl justify-center cursor-pointer">
+            <span class="material-symbols-outlined text-[20px]">logout</span>
+            <span>Logout</span>
+        </a>
+    </div>
+</nav>
+
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-72 relative min-h-screen flex flex-col w-full">
+    <!-- TopNavBar -->
+    <header class="bg-white/60 backdrop-blur-[40px] font-body-md w-full h-20 sticky top-0 border-b border-white/40 flex justify-between items-center px-12 z-40">
+        <div class="hidden md:flex items-center relative w-64 lg:w-96">
+            <span class="material-symbols-outlined absolute left-4 text-on-surface-variant/50 z-10">search</span>
+            <input class="w-full pl-11 pr-4 py-2.5 bg-surface-container-low/50 border border-outline-variant/30 rounded-[28px] focus:outline-none focus:border-secondary focus:ring-1 text-sm shadow-inner" placeholder="Search products..." type="text"/>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-full bg-secondary-container border-2 border-white shadow-sm overflow-hidden ml-2 flex items-center justify-center">
+                <span class="material-symbols-outlined text-secondary">person</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="p-4 md:p-12 flex-1">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+            <div>
+                <h2 class="font-headline-lg text-2xl font-bold text-on-surface tracking-tight">Category Collections</h2>
+                <p class="font-body-lg text-sm text-on-surface-variant mt-1 max-w-2xl opacity-80">Organize and manage the main categories for your bakery items.</p>
+            </div>
+            <div class="flex gap-4">
+                <button class="px-6 py-3 rounded-full bg-gradient-to-r from-secondary to-[#8b7552] text-white font-label-md text-xs font-bold uppercase tracking-widest hover:scale-105 transition-all duration-300 shadow-md flex items-center gap-2" onclick="window.location.href='/admin-add-category.html'">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    Add Category
+                </button>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="glass-panel rounded-xl p-4 mb-8 flex items-center justify-between shadow-[0_8px_32px_rgba(75,52,37,0.04)]">
+            <div class="flex-1 max-w-md relative">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+                <input class="w-full bg-white/40 border border-white/60 rounded-full py-2 pl-10 pr-4 font-body-md text-on-surface placeholder:text-on-surface-variant/70 focus:outline-none focus:ring-1 focus:ring-secondary/50 text-sm" placeholder="Search culinary creations..." type="text"/>
+            </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="glass-panel rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(75,52,37,0.04)]">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="bg-white/30 border-b border-outline-variant/30 uppercase tracking-widest text-[10px] text-on-surface-variant/70">
+                            <th class="py-4 px-6 font-semibold w-12">ID</th>
+                            <th class="py-4 px-6 font-semibold">Category Info</th>
+                            <th class="py-4 px-6 font-semibold">Description</th>
+                            <th class="py-4 px-6 font-semibold text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="font-body-md text-on-surface" id="categories-tbody">
+                        <tr>
+                            <td colspan="6" class="py-8 text-center text-on-surface-variant">Loading masterpiece data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const token = localStorage.getItem('token');
+    if (!token) window.location.href = '/auth.html';
+
+    document.getElementById('btn-logout').addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = '/auth.html';
+    });
+
+    async function loadProductsPage() {
+        try {
+            // Verify Auth
+            const authRes = await fetch('/api/v1/auth/me', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!authRes.ok) throw new Error("Unauthorized");
+            const user = await authRes.json();
+            
+            if (user.role === 'USER') {
+                window.location.href = '/';
+                return;
+            }
+
+            document.getElementById('user-role-badge').textContent = user.role.replace('_', ' ');
+            if (user.role === 'SUPER_ADMIN') {
+                document.getElementById('nav-users').classList.remove('hidden');
+                document.getElementById('nav-users').classList.add('flex');
+            }
+
+            // Fetch Categories
+            const res = await fetch('/api/v1/public/categories');
+            const categories = await res.json();
+            
+            const tbody = document.getElementById('categories-tbody');
+            if (categories.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-on-surface-variant opacity-70">No categories found. Start organizing!</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = categories.map(c => `
+                <tr class="group hover:bg-white/40 transition-colors border-b border-outline-variant/10 last:border-0">
+                    <td class="py-4 px-6 text-on-surface-variant/70">#${c.id}</td>
+                    <td class="py-4 px-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-16 h-16 rounded-lg overflow-hidden shadow-sm relative bg-white border border-outline-variant/20">
+                                <img src="${c.imageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=200'}" alt="${c.name}" class="w-full h-full object-cover"/>
+                            </div>
+                            <div>
+                                <div class="font-bold text-primary text-base">${c.name}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6 text-on-surface-variant opacity-80 max-w-md truncate">${c.description || '-'}</td>
+                    <td class="py-4 px-6 text-right">
+                        <button class="p-2 text-on-surface-variant hover:text-error hover:bg-error-container/50 rounded-full transition-colors" onclick="deleteCategory(${c.id})">
+                            <span class="material-symbols-outlined text-[18px]">delete</span>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+        } catch (e) {
+            console.error(e);
+            localStorage.removeItem('token');
+            window.location.href = '/auth.html';
+        }
+    }
+
+    async function deleteCategory(id) {
+        if (!confirm("Are you sure you want to delete this category?")) return;
+        try {
+            const res = await fetch(`/api/v1/admin/categories/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                loadProductsPage();
+            } else {
+                alert("Failed to delete category.");
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    loadProductsPage();
+</script>
+</body>
+</html>

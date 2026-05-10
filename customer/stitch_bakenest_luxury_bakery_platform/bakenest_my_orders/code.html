@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BakeNest - My Orders</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#584413",
+                      "secondary-fixed": "#ffdf9f",
+                      "on-error": "#ffffff",
+                      "background": "#fff8f3",
+                      "on-surface-variant": "#4f453f",
+                      "on-primary-fixed-variant": "#5a4132",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#745948",
+                      "on-secondary-fixed": "#261a00",
+                      "on-tertiary-fixed-variant": "#54442a",
+                      "on-primary-container": "#bd9c88",
+                      "on-tertiary-fixed": "#251a04",
+                      "surface-dim": "#e5d8c9",
+                      "tertiary-fixed": "#f7dfbc",
+                      "primary-fixed-dim": "#e3bfab",
+                      "inverse-on-surface": "#fcefdf",
+                      "secondary-container": "#ffdf9f",
+                      "error": "#ba1a1a",
+                      "surface": "#fff8f3",
+                      "tertiary-container": "#45371e",
+                      "surface-container": "#f9ecdc",
+                      "secondary-fixed-dim": "#e1c386",
+                      "on-secondary-container": "#78612e",
+                      "outline": "#81756e",
+                      "secondary": "#725b29",
+                      "on-primary": "#ffffff",
+                      "surface-container-low": "#fff2e1",
+                      "surface-bright": "#fff8f3",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#e3bfab",
+                      "on-surface": "#211b11",
+                      "inverse-surface": "#362f25",
+                      "primary-fixed": "#ffdcc7",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#dac3a1",
+                      "primary": "#331f11",
+                      "outline-variant": "#d3c3bb",
+                      "on-tertiary-container": "#b5a080",
+                      "on-primary-fixed": "#2a170a",
+                      "tertiary": "#2e220b",
+                      "primary-container": "#4b3425",
+                      "on-background": "#211b11",
+                      "surface-container-high": "#f3e6d6",
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#ede1d1",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-variant": "#ede1d1"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin-mobile": "20px",
+                      "container-max": "1440px",
+                      "margin-desktop": "80px",
+                      "unit": "8px",
+                      "section-padding": "120px"
+              },
+              "fontFamily": {
+                      "label-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Playfair Display"
+                      ],
+                      "display-lg-mobile": [
+                              "Playfair Display"
+                      ],
+                      "display-lg": [
+                              "Playfair Display"
+                      ],
+                      "headline-md": [
+                              "Playfair Display"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Playfair Display"
+                      ]
+              },
+              "fontSize": {
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg-mobile": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "64px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<nav class="bg-surface/15 backdrop-blur-xl text-primary font-label-lg text-label-lg uppercase tracking-widest fixed top-0 w-full z-50 border-b border-white/20 shadow-[0_30px_60px_-15px_rgba(114,91,41,0.08)] transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)]">
+<div class="max-w-container-max mx-auto px-margin-desktop flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop">
+<div class="font-headline-md text-headline-md font-bold text-primary">BakeNest</div>
+<div class="hidden md:flex space-x-8">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Shop</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Custom Cakes</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">About</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Contact</a>
+</div>
+<div class="flex items-center space-x-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-300 hover:scale-105 ease-[cubic-bezier(0.2,0,0,1)]">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors duration-300 hover:scale-105 ease-[cubic-bezier(0.2,0,0,1)]">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<button class="text-primary border-b-2 border-primary pb-1 hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)]">
+<span class="material-symbols-outlined" data-icon="account_circle" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-32 pb-section-padding px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full">
+<!-- Header & Breadcrumbs -->
+<div class="mb-16">
+<div class="flex items-center space-x-2 text-on-surface-variant font-label-sm text-label-sm mb-6">
+<a class="hover:text-primary transition-colors" href="#">Account</a>
+<span class="w-[1px] h-3 bg-outline-variant"></span>
+<span class="text-primary font-semibold">My Orders</span>
+</div>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-4">Order History</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Track your recent artisanal indulgences, reorder your favorites, and review your tasting journeys.</p>
+</div>
+<!-- Floating Filters (Glassmorphic) -->
+<div class="sticky top-24 z-40 mb-12 bg-surface/20 backdrop-blur-[30px] border border-white/20 rounded-[32px] p-2 flex flex-wrap gap-2 shadow-[0_20px_40px_-10px_rgba(114,91,41,0.05)] max-w-fit">
+<button class="px-6 py-3 rounded-full bg-primary text-on-primary font-label-lg text-label-lg transition-all duration-300">All Orders</button>
+<button class="px-6 py-3 rounded-full text-on-surface-variant hover:bg-white/40 font-label-lg text-label-lg transition-all duration-300">Processing</button>
+<button class="px-6 py-3 rounded-full text-on-surface-variant hover:bg-white/40 font-label-lg text-label-lg transition-all duration-300">Delivered</button>
+<div class="w-[1px] bg-outline-variant/30 mx-2 self-stretch hidden sm:block"></div>
+<button class="px-6 py-3 rounded-full text-on-surface-variant hover:bg-white/40 font-label-lg text-label-lg transition-all duration-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                Past 6 Months
+            </button>
+</div>
+<!-- Orders Grid -->
+<div class="grid grid-cols-1 gap-gutter">
+<!-- Order Card 1: Processing -->
+<div class="group bg-white/20 backdrop-blur-[40px] border border-white/20 border-b-surface-tint/10 border-r-surface-tint/10 rounded-[32px] p-8 md:p-10 shadow-[0_30px_60px_-15px_rgba(114,91,41,0.08)] hover:shadow-[0_40px_80px_-20px_rgba(114,91,41,0.12)] hover:scale-[1.01] transition-all duration-500 ease-[cubic-bezier(0.2,0,0,1)] relative overflow-hidden">
+<!-- Decorative Blur Element -->
+<div class="absolute -top-20 -right-20 w-64 h-64 bg-secondary-container/30 rounded-full blur-[60px] pointer-events-none"></div>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 relative z-10">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-widest">Order #BN-2024-089</p>
+<h2 class="font-headline-md text-headline-md text-primary">October 24, 2024</h2>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-secondary-container/50 border border-secondary/20 rounded-full">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider font-semibold">Processing</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+<div class="lg:col-span-8">
+<div class="flex items-center gap-6 p-4 rounded-xl hover:bg-white/10 transition-colors">
+<img alt="" class="w-24 h-24 rounded-xl object-cover shadow-sm" data-alt="A decadent artisanal chocolate layered cake on a minimalist ceramic plate. The scene is lit with soft, high-key natural light typical of a luxury bakery, creating a bright, editorial light-mode aesthetic. Warm, golden-brown and cream tones dominate the sophisticated color palette. The mood is indulgent and elegant, focusing on the intricate textures of the frosting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxuVWt5pqFFYnW-OqXQoDSThc776U7JDzVLvF1IAC5Fp_HpzhOqiTiUG_fr-RhanfyeNFxRevwMgoMB5R_KPWxYMpK3gYTJ1Fevqrky1IkDv1kgmkmgZNj1zQQv5ac9qMymJhsZjkJYv-RSd2h2aIugDBkCnLA1MXxszO_Jma1w7N1_TQWkfGCgfKkncayaBMjH9akfuu4obp13f04uaOLLP0eimfRh3nn5Y6Uk6cksDj2hlgv3VzJ1Z3YH13_iakkZHJXxIs1"/>
+<div>
+<h3 class="font-body-lg text-body-lg font-semibold text-primary mb-1">Signature Dark Chocolate Truffle Cake</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Qty: 1 · Size: 8" Round</p>
+</div>
+<div class="ml-auto font-body-lg text-body-lg text-primary">$85.00</div>
+</div>
+<div class="w-full h-[1px] bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent my-2"></div>
+<div class="flex items-center gap-6 p-4 rounded-xl hover:bg-white/10 transition-colors">
+<img alt="" class="w-24 h-24 rounded-xl object-cover shadow-sm" data-alt="A delicate selection of pastel macarons arranged neatly in a premium frosted glass box. The setting is clean, airy, and flooded with soft light, evoking a modern, high-end patisserie in light-mode. Gentle champagne beige and warm cream colors subtly reflect off the translucent surfaces. The overall vibe is pristine, luxurious, and precisely crafted." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVJpfKm_hc-FT-l8J8KbyPyUIoRkKYo2SUViZ1DgBj8v362pYZ0qjTzk7wkP3l7r-YlZ1bIyZVj3ThU3ekavABBXUwTtgGDUyUtGCJVgnrz6CW3nLfIlvE2ntlCNzgqs6PWgbb_AAYNXadex8XNrBaIYqlt7F9gI9BAhDqWMQaVQRaFQyA2FzzCEH9s7hmLm8Ww5a4-swQDMSJu3XOWZqpmmQd1ivnv7wdSjv47_DfACH9yd8CIhLon-cFO6I5UUmGk7LUUWhX"/>
+<div>
+<h3 class="font-body-lg text-body-lg font-semibold text-primary mb-1">Assorted Macaron Box</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Qty: 2 · Box of 12</p>
+</div>
+<div class="ml-auto font-body-lg text-body-lg text-primary">$72.00</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col justify-end bg-surface-container/30 rounded-[24px] p-6 border border-white/40 h-full">
+<div class="flex justify-between items-center mb-2">
+<span class="font-body-md text-body-md text-on-surface-variant">Subtotal</span>
+<span class="font-body-md text-body-md text-primary">$157.00</span>
+</div>
+<div class="flex justify-between items-center mb-4">
+<span class="font-body-md text-body-md text-on-surface-variant">Shipping</span>
+<span class="font-body-md text-body-md text-primary">$15.00</span>
+</div>
+<div class="flex justify-between items-center mb-8 border-t border-outline-variant/30 pt-4">
+<span class="font-body-lg text-body-lg font-semibold text-primary">Total</span>
+<span class="font-headline-md text-headline-md text-primary">$172.00</span>
+</div>
+<div class="flex flex-col gap-3">
+<button class="w-full py-4 rounded-full bg-primary text-on-primary font-label-lg text-label-lg tracking-widest uppercase hover:bg-primary/90 transition-colors duration-300">Track Order</button>
+<button class="w-full py-4 rounded-full bg-white/40 backdrop-blur-md border border-secondary/20 text-primary font-label-lg text-label-lg tracking-widest uppercase hover:bg-white/60 transition-colors duration-300">View Invoice</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Card 2: Delivered -->
+<div class="group bg-white/15 backdrop-blur-[30px] border border-white/20 border-b-surface-tint/10 border-r-surface-tint/10 rounded-[32px] p-8 md:p-10 shadow-[0_20px_40px_-10px_rgba(114,91,41,0.05)] relative overflow-hidden">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-widest">Order #BN-2024-042</p>
+<h2 class="font-headline-md text-headline-md text-primary">September 12, 2024</h2>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-highest border border-outline-variant/20 rounded-full">
+<span class="material-symbols-outlined text-[16px] text-outline">check_circle</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Delivered</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+<div class="lg:col-span-8">
+<div class="flex items-center gap-6 p-4 rounded-xl">
+<img alt="" class="w-24 h-24 rounded-xl object-cover shadow-sm grayscale-[20%]" data-alt="A beautiful rustic fruit tart on a marble countertop, viewed from a slightly high angle. The composition is expansive, utilizing negative space and soft, diffused window light to enhance the light-mode editorial feel. The warm tones of the baked crust contrast elegantly with the soft cream and muted fruit colors. It conveys a quiet, authoritative luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD-xO-J8jD6q37yu8BP-IDGnBkFtfPf1ND0cv8Iw04H8PPrfffMcLcR5_S3nK0h03a88QgpkeARHY6rAiuyjTReHxZCiCm_LsOeTtbtfC4tHUQwVcz_oUQzm8bTpfhewHmpHYXux5I7g6p0P1traRDmFM6wfx4LWUz3oNmms6RHJVzlCm7B4V9KwSWUPBxJEcWpxnKecUpmqdm6s1bcN2tIHJiFBN12NmrtFQfDVGSDUM3JcQQXe9pzYAvmf8xwbJIn3vKsjZ5"/>
+<div>
+<h3 class="font-body-lg text-body-lg font-semibold text-primary mb-1">Rustic Berry Galette</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Qty: 1 · Serves 6-8</p>
+</div>
+<div class="ml-auto font-body-lg text-body-lg text-primary">$45.00</div>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col justify-end bg-surface-container-low/50 rounded-[24px] p-6 h-full">
+<div class="flex justify-between items-center mb-6">
+<span class="font-body-lg text-body-lg font-semibold text-primary">Total</span>
+<span class="font-headline-md text-headline-md text-primary">$55.00</span>
+</div>
+<div class="flex flex-col gap-3">
+<button class="w-full py-4 rounded-full bg-surface-container border border-outline-variant/30 text-primary font-label-lg text-label-lg tracking-widest uppercase hover:bg-surface-container-high transition-colors duration-300 flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">refresh</span>
+                                Reorder
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest text-primary font-body-md text-body-md w-full pt-section-padding pb-8">
+<div class="max-w-container-max mx-auto px-margin-desktop px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="md:col-span-1">
+<div class="font-headline-lg text-headline-lg text-primary mb-8">BakeNest</div>
+<p class="text-on-surface-variant mt-4 opacity-80">© 2024 BakeNest Artisanal Patisserie. All rights reserved.</p>
+</div>
+<div class="flex flex-col space-y-4">
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Shipping Info</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Sustainability</a>
+</div>
+<div class="flex flex-col space-y-4">
+<p class="font-label-lg text-label-lg uppercase tracking-widest mb-2">Connect</p>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Instagram</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300 opacity-80 hover:opacity-100" href="#">Pinterest</a>
+</div>
+<div class="flex flex-col space-y-4">
+<p class="font-label-lg text-label-lg uppercase tracking-widest mb-2">Newsletter</p>
+<div class="relative group mt-2">
+<input class="w-full bg-transparent border-b border-light-mocha py-2 outline-none focus:border-primary transition-colors text-body-md placeholder:text-on-surface-variant/50" placeholder="Email Address" type="email"/>
+<button class="absolute right-0 top-1/2 -translate-y-1/2 text-primary">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
