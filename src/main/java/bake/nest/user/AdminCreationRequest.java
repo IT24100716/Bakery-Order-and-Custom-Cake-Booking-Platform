@@ -20,7 +20,7 @@ public class AdminCreationRequest {
     private String password;
 
     @NotNull
-    private Role role;
+    private String role;
 
     private String phone;
     private String address;

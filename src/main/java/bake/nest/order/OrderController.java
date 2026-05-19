@@ -34,4 +34,10 @@ public class OrderController {
     public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
+
+    @PostMapping("/{id}/cancel")
+    @PreAuthorize("hasAnyRole('USER', 'SUPER_ADMIN', 'PRODUCT_ADMIN', 'ORDER_ADMIN', 'USER_ADMIN')")
+    public ResponseEntity<OrderResponseDto> cancelOrder(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.cancelOrder(id));
+    }
 }

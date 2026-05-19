@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html class="scroll-smooth" lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>BakeNest - Luxury Patisserie</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -51,85 +56,453 @@
             border-right: 1px solid rgba(114, 91, 41, 0.1);
             border-bottom: 1px solid rgba(114, 91, 41, 0.1);
         }
+
         .liquid-shadow {
             box-shadow: 0 30px 60px -15px rgba(114, 91, 41, 0.08);
         }
+
         .viscous-transition {
             transition: all 400ms cubic-bezier(0.2, 0, 0, 1);
         }
+
+        /* Hero Full-Background Carousel */
+        .hero-bg-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-bg-slide.active {
+            opacity: 1;
+        }
+
+        .hero-bg-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: right center;
+        }
+
+        /* Left gradient overlay for text readability */
+        .hero-gradient-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right,
+                    rgba(255, 248, 243, 0.7) 0%,
+                    rgba(255, 248, 243, 0.55) 25%,
+                    rgba(255, 248, 243, 0.35) 40%,
+                    rgba(255, 248, 243, 0.15) 55%,
+                    rgba(255, 248, 243, 0.03) 70%,
+                    transparent 85%);
+            z-index: 2;
+        }
+
+        /* Bottom gradient for smooth page transition */
+        .hero-bottom-fade {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            background: linear-gradient(to top, #fff8f3 0%, transparent 100%);
+            z-index: 3;
+        }
+
+        .hero-indicator {
+            width: 32px;
+            height: 3px;
+            background: rgba(51, 31, 17, 0.15);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-indicator::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: #331f11;
+            border-radius: 4px;
+            transition: width 0s linear;
+        }
+
+        .hero-indicator.active {
+            width: 48px;
+            background: rgba(51, 31, 17, 0.1);
+        }
+
+        .hero-indicator.active::after {
+            width: 100%;
+            transition: width 5s linear;
+        }
+
+        /* Animated gradient text for hero accent words */
+        .gradient-text-animated {
+            background: linear-gradient(90deg,
+                    #331f11,
+                    #5a3a1a,
+                    #8a6d35,
+                    #5a3a1a,
+                    #331f11);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+            padding: 0 0.15em;
+            margin: 0 -0.15em;
+            display: inline-block;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes heroFadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroFadeUpD1 {
+
+            0%,
+            10% {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroFadeUpD2 {
+
+            0%,
+            20% {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroFadeUpD3 {
+
+            0%,
+            30% {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-anim-1 {
+            animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-anim-2 {
+            animation: heroFadeUpD1 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        .hero-anim-3 {
+            animation: heroFadeUpD2 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        .hero-anim-4 {
+            animation: heroFadeUpD3 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
     </style>
 </head>
+
 <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased">
 
-<!-- TopNavBar -->
-<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/20 shadow-[0_30px_60px_-15px_rgba(114,91,41,0.08)] transition-all duration-300">
-    <div class="max-w-[1440px] mx-auto px-8 flex justify-between items-center h-20">
-        <a class="font-headline-md text-3xl font-bold text-primary hover:scale-105 transition-transform duration-300" href="/">
-            BakeNest
-        </a>
-        <nav class="hidden md:flex gap-8 items-center h-full">
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="#">Shop</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="#">Custom Cakes</a>
-            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="#">About</a>
-        </nav>
-        <div class="flex gap-4 items-center">
-            <a id="nav-orders" href="/my-orders.html" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 hidden items-center gap-1" title="My Orders">
-                <span class="material-symbols-outlined">receipt_long</span>
-                <span class="hidden lg:inline text-sm font-semibold uppercase tracking-widest">Orders</span>
+    <!-- TopNavBar -->
+    <header
+        class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/20 shadow-[0_30px_60px_-15px_rgba(114,91,41,0.08)] transition-all duration-300">
+        <div class="max-w-[1440px] mx-auto px-8 flex justify-between items-center h-20">
+            <a class="font-headline-md text-3xl font-bold text-primary hover:scale-105 transition-transform duration-300"
+                href="/">
+                BakeNest
             </a>
-            <button id="nav-cart-btn" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 relative">
-                <span class="material-symbols-outlined">shopping_bag</span>
-                <span id="nav-cart-count" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-            </button>
-            <a id="nav-account" href="/auth.html" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 hidden md:flex items-center gap-1">
-                <span class="material-symbols-outlined">account_circle</span>
-                <span id="nav-account-text" class="text-sm font-semibold uppercase tracking-widest">Sign In</span>
-            </a>
-        </div>
-    </div>
-</header>
+            <nav class="hidden md:flex gap-8 items-center h-full">
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest"
+                    href="#">Shop</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest"
+                    href="/custom-cake.html">Custom Cakes</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest"
+                    href="#">About</a>
+            </nav>
+            <div class="flex gap-4 items-center">
+                <!-- Search Bar -->
+                <div class="relative hidden lg:block mr-2">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">search</span>
+                    <input type="text" id="live-search-input"
+                        class="bg-surface border border-outline-variant/30 rounded-full pl-10 pr-4 py-2 text-sm text-primary placeholder:text-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/20 transition-all w-48 focus:w-64"
+                        placeholder="Search...">
 
-<main class="flex-grow pt-20">
-    <!-- Hero Section -->
-    <section class="relative min-h-[700px] flex items-center justify-center overflow-hidden bg-surface-container-low">
-        <div class="absolute inset-0 z-0">
-            <img class="w-full h-full object-cover opacity-60" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=2000&auto=format&fit=crop" alt="Luxury Cake"/>
-            <div class="absolute inset-0 bg-gradient-to-b from-background/40 via-transparent to-background/80"></div>
-        </div>
-        <div class="relative z-10 max-w-[1440px] mx-auto px-8 text-center flex flex-col items-center">
-            <span class="font-label-lg uppercase tracking-widest text-primary mb-6 block glass-panel px-6 py-2 rounded-full">Artisanal Excellence</span>
-            <h1 class="font-display-lg text-6xl md:text-7xl text-primary max-w-4xl mb-8 leading-tight">
-                Elevating Pastry to an <span class="italic font-light">Art Form</span>
-            </h1>
-            <p class="font-body-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
-                Experience the delicate balance of flavor, texture, and uncompromising aesthetic. Every creation is a masterpiece designed to indulge the senses.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <button class="bg-primary text-white font-label-lg px-8 py-4 rounded-[32px] viscous-transition hover:bg-primary/90 shadow-lg uppercase tracking-widest">
-                    Explore Collections
+                    <!-- Live Search Results Dropdown -->
+                    <div id="live-search-results"
+                        class="absolute top-full mt-2 right-0 w-80 bg-surface-container-lowest rounded-2xl shadow-xl border border-outline-variant/20 overflow-hidden hidden flex-col max-h-[400px] overflow-y-auto z-50">
+                        <!-- Results will be injected here -->
+                    </div>
+                </div>
+
+                <a id="nav-orders" href="/my-orders.html"
+                    class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 hidden items-center"
+                    title="My Orders">
+                    <span class="material-symbols-outlined text-3xl">inventory_2</span>
+                </a>
+                <button id="nav-cart-btn"
+                    class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 relative mt-1">
+                    <span class="material-symbols-outlined text-3xl">shopping_bag</span>
+                    <span id="nav-cart-count"
+                        class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
                 </button>
+                <div id="nav-account-container" class="hidden md:block relative group">
+                    <a id="nav-account" href="/auth.html"
+                        class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-3xl">account_circle</span>
+                    </a>
+                    <div id="profile-dropdown"
+                        class="absolute right-0 top-full w-48 bg-surface-container-lowest rounded-xl shadow-xl border border-outline-variant/20 py-2 hidden group-hover:block transition-all duration-300 before:content-[''] before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
+                        <a href="/profile-settings.html"
+                            class="block px-4 py-2 text-sm text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors font-semibold uppercase tracking-wider">Settings</a>
+                        <button id="btn-logout-header"
+                            class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors font-semibold uppercase tracking-wider">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section — Full Background Slider -->
+    <section class="relative h-[700px] lg:h-[780px] overflow-hidden">
+        <!-- Background Image Slides -->
+        <div class="absolute inset-0 z-0">
+            <div class="hero-bg-slide active" data-index="0">
+                <img src="/images/hero-1.png" alt="Artisanal Chocolate Cake" />
+            </div>
+            <div class="hero-bg-slide" data-index="1">
+                <img src="/images/hero-2.png" alt="French Pastry Collection" />
+            </div>
+            <div class="hero-bg-slide" data-index="2">
+                <img src="/images/hero-3.png" alt="Elegant Wedding Cake" />
+            </div>
+        </div>
+
+        <!-- Left Gradient Overlay -->
+        <div class="hero-gradient-overlay"></div>
+
+        <!-- Text Content -->
+        <div class="relative z-10 max-w-[1440px] mx-auto px-8 lg:px-16 h-full flex items-center">
+            <div class="max-w-xl">
+                <div class="hero-anim-1 mb-6">
+                    <span id="hero-badge"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] text-secondary border border-secondary/20 bg-white/60 backdrop-blur-md shadow-sm">
+                        <span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+                        <span id="hero-badge-text">Artisanal Excellence</span>
+                    </span>
+                </div>
+
+                <h1 id="hero-heading"
+                    class="hero-anim-2 font-display-lg text-5xl md:text-6xl lg:text-[72px] text-primary leading-[1.05] mb-8 tracking-tight"
+                    style="transition: opacity 0.5s ease;">
+                    Elevating Pastry<br>to an <span class="italic font-light gradient-text-animated">Art Form</span>
+                </h1>
+
+                <p id="hero-desc"
+                    class="hero-anim-3 font-body-lg text-on-surface-variant text-base lg:text-lg mb-10 leading-relaxed max-w-md"
+                    style="transition: opacity 0.5s ease;">
+                    Experience the delicate balance of flavor, texture, and uncompromising aesthetic. Every creation is
+                    a masterpiece designed to indulge the senses.
+                </p>
+
+                <div class="hero-anim-4 flex flex-col sm:flex-row gap-4 items-start">
+                    <button onclick="document.getElementById('products-section').scrollIntoView({behavior:'smooth'})"
+                        class="bg-primary text-white font-label-lg px-10 py-4 rounded-full viscous-transition hover:bg-primary/90 hover:scale-[1.03] hover:shadow-xl shadow-lg uppercase tracking-widest text-sm flex items-center gap-3 group">
+                        Order Now
+                        <span
+                            class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </button>
+                    <a href="/custom-cake.html"
+                        class="font-label-lg px-10 py-4 rounded-full viscous-transition border border-primary/20 text-primary bg-white/50 backdrop-blur-sm hover:bg-white/80 hover:border-primary/40 uppercase tracking-widest text-sm flex items-center gap-3">
+                        Custom Cake
+                        <span class="material-symbols-outlined text-[18px]">palette</span>
+                    </a>
+                </div>
+
+                <!-- Slide Indicators -->
+                <div class="flex gap-2 mt-12 hero-anim-4">
+                    <div class="hero-indicator active" data-slide="0"></div>
+                    <div class="hero-indicator" data-slide="1"></div>
+                    <div class="hero-indicator" data-slide="2"></div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Curated Indulgence (Static Banners) -->
-    <section class="max-w-[1440px] mx-auto px-8 py-24">
-        <div class="text-center mb-16">
-            <h2 class="font-headline-lg text-4xl text-primary mb-4">Curated Indulgence</h2>
-            <p class="font-body-md text-on-surface-variant">Discover our signature categories</p>
+    <!-- Curated Indulgence (Categories) -->
+    <section class="w-full max-w-[1440px] mx-auto px-8 py-24">
+        <div class="text-center mb-20">
+            <span class="inline-block text-[10px] font-bold uppercase tracking-[0.3em] text-secondary/70 mb-4">Our
+                Collections</span>
+            <h2 class="font-display-lg text-5xl md:text-6xl text-primary mb-5 tracking-tight">Hot <span
+                    class="italic font-light gradient-text-animated">Collections</span></h2>
+            <p class="font-body-md text-on-surface-variant max-w-md mx-auto">Explore our handpicked categories of
+                artisan baked creations</p>
+            <div class="flex items-center justify-center gap-3 mt-8">
+                <div class="h-px w-16 bg-secondary/20"></div>
+                <span class="material-symbols-outlined text-secondary/30 text-lg">diamond</span>
+                <div class="h-px w-16 bg-secondary/20"></div>
+            </div>
         </div>
-        <div id="categories-container" class="grid grid-cols-1 md:grid-cols-12 gap-6 h-auto md:h-[600px]">
-            <!-- Dynamic categories will be injected here -->
+        <div class="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Cakes -->
+            <div class="group w-full relative rounded-3xl overflow-hidden aspect-square cursor-pointer shadow-xl hover:shadow-2xl"
+                style="transition: all 600ms cubic-bezier(0.16, 1, 0.3, 1);">
+                <img src="/images/cat-cakes.png" alt="Cakes"
+                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-110" />
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-[#331f11]/85 via-[#331f11]/35 to-transparent transition-opacity duration-500 group-hover:opacity-90">
+                </div>
+                <div class="absolute top-6 left-6 z-20">
+                    <span
+                        class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-[0.2em] text-white/90 bg-white/10 backdrop-blur-md border border-white/20">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                        Popular
+                    </span>
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 right-0 p-8 z-10 transition-transform duration-500 group-hover:-translate-y-1">
+                    <h3 class="font-display text-3xl text-white mb-2 tracking-tight">Cakes</h3>
+                    <p class="text-white/60 text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">Layered masterpieces
+                        crafted for every unforgettable celebration.</p>
+                    <div
+                        class="flex items-center gap-2 text-white/50 text-[11px] font-semibold uppercase tracking-widest transition-colors duration-300 group-hover:text-white">
+                        Explore Collection
+                        <span
+                            class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1.5">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Pastries -->
+            <div class="group w-full relative rounded-3xl overflow-hidden aspect-square cursor-pointer shadow-xl hover:shadow-2xl"
+                style="transition: all 600ms cubic-bezier(0.16, 1, 0.3, 1);">
+                <img src="/images/cat-pastries.png" alt="Pastries"
+                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-110" />
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-[#331f11]/85 via-[#331f11]/35 to-transparent transition-opacity duration-500 group-hover:opacity-90">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 right-0 p-8 z-10 transition-transform duration-500 group-hover:-translate-y-1">
+                    <h3 class="font-display text-3xl text-white mb-2 tracking-tight">Pastries</h3>
+                    <p class="text-white/60 text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">Golden croissants,
+                        flaky danishes, and buttery morning delights.</p>
+                    <div
+                        class="flex items-center gap-2 text-white/50 text-[11px] font-semibold uppercase tracking-widest transition-colors duration-300 group-hover:text-white">
+                        Explore Collection
+                        <span
+                            class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1.5">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Cookies -->
+            <div class="group w-full relative rounded-3xl overflow-hidden aspect-square cursor-pointer shadow-xl hover:shadow-2xl"
+                style="transition: all 600ms cubic-bezier(0.16, 1, 0.3, 1);">
+                <img src="/images/cat-cookies.png" alt="Cookies"
+                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-110" />
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-[#331f11]/85 via-[#331f11]/35 to-transparent transition-opacity duration-500 group-hover:opacity-90">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 right-0 p-8 z-10 transition-transform duration-500 group-hover:-translate-y-1">
+                    <h3 class="font-display text-3xl text-white mb-2 tracking-tight">Cookies</h3>
+                    <p class="text-white/60 text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">Artisan cookies and
+                        delicate macarons handcrafted in small batches.</p>
+                    <div
+                        class="flex items-center gap-2 text-white/50 text-[11px] font-semibold uppercase tracking-widest transition-colors duration-300 group-hover:text-white">
+                        Explore Collection
+                        <span
+                            class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1.5">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Breads -->
+            <div class="group w-full relative rounded-3xl overflow-hidden aspect-square cursor-pointer shadow-xl hover:shadow-2xl"
+                style="transition: all 600ms cubic-bezier(0.16, 1, 0.3, 1);">
+                <img src="/images/cat-breads.png" alt="Breads"
+                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-110" />
+                <div
+                    class="absolute inset-0 bg-gradient-to-t from-[#331f11]/85 via-[#331f11]/35 to-transparent transition-opacity duration-500 group-hover:opacity-90">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 right-0 p-8 z-10 transition-transform duration-500 group-hover:-translate-y-1">
+                    <h3 class="font-display text-3xl text-white mb-2 tracking-tight">Breads</h3>
+                    <p class="text-white/60 text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">Rustic sourdough,
+                        crisp baguettes, and artisan loaves baked to perfection.</p>
+                    <div
+                        class="flex items-center gap-2 text-white/50 text-[11px] font-semibold uppercase tracking-widest transition-colors duration-300 group-hover:text-white">
+                        Explore Collection
+                        <span
+                            class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1.5">arrow_forward</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Dynamic Featured Products -->
-    <section class="max-w-[1440px] mx-auto px-8 py-12 mb-24">
-        <div class="text-center mb-12">
-            <h2 class="font-headline-lg text-4xl text-primary mb-4">Fresh from the Oven</h2>
-            <p class="font-body-md text-on-surface-variant">Our latest exquisite creations</p>
+    <section id="products-section" class="max-w-[1440px] mx-auto px-8 py-12 mb-24">
+        <div class="text-center mb-16">
+            <span class="inline-block text-[10px] font-bold uppercase tracking-[0.3em] text-secondary/70 mb-4">Freshly
+                Baked</span>
+            <h2 class="font-display-lg text-5xl md:text-6xl text-primary mb-5 tracking-tight">Fresh from the <span
+                    class="italic font-light gradient-text-animated">Oven</span></h2>
+            <p class="font-body-md text-on-surface-variant max-w-md mx-auto">Our latest exquisite creations, baked with
+                passion daily</p>
+            <div class="flex items-center justify-center gap-3 mt-8">
+                <div class="h-px w-16 bg-secondary/20"></div>
+                <span class="material-symbols-outlined text-secondary/30 text-lg">diamond</span>
+                <div class="h-px w-16 bg-secondary/20"></div>
+            </div>
         </div>
-        
+
         <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
             <!-- Dynamic products will be injected here -->
             <div class="col-span-full text-center py-12 text-on-surface-variant" id="products-loading">
@@ -137,305 +510,413 @@
             </div>
         </div>
     </section>
-</main>
+    </main>
 
-<!-- Cart Drawer -->
-<div id="cart-drawer-overlay" class="fixed inset-0 bg-black/50 z-[60] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm"></div>
-<div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-surface z-[70] transform translate-x-full transition-transform duration-400 ease-[cubic-bezier(0.2,0,0,1)] shadow-2xl flex flex-col">
-    <!-- Header -->
-    <div class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-lowest">
-        <h2 class="font-headline-md text-2xl text-primary flex items-center gap-2">
-            Cart <span id="cart-drawer-count" class="text-sm bg-secondary/10 text-secondary w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
-        </h2>
-        <button id="close-cart-btn" class="text-on-surface-variant hover:text-primary transition-colors">
-            <span class="material-symbols-outlined">close</span>
-        </button>
+    <!-- Cart Drawer -->
+    <div id="cart-drawer-overlay"
+        class="fixed inset-0 bg-black/50 z-[60] hidden opacity-0 transition-opacity duration-300 backdrop-blur-sm">
     </div>
-    
-    <!-- Items Container -->
-    <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 flex flex-col gap-6">
-        <!-- Cart Items Injected Here -->
+    <div id="cart-drawer"
+        class="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-surface z-[70] transform translate-x-full transition-transform duration-400 ease-[cubic-bezier(0.2,0,0,1)] shadow-2xl flex flex-col">
+        <!-- Header -->
+        <div
+            class="px-6 py-4 border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-lowest">
+            <h2 class="font-headline-md text-2xl text-primary flex items-center gap-2">
+                Cart <span id="cart-drawer-count"
+                    class="text-sm bg-secondary/10 text-secondary w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+            </h2>
+            <button id="close-cart-btn" class="text-on-surface-variant hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <!-- Items Container -->
+        <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 flex flex-col gap-6">
+            <!-- Cart Items Injected Here -->
+        </div>
+
+        <!-- Footer -->
+        <div class="p-6 border-t border-outline-variant/30 bg-surface-container-lowest">
+            <div class="flex justify-between items-center mb-6">
+                <span class="font-body-md text-on-surface-variant">Estimated total</span>
+                <span id="cart-subtotal" class="font-headline-md text-2xl text-primary">Rs. 0.00</span>
+            </div>
+            <p class="text-[10px] text-on-surface-variant mb-4 text-center uppercase tracking-widest">Taxes and shipping
+                calculated at checkout</p>
+            <button id="btn-checkout"
+                class="w-full bg-primary text-white font-label-lg py-4 rounded-full hover:bg-primary/90 transition-colors uppercase tracking-widest">
+                Check out
+            </button>
+        </div>
     </div>
-    
+
     <!-- Footer -->
-    <div class="p-6 border-t border-outline-variant/30 bg-surface-container-lowest">
-        <div class="flex justify-between items-center mb-6">
-            <span class="font-body-md text-on-surface-variant">Estimated total</span>
-            <span id="cart-subtotal" class="font-headline-md text-2xl text-primary">Rs. 0.00</span>
+    <footer class="w-full pt-24 pb-8 bg-surface-container-lowest text-primary">
+        <div class="max-w-[1440px] mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+            <div>
+                <div class="font-headline-lg text-3xl mb-4">BakeNest</div>
+                <p class="text-on-surface-variant text-sm max-w-xs">Elevating pastry to an art form through
+                    uncompromising material honesty and precision craft.</p>
+            </div>
+            <div>
+                <h4 class="font-label-lg uppercase tracking-widest mb-6">Explore</h4>
+                <ul class="space-y-4 text-sm text-on-surface-variant">
+                    <li><a href="#" class="hover:text-primary transition-colors">Shop</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Custom Cakes</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-label-lg uppercase tracking-widest mb-6">Legal</h4>
+                <ul class="space-y-4 text-sm text-on-surface-variant">
+                    <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-label-lg uppercase tracking-widest mb-6">Connect</h4>
+                <ul class="space-y-4 text-sm text-on-surface-variant">
+                    <li><a href="#" class="hover:text-primary transition-colors">Instagram</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Contact Us</a></li>
+                </ul>
+            </div>
         </div>
-        <p class="text-[10px] text-on-surface-variant mb-4 text-center uppercase tracking-widest">Taxes and shipping calculated at checkout</p>
-        <button id="btn-checkout" class="w-full bg-primary text-white font-label-lg py-4 rounded-full hover:bg-primary/90 transition-colors uppercase tracking-widest">
-            Check out
-        </button>
-    </div>
-</div>
-
-<!-- Footer -->
-<footer class="w-full pt-24 pb-8 bg-surface-container-lowest text-primary">
-    <div class="max-w-[1440px] mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
-        <div>
-            <div class="font-headline-lg text-3xl mb-4">BakeNest</div>
-            <p class="text-on-surface-variant text-sm max-w-xs">Elevating pastry to an art form through uncompromising material honesty and precision craft.</p>
+        <div
+            class="max-w-[1440px] mx-auto px-8 border-t border-outline-variant/30 pt-8 text-center text-sm text-on-surface-variant">
+            © 2024 BakeNest Artisanal Patisserie. All rights reserved.
         </div>
-        <div>
-            <h4 class="font-label-lg uppercase tracking-widest mb-6">Explore</h4>
-            <ul class="space-y-4 text-sm text-on-surface-variant">
-                <li><a href="#" class="hover:text-primary transition-colors">Shop</a></li>
-                <li><a href="#" class="hover:text-primary transition-colors">Custom Cakes</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4 class="font-label-lg uppercase tracking-widest mb-6">Legal</h4>
-            <ul class="space-y-4 text-sm text-on-surface-variant">
-                <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
-                <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4 class="font-label-lg uppercase tracking-widest mb-6">Connect</h4>
-            <ul class="space-y-4 text-sm text-on-surface-variant">
-                <li><a href="#" class="hover:text-primary transition-colors">Instagram</a></li>
-                <li><a href="#" class="hover:text-primary transition-colors">Contact Us</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="max-w-[1440px] mx-auto px-8 border-t border-outline-variant/30 pt-8 text-center text-sm text-on-surface-variant">
-        © 2024 BakeNest Artisanal Patisserie. All rights reserved.
-    </div>
-</footer>
+    </footer>
 
-<script>
-    // Authentication State Logic
-    document.addEventListener('DOMContentLoaded', () => {
-        const token = localStorage.getItem('token');
-        const navAccountBtn = document.getElementById('nav-account');
-        const navAccountText = document.getElementById('nav-account-text');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = sessionStorage.getItem('token');
+            const navAccountBtn = document.getElementById('nav-account');
+            const profileDropdown = document.getElementById('profile-dropdown');
+            const logoutBtn = document.getElementById('btn-logout-header');
 
-        if (token) {
-            navAccountText.textContent = "Sign Out";
-            navAccountBtn.href = "#";
-            document.getElementById('nav-orders').classList.remove('hidden');
-            document.getElementById('nav-orders').classList.add('flex');
-            navAccountBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                localStorage.removeItem('token');
-                window.location.reload();
-            });
-        }
-    });
+            if (token) {
+                navAccountBtn.href = "#";
+                document.getElementById('nav-orders').classList.remove('hidden');
+                document.getElementById('nav-orders').classList.add('flex');
 
-    // Fetch and render products
-    async function loadProducts() {
-        const grid = document.getElementById('products-grid');
-        const loader = document.getElementById('products-loading');
-
-        try {
-            const response = await fetch('/api/v1/public/products');
-            if (!response.ok) throw new Error("Failed to load products");
-            
-            const products = await response.json();
-            loader.style.display = 'none';
-
-            if (products.length === 0) {
-                grid.innerHTML = '<div class="col-span-full text-center py-12 text-on-surface-variant">More creations coming soon!</div>';
-                return;
+                // Logout logic
+                logoutBtn.addEventListener('click', () => {
+                    sessionStorage.removeItem('token');
+                    window.location.reload();
+                });
+            } else {
+                // Hide dropdown if not logged in
+                profileDropdown.remove();
             }
+        });
 
-            // Store products globally for easy Add To Cart lookup
-            window.globalProductsMap = new Map(products.map(p => [p.id, p]));
+        // Fetch and render products
+        async function loadProducts() {
+            const grid = document.getElementById('products-grid');
+            const loader = document.getElementById('products-loading');
 
-            // Display up to 4 products on the homepage
-            const displayProducts = products.slice(0, 4);
-            grid.innerHTML = displayProducts.map(product => `
-                <div onclick="window.location.href='/product-details.html?id=${product.id}'" class="glass-panel rounded-xl overflow-hidden group cursor-pointer hover:scale-[1.02] viscous-transition liquid-shadow flex flex-col relative">
-                    <div class="h-64 overflow-hidden relative bg-white/50">
+            try {
+                const response = await fetch('/api/v1/public/products');
+                if (!response.ok) throw new Error("Failed to load products");
+
+                const products = await response.json();
+                products.sort((a, b) => b.id - a.id);
+                loader.style.display = 'none';
+
+                if (products.length === 0) {
+                    grid.innerHTML = '<div class="col-span-full text-center py-12 text-on-surface-variant">More creations coming soon!</div>';
+                    return;
+                }
+
+                // Store products globally for easy Add To Cart lookup
+                window.globalProductsMap = new Map(products.map(p => [p.id, p]));
+
+                // Display up to 4 products on the homepage
+                const displayProducts = products.slice(0, 4);
+                grid.innerHTML = displayProducts.map(product => `
+                <div onclick="window.location.href='/product-details.html?id=${product.id}'" class="glass-panel rounded-xl overflow-hidden group cursor-pointer hover:scale-[1.02] viscous-transition liquid-shadow flex flex-col relative w-full">
+                    <div class="h-80 overflow-hidden relative bg-white/50 w-full">
                         <!-- We use a placeholder image if product.imageUrl is empty -->
                         <img src="${product.imageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=600&auto=format&fit=crop'}" 
                              alt="${product.name}" 
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
                     </div>
-                    <div class="p-6 flex-grow flex flex-col justify-between">
+                    <div class="p-4 pt-3 pb-4 flex flex-col justify-between flex-grow bg-white/90 backdrop-blur-sm">
                         <div>
-                            <span class="text-xs font-semibold uppercase tracking-widest text-secondary mb-2 block">${product.category || 'Bakery'}</span>
-                            <h3 class="font-headline-md text-xl text-primary mb-2">${product.name}</h3>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-secondary mb-1 block">${product.category || 'Bakery'}</span>
+                            <h3 class="font-headline-md text-lg text-primary mb-1 line-clamp-1">${product.name}</h3>
                         </div>
-                        <div class="flex justify-between items-center mt-4 border-t border-outline-variant/30 pt-4">
-                            <span class="font-body-md font-semibold text-primary">Rs. ${product.price.toFixed(2)}</span>
-                            <button onclick="event.stopPropagation(); addToCartFromMap(${product.id})" class="text-primary hover:text-secondary transition-colors relative z-10">
-                                <span class="material-symbols-outlined">add_shopping_cart</span>
+                        <div class="flex justify-between items-center mt-3 pt-2.5 border-t border-outline-variant/20">
+                            <span class="font-body-md font-bold text-primary">Rs. ${product.price.toFixed(2)}</span>
+                            <button onclick="event.stopPropagation(); addToCartFromMap(${product.id})" class="w-8 h-8 rounded-full bg-primary/5 hover:bg-primary hover:text-white flex items-center justify-center text-primary transition-all duration-300 relative z-10">
+                                <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
                             </button>
                         </div>
                     </div>
                 </div>
             `).join('');
 
-        } catch (error) {
-            console.error("Error loading products:", error);
-            loader.textContent = "Unable to load creations at this time.";
-        }
-    }
-
-    async function loadCategories() {
-        const container = document.getElementById('categories-container');
-        try {
-            const res = await fetch('/api/v1/public/categories');
-            const categories = await res.json();
-            
-            if (!categories || categories.length === 0) {
-                container.innerHTML = `<div class="col-span-full py-12 text-center text-on-surface-variant opacity-70">New collections coming soon...</div>`;
-                return;
+            } catch (error) {
+                console.error("Error loading products:", error);
+                loader.textContent = "Unable to load creations at this time.";
             }
+        }
 
-            let html = '';
-            
-            // First category is the main hero
-            if (categories.length > 0) {
-                const c1 = categories[0];
-                html += `
-                    <a class="md:col-span-8 glass-panel rounded-xl overflow-hidden group relative flex items-end viscous-transition hover:scale-[1.01] liquid-shadow min-h-[400px]" href="#">
-                        <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" src="${c1.imageUrl || 'https://images.unsplash.com/photo-1519340333755-56e9c1d04579?q=80'}" alt="${c1.name}"/>
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+        async function loadCategories() {
+            const container = document.getElementById('categories-container');
+            try {
+                const res = await fetch('/api/v1/public/categories');
+                const categories = await res.json();
+
+                if (!categories || categories.length === 0) {
+                    container.innerHTML = `<div class="col-span-full py-12 text-center text-on-surface-variant opacity-70">New collections coming soon...</div>`;
+                    return;
+                }
+
+                let html = '';
+
+                // First category — large hero card
+                if (categories.length > 0) {
+                    const c1 = categories[0];
+                    html += `
+                    <a class="md:col-span-8 rounded-3xl overflow-hidden group relative flex items-end min-h-[400px] cursor-pointer" href="#" style="transition: all 500ms cubic-bezier(0.2, 0, 0, 1);">
+                        <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-110" src="${c1.imageUrl || 'https://images.unsplash.com/photo-1519340333755-56e9c1d04579?q=80'}" alt="${c1.name}"/>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute top-6 left-6 z-20">
+                            <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-[0.2em] text-white/90 bg-white/15 backdrop-blur-md border border-white/20">
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                                Signature Collection
+                            </span>
+                        </div>
                         <div class="relative z-10 p-10 w-full">
-                            <span class="text-white/80 font-label-sm uppercase tracking-wider mb-2 block">Signature</span>
-                            <h3 class="font-headline-md text-3xl text-white mb-2">${c1.name}</h3>
-                            <p class="text-white/70 line-clamp-2 max-w-lg">${c1.description || ''}</p>
+                            <h3 class="font-display-lg text-4xl text-white mb-2 tracking-tight group-hover:translate-x-2 transition-transform duration-500">${c1.name}</h3>
+                            <p class="text-white/60 line-clamp-2 max-w-lg text-sm">${c1.description || 'Discover our finest selection'}</p>
+                            <div class="flex items-center gap-2 mt-4 text-white/50 text-xs font-semibold uppercase tracking-widest group-hover:text-white/80 transition-colors">
+                                Explore
+                                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            </div>
                         </div>
                     </a>
                 `;
-            }
+                }
 
-            // Remaining categories go to the right side column
-            if (categories.length > 1) {
-                html += `<div class="md:col-span-4 flex flex-col gap-6">`;
-                for (let i = 1; i < Math.min(categories.length, 3); i++) { // Max 2 more
-                    const c = categories[i];
-                    html += `
-                        <a class="flex-1 glass-panel rounded-xl overflow-hidden group relative flex items-end viscous-transition hover:scale-[1.02] liquid-shadow min-h-[250px]" href="#">
-                            <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" src="${c.imageUrl || 'https://images.unsplash.com/photo-1555507036-ab1f40ce88ca?q=80'}" alt="${c.name}"/>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                // Remaining categories — right side stacked
+                if (categories.length > 1) {
+                    html += `<div class="md:col-span-4 flex flex-col gap-5">`;
+                    for (let i = 1; i < Math.min(categories.length, 4); i++) {
+                        const c = categories[i];
+                        html += `
+                        <a class="flex-1 rounded-3xl overflow-hidden group relative flex items-end min-h-[180px] cursor-pointer" href="#" style="transition: all 500ms cubic-bezier(0.2, 0, 0, 1);">
+                            <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-[800ms] ease-out group-hover:scale-110" src="${c.imageUrl || 'https://images.unsplash.com/photo-1555507036-ab1f40ce88ca?q=80'}" alt="${c.name}"/>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent"></div>
                             <div class="relative z-10 p-6 w-full">
-                                <h3 class="font-headline-md text-2xl text-white">${c.name}</h3>
+                                <h3 class="font-display-lg text-xl text-white group-hover:translate-x-1 transition-transform duration-500">${c.name}</h3>
+                                <div class="flex items-center gap-1.5 mt-2 text-white/40 text-[10px] font-semibold uppercase tracking-widest group-hover:text-white/70 transition-colors">
+                                    View Collection
+                                    <span class="material-symbols-outlined text-xs group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                                </div>
                             </div>
                         </a>
                     `;
+                    }
+                    html += `</div>`;
                 }
-                html += `</div>`;
+
+                container.innerHTML = html;
+
+            } catch (e) {
+                console.error("Error loading categories:", e);
+            }
+        }
+
+        loadCategories();
+        loadProducts();
+
+        // --- Hero Carousel ---
+        (function () {
+            const slides = document.querySelectorAll('.hero-bg-slide');
+            const indicators = document.querySelectorAll('.hero-indicator');
+            const heroBadge = document.getElementById('hero-badge-text');
+            const heroHeading = document.getElementById('hero-heading');
+            const heroDesc = document.getElementById('hero-desc');
+            let currentSlide = 0;
+            let heroInterval;
+
+            const heroContent = [
+                {
+                    badge: 'Artisanal Excellence',
+                    heading: 'Elevating Pastry<br>to an <span class="italic font-light gradient-text-animated">Art Form</span>',
+                    desc: 'Indulge in handcrafted creations made with the finest ingredients. From rich chocolate ganache to delicate buttercream — taste the difference of true artisan baking.'
+                },
+                {
+                    badge: 'Fresh Daily',
+                    heading: 'Baked Fresh,<br>Served with <span class="italic font-light gradient-text-animated">Love</span>',
+                    desc: 'Every morning our master bakers craft golden croissants, flaky pastries, and irresistible treats. Order now and enjoy bakery-fresh flavors delivered to your door.'
+                },
+                {
+                    badge: 'Design Your Dream',
+                    heading: 'Your Vision,<br>Our <span class="italic font-light gradient-text-animated">Masterpiece</span>',
+                    desc: 'Dream it, and we\'ll bake it. Create a one-of-a-kind custom cake for weddings, birthdays, or any celebration — designed uniquely for your special moment.'
+                }
+            ];
+
+            function goToSlide(index) {
+                slides.forEach(s => s.classList.remove('active'));
+                indicators.forEach(ind => ind.classList.remove('active'));
+                currentSlide = index;
+                slides[currentSlide].classList.add('active');
+                indicators[currentSlide].classList.add('active');
+
+                // Animate text change
+                heroHeading.style.opacity = '0';
+                heroDesc.style.opacity = '0';
+                heroBadge.style.opacity = '0';
+                setTimeout(() => {
+                    heroBadge.textContent = heroContent[index].badge;
+                    heroHeading.innerHTML = heroContent[index].heading;
+                    heroDesc.textContent = heroContent[index].desc;
+                    heroBadge.style.opacity = '1';
+                    heroHeading.style.opacity = '1';
+                    heroDesc.style.opacity = '1';
+                }, 400);
             }
 
-            container.innerHTML = html;
+            function nextSlide() {
+                goToSlide((currentSlide + 1) % slides.length);
+            }
 
-        } catch (e) {
-            console.error("Error loading categories:", e);
-        }
-    }
+            function startAutoplay() {
+                clearInterval(heroInterval);
+                heroInterval = setInterval(nextSlide, 5000);
+            }
 
-    loadCategories();
-    loadProducts();
-
-    // --- Cart State Management ---
-    let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-
-    function saveCart() {
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        renderCart();
-    }
-
-    function addToCartFromMap(productId) {
-        if (!window.globalProductsMap) return;
-        const product = window.globalProductsMap.get(productId);
-        if (product) addToCart(product);
-    }
-
-    function addToCart(product) {
-        const existing = cartItems.find(item => item.productId === product.id);
-        if (existing) {
-            existing.quantity += 1;
-        } else {
-            cartItems.push({
-                productId: product.id,
-                name: product.name,
-                price: product.price,
-                imageUrl: product.imageUrl,
-                quantity: 1
+            indicators.forEach(ind => {
+                ind.addEventListener('click', () => {
+                    goToSlide(parseInt(ind.dataset.slide));
+                    startAutoplay();
+                });
             });
-        }
-        saveCart();
-        openCart();
-    }
 
-    function updateQuantity(productId, delta) {
-        const item = cartItems.find(item => item.productId === productId);
-        if (item) {
-            item.quantity += delta;
-            if (item.quantity <= 0) {
-                cartItems = cartItems.filter(i => i.productId !== productId);
+            startAutoplay();
+        })();
+
+        // --- Cart State Management ---
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        function saveCart() {
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            renderCart();
+        }
+
+        function addToCartFromMap(productId) {
+            if (!window.globalProductsMap) return;
+            const product = window.globalProductsMap.get(productId);
+            if (product) addToCart(product);
+        }
+
+        function addToCart(product) {
+            const existing = cartItems.find(item => item.productId === product.id);
+            const currentQtyInCart = existing ? existing.quantity : 0;
+
+            if (product.stockType !== 'MADE_TO_ORDER' && (currentQtyInCart + 1) > product.stock) {
+                showToast('Limit Reached', `Only ${product.stock} units available in stock.`, 'inventory_2');
+                return;
+            }
+
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cartItems.push({
+                    productId: product.id,
+                    name: product.name,
+                    price: product.price,
+                    imageUrl: product.imageUrl,
+                    quantity: 1,
+                    stock: product.stock,
+                    stockType: product.stockType
+                });
             }
             saveCart();
+            openCart();
         }
-    }
 
-    function removeFromCart(productId) {
-        cartItems = cartItems.filter(item => item.productId !== productId);
-        saveCart();
-    }
+        function updateQuantity(productId, delta) {
+            const item = cartItems.find(item => item.productId === productId);
+            if (item) {
+                const newQty = item.quantity + delta;
+                if (delta > 0 && item.stockType !== 'MADE_TO_ORDER' && newQty > item.stock) {
+                    showToast('Limit Reached', `Only ${item.stock} units available.`, 'inventory_2');
+                    return;
+                }
+                item.quantity = newQty;
+                if (item.quantity <= 0) {
+                    cartItems = cartItems.filter(i => i.productId !== productId);
+                }
+                saveCart();
+            }
+        }
 
-    // --- Cart UI Logic ---
-    const cartOverlay = document.getElementById('cart-drawer-overlay');
-    const cartDrawer = document.getElementById('cart-drawer');
-    const navCartBtn = document.getElementById('nav-cart-btn');
-    const closeCartBtn = document.getElementById('close-cart-btn');
-    const navCartCount = document.getElementById('nav-cart-count');
-    const drawerCartCount = document.getElementById('cart-drawer-count');
-    const cartItemsContainer = document.getElementById('cart-items-container');
-    const cartSubtotal = document.getElementById('cart-subtotal');
-    const btnCheckout = document.getElementById('btn-checkout');
+        function removeFromCart(productId) {
+            cartItems = cartItems.filter(item => item.productId !== productId);
+            saveCart();
+        }
 
-    function openCart() {
-        cartOverlay.classList.remove('hidden');
-        // trigger reflow
-        void cartOverlay.offsetWidth;
-        cartOverlay.classList.remove('opacity-0');
-        cartDrawer.classList.remove('translate-x-full');
-        document.body.style.overflow = 'hidden';
-    }
+        // --- Cart UI Logic ---
+        const cartOverlay = document.getElementById('cart-drawer-overlay');
+        const cartDrawer = document.getElementById('cart-drawer');
+        const navCartBtn = document.getElementById('nav-cart-btn');
+        const closeCartBtn = document.getElementById('close-cart-btn');
+        const navCartCount = document.getElementById('nav-cart-count');
+        const drawerCartCount = document.getElementById('cart-drawer-count');
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const btnCheckout = document.getElementById('btn-checkout');
 
-    function closeCart() {
-        cartOverlay.classList.add('opacity-0');
-        cartDrawer.classList.add('translate-x-full');
-        document.body.style.overflow = '';
-        setTimeout(() => cartOverlay.classList.add('hidden'), 300);
-    }
+        function openCart() {
+            cartOverlay.classList.remove('hidden');
+            // trigger reflow
+            void cartOverlay.offsetWidth;
+            cartOverlay.classList.remove('opacity-0');
+            cartDrawer.classList.remove('translate-x-full');
+            document.body.style.overflow = 'hidden';
+        }
 
-    navCartBtn.addEventListener('click', openCart);
-    closeCartBtn.addEventListener('click', closeCart);
-    cartOverlay.addEventListener('click', closeCart);
+        function closeCart() {
+            cartOverlay.classList.add('opacity-0');
+            cartDrawer.classList.add('translate-x-full');
+            document.body.style.overflow = '';
+            setTimeout(() => cartOverlay.classList.add('hidden'), 300);
+        }
 
-    function renderCart() {
-        const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-        navCartCount.textContent = totalItems;
-        drawerCartCount.textContent = totalItems;
+        navCartBtn.addEventListener('click', openCart);
+        closeCartBtn.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
 
-        if (cartItems.length === 0) {
-            cartItemsContainer.innerHTML = `
+        function renderCart() {
+            const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            navCartCount.textContent = totalItems;
+            drawerCartCount.textContent = totalItems;
+
+            if (cartItems.length === 0) {
+                cartItemsContainer.innerHTML = `
                 <div class="h-full flex flex-col items-center justify-center text-on-surface-variant opacity-70 gap-4">
                     <span class="material-symbols-outlined text-4xl">shopping_bag</span>
                     <p>Your cart is empty.</p>
                     <button onclick="closeCart()" class="mt-4 border-b border-primary text-primary pb-1 font-label-lg uppercase tracking-widest text-sm hover:text-secondary hover:border-secondary transition-colors">Continue Shopping</button>
                 </div>
             `;
-            cartSubtotal.textContent = 'Rs. 0.00';
-            btnCheckout.disabled = true;
-            btnCheckout.classList.add('opacity-50', 'cursor-not-allowed');
-            return;
-        }
+                cartSubtotal.textContent = 'Rs. 0.00';
+                btnCheckout.disabled = true;
+                btnCheckout.classList.add('opacity-50', 'cursor-not-allowed');
+                return;
+            }
 
-        btnCheckout.disabled = false;
-        btnCheckout.classList.remove('opacity-50', 'cursor-not-allowed');
+            btnCheckout.disabled = false;
+            btnCheckout.classList.remove('opacity-50', 'cursor-not-allowed');
 
-        let subtotal = 0;
-        cartItemsContainer.innerHTML = cartItems.map(item => {
-            subtotal += item.price * item.quantity;
-            return `
+            let subtotal = 0;
+            cartItemsContainer.innerHTML = cartItems.map(item => {
+                subtotal += item.price * item.quantity;
+                return `
                 <div class="flex gap-4">
                     <div class="w-20 h-20 bg-white/50 rounded-lg overflow-hidden shrink-0 border border-outline-variant/30">
                         <img src="${item.imageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80'}" alt="${item.name}" class="w-full h-full object-cover">
@@ -458,18 +939,146 @@
                     </div>
                 </div>
             `;
-        }).join('');
-        
-        cartSubtotal.textContent = 'Rs. ' + subtotal.toFixed(2);
-    }
+            }).join('');
 
-    btnCheckout.addEventListener('click', () => {
-        window.location.href = '/checkout.html';
-    });
+            cartSubtotal.textContent = 'Rs. ' + subtotal.toFixed(2);
+        }
 
-    // Initial render
-    renderCart();
+        btnCheckout.addEventListener('click', () => {
+            window.location.href = '/checkout.html';
+        });
 
-</script>
+        // Initial render
+        renderCart();
+
+        // Live Search
+        const searchInput = document.getElementById('live-search-input');
+        const searchResults = document.getElementById('live-search-results');
+        let searchTimeout;
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                const query = e.target.value.trim();
+
+                if (query.length < 2) {
+                    searchResults.classList.add('hidden');
+                    return;
+                }
+
+                searchTimeout = setTimeout(async () => {
+                    try {
+                        const res = await fetch(`/api/v1/public/products/search?query=${encodeURIComponent(query)}`);
+                        if (res.ok) {
+                            const products = await res.json();
+                            renderSearchResults(products);
+                        }
+                    } catch (error) {
+                        console.error('Search error:', error);
+                    }
+                }, 300);
+            });
+
+            // Hide results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.add('hidden');
+                }
+            });
+
+            // Show results when focusing if there's a query
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.trim().length >= 2 && searchResults.innerHTML !== '') {
+                    searchResults.classList.remove('hidden');
+                }
+            });
+        }
+
+        function renderSearchResults(products) {
+            searchResults.innerHTML = '';
+            if (products.length === 0) {
+                searchResults.innerHTML = '<div class="p-4 text-sm text-on-surface-variant text-center">No products found</div>';
+            } else {
+                products.forEach(p => {
+                    const item = document.createElement('a');
+                    item.href = `/product-details.html?id=${p.id}`;
+                    item.className = 'flex items-center gap-3 p-3 hover:bg-surface-container-low transition-colors border-b border-outline-variant/10 last:border-0';
+                    item.innerHTML = `
+                    <div class="w-12 h-12 rounded-lg bg-surface-container-low overflow-hidden flex-shrink-0">
+                        ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.name}" class="w-full h-full object-cover">` : '<div class="w-full h-full flex items-center justify-center text-outline-variant"><span class="material-symbols-outlined">image</span></div>'}
+                    </div>
+                    <div class="flex-grow min-w-0">
+                        <h4 class="text-sm font-semibold text-primary truncate">${p.name}</h4>
+                        <p class="text-xs text-secondary font-bold">Rs. ${p.price.toFixed(2)}</p>
+                    </div>
+                `;
+                    searchResults.appendChild(item);
+                });
+            }
+            searchResults.classList.remove('hidden');
+        }
+
+
+        function showToast(title, message, icon = 'check_circle') {
+            const container = document.getElementById('toast-container') || (() => {
+                const c = document.createElement('div');
+                c.id = 'toast-container';
+                document.body.appendChild(c);
+                return c;
+            })();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-msg';
+            toast.innerHTML = `
+            <div class="w-8 h-8 bg-secondary/10 rounded-full flex items-center justify-center">
+                <span class="material-symbols-outlined text-secondary text-[20px]">${icon}</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-[10px] font-bold text-primary uppercase tracking-widest">${title}</span>
+                <span class="text-[11px] text-on-surface-variant font-medium">${message}</span>
+            </div>
+        `;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+    </script>
+
+    <style>
+        #toast-container {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .toast-msg {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid #725b2920;
+            border-radius: 999px;
+            padding: 12px 24px;
+            box-shadow: 0 10px 30px rgba(51, 31, 17, 0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: auto;
+            margin-bottom: 8px;
+        }
+
+        .toast-msg.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </body>
+
 </html>

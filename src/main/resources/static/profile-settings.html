@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Profile Settings - BakeNest</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Playfair+Display:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#331f11",
+                        "secondary": "#725b29",
+                        "background": "#fff8f3",
+                        "surface": "#fff8f3",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#fff2e1",
+                        "on-background": "#211b11",
+                        "on-surface": "#211b11",
+                        "on-surface-variant": "#4f453f",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#d3c3bb"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "headline-lg": ["Playfair Display"],
+                        "display-lg": ["Playfair Display"],
+                        "headline-md": ["Playfair Display"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-left: 1px solid rgba(255, 255, 255, 0.4);
+            border-right: 1px solid rgba(114, 91, 41, 0.1);
+            border-bottom: 1px solid rgba(114, 91, 41, 0.1);
+        }
+        .liquid-shadow {
+            box-shadow: 0 30px 60px -15px rgba(114, 91, 41, 0.08);
+        }
+        .viscous-transition {
+            transition: all 400ms cubic-bezier(0.2, 0, 0, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased">
+
+<!-- TopNavBar (Same as index.html) -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/20 shadow-[0_30px_60px_-15px_rgba(114,91,41,0.08)] transition-all duration-300">
+    <div class="max-w-[1440px] mx-auto px-8 flex justify-between items-center h-20">
+        <a class="font-headline-md text-3xl font-bold text-primary hover:scale-105 transition-transform duration-300" href="/">BakeNest</a>
+        <nav class="hidden md:flex gap-8 items-center h-full">
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="/">Shop</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="/custom-cake.html">Custom Cakes</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="#">About</a>
+        </nav>
+        <div class="flex gap-4 items-center">
+            <!-- Search Bar -->
+            <div class="relative hidden lg:block mr-2">
+                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">search</span>
+                <input type="text" id="live-search-input" class="bg-surface border border-outline-variant/30 rounded-full pl-10 pr-4 py-2 text-sm text-primary placeholder:text-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/20 transition-all w-48 focus:w-64" placeholder="Search...">
+                
+                <!-- Live Search Results Dropdown -->
+                <div id="live-search-results" class="absolute top-full mt-2 right-0 w-80 bg-surface-container-lowest rounded-2xl shadow-xl border border-outline-variant/20 overflow-hidden hidden flex-col max-h-[400px] overflow-y-auto z-50">
+                    <!-- Results will be injected here -->
+                </div>
+            </div>
+
+            <a id="nav-orders" href="/my-orders.html" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 hidden items-center" title="My Orders">
+                <span class="material-symbols-outlined text-3xl">inventory_2</span>
+            </a>
+            <button id="nav-cart-btn" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 relative mt-1">
+                <span class="material-symbols-outlined text-3xl">shopping_bag</span>
+                <span id="nav-cart-count" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+            </button>
+            <div id="nav-account-container" class="hidden md:block relative group">
+                <a id="nav-account" href="/auth.html" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 flex items-center gap-1">
+                    <span class="material-symbols-outlined text-3xl">account_circle</span>
+                </a>
+                <div id="profile-dropdown" class="absolute right-0 top-full w-48 bg-surface-container-lowest rounded-xl shadow-xl border border-outline-variant/20 py-2 hidden group-hover:block transition-all duration-300 before:content-[''] before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
+                    <a href="/profile-settings.html" class="block px-4 py-2 text-sm text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors font-semibold uppercase tracking-wider border-b border-outline-variant/10 pb-2 mb-2">Settings</a>
+                    <button id="btn-logout-header" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors font-semibold uppercase tracking-wider">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="flex-grow pt-28 pb-16">
+    <div class="max-w-xl mx-auto px-6">
+
+        <!-- Page Title -->
+        <div class="mb-6 text-center">
+            <h1 class="font-headline-md text-3xl text-primary mb-1">Account Settings</h1>
+            <p class="text-on-surface-variant text-xs uppercase tracking-widest">Manage your profile & security</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-surface-container-lowest rounded-3xl border border-outline-variant/30 shadow-lg p-6 md:p-8">
+            <form id="profile-form" class="space-y-5">
+                
+                <!-- Email -->
+                <div>
+                    <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.12em] mb-1.5 ml-1">Email</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant text-lg">mail</span>
+                        <input type="email" id="email" class="w-full bg-surface-container-low/50 border border-outline-variant/30 rounded-full px-5 pl-11 py-2.5 text-on-surface-variant text-sm cursor-not-allowed focus:outline-none" readonly />
+                    </div>
+                    <p class="mt-1 text-[9px] text-outline-variant uppercase tracking-widest ml-1 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[10px]">lock</span> Cannot be changed
+                    </p>
+                </div>
+
+                <!-- Name & Phone Row -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.12em] mb-1.5 ml-1" for="name">Full Name</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant text-lg">person</span>
+                            <input type="text" id="name" name="name" class="w-full bg-surface-container-low/50 border border-outline-variant/30 rounded-full px-5 pl-11 py-2.5 text-primary text-sm font-medium placeholder:text-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/20 viscous-transition" placeholder="Your name" required />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.12em] mb-1.5 ml-1" for="phone">Phone</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant text-lg">call</span>
+                            <input type="tel" id="phone" name="phone" class="w-full bg-surface-container-low/50 border border-outline-variant/30 rounded-full px-5 pl-11 py-2.5 text-primary text-sm font-medium placeholder:text-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/20 viscous-transition" placeholder="Phone number" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div>
+                    <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.12em] mb-1.5 ml-1" for="address">Address</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-4 top-3 text-outline-variant text-lg">location_on</span>
+                        <textarea id="address" name="address" rows="2" class="w-full bg-surface-container-low/50 border border-outline-variant/30 rounded-2xl px-5 pl-11 py-2.5 text-primary text-sm font-medium placeholder:text-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/20 viscous-transition resize-none" placeholder="Delivery address"></textarea>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="flex items-center gap-3 pt-1">
+                    <div class="h-px flex-grow bg-outline-variant/30"></div>
+                    <span class="text-[9px] text-outline-variant uppercase tracking-widest font-bold">Security</span>
+                    <div class="h-px flex-grow bg-outline-variant/30"></div>
+                </div>
+
+                <!-- Current Password -->
+                <div>
+                    <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.12em] mb-1.5 ml-1" for="current-password">Current Password</label>
+                    <div class="flex gap-2">
+                        <div class="relative flex-grow">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant text-lg">password</span>
+                            <input type="password" id="current-password" class="w-full bg-surface-container-low/50 border border-outline-variant/30 rounded-full px-5 pl-11 py-2.5 text-primary text-sm font-medium placeholder:text-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/20 viscous-transition" placeholder="Enter current password to change it" />
+                        </div>
+                        <button type="button" id="btn-check-password" class="bg-secondary text-white font-label-lg px-4 py-2.5 rounded-full viscous-transition uppercase tracking-widest text-[10px] whitespace-nowrap hover:bg-secondary/90">
+                            Check
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Password Row -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.12em] mb-1.5 ml-1" for="password">New Password</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant text-lg opacity-50" id="icon-new-pwd">key</span>
+                            <input type="password" id="password" name="password" class="w-full bg-surface-container-low/50 border border-outline-variant/30 rounded-full px-5 pl-11 py-2.5 text-primary text-sm font-medium placeholder:text-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/20 viscous-transition opacity-50 cursor-not-allowed" placeholder="New password" disabled />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.12em] mb-1.5 ml-1" for="confirm-password">Confirm</label>
+                        <div class="relative">
+                            <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant text-lg opacity-50" id="icon-confirm-pwd">lock</span>
+                            <input type="password" id="confirm-password" class="w-full bg-surface-container-low/50 border border-outline-variant/30 rounded-full px-5 pl-11 py-2.5 text-primary text-sm font-medium placeholder:text-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/20 viscous-transition opacity-50 cursor-not-allowed" placeholder="Confirm password" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <div class="pt-2">
+                    <button type="submit" id="save-btn" class="w-full bg-primary hover:bg-primary/90 text-white font-label-lg py-3 rounded-full viscous-transition shadow-md uppercase tracking-widest text-[11px] flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-base">save</span>
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full pt-24 pb-8 bg-surface-container-lowest text-primary">
+    <div class="max-w-[1440px] mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
+        <div>
+            <div class="font-headline-lg text-3xl mb-4">BakeNest</div>
+            <p class="text-on-surface-variant text-sm max-w-xs">Elevating pastry to an art form through uncompromising material honesty and precision craft.</p>
+        </div>
+        <div>
+            <h4 class="font-label-lg uppercase tracking-widest mb-6">Explore</h4>
+            <ul class="space-y-4 text-sm text-on-surface-variant">
+                <li><a href="#" class="hover:text-primary transition-colors">Shop</a></li>
+                <li><a href="#" class="hover:text-primary transition-colors">Custom Cakes</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-label-lg uppercase tracking-widest mb-6">Legal</h4>
+            <ul class="space-y-4 text-sm text-on-surface-variant">
+                <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-label-lg uppercase tracking-widest mb-6">Connect</h4>
+            <ul class="space-y-4 text-sm text-on-surface-variant">
+                <li><a href="#" class="hover:text-primary transition-colors">Instagram</a></li>
+                <li><a href="#" class="hover:text-primary transition-colors">Contact Us</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="max-w-[1440px] mx-auto px-8 border-t border-outline-variant/30 pt-8 text-center text-sm text-on-surface-variant">
+        © 2024 BakeNest Artisanal Patisserie. All rights reserved.
+    </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast-container" class="fixed top-24 left-1/2 -translate-x-1/2 z-[100] flex flex-col gap-4"></div>
+
+<script>
+    const token = sessionStorage.getItem('token');
+    if (!token) window.location.href = '/auth.html';
+
+    document.getElementById('nav-orders').classList.remove('hidden');
+    document.getElementById('nav-orders').classList.add('flex');
+    document.getElementById('nav-account').href = '#';
+
+    document.getElementById('btn-logout-header').addEventListener('click', () => {
+        sessionStorage.removeItem('token');
+        window.location.href = '/';
+    });
+
+    async function fetchProfile() {
+        try {
+            const res = await fetch('/api/v1/user/profile', { headers: { 'Authorization': `Bearer ${token}` } });
+            if (!res.ok) throw new Error('Failed');
+            const user = await res.json();
+            document.getElementById('email').value = user.email;
+            document.getElementById('name').value = user.name || '';
+            document.getElementById('phone').value = user.phone || '';
+            document.getElementById('address').value = user.address || '';
+        } catch (e) {
+            console.error(e);
+            showToast('Error loading profile', 'error');
+        }
+    }
+
+    document.getElementById('btn-check-password').addEventListener('click', async () => {
+        const currentPassword = document.getElementById('current-password').value;
+        if (!currentPassword) {
+            showToast('Please enter your current password', 'error');
+            return;
+        }
+        
+        const btn = document.getElementById('btn-check-password');
+        btn.disabled = true;
+        btn.textContent = 'Checking...';
+
+        try {
+            const res = await fetch('/api/v1/user/verify-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ currentPassword })
+            });
+            if (res.ok) {
+                showToast('Password verified!', 'success');
+                const newPwd = document.getElementById('password');
+                const confirmPwd = document.getElementById('confirm-password');
+                
+                newPwd.disabled = false;
+                newPwd.classList.remove('opacity-50', 'cursor-not-allowed');
+                document.getElementById('icon-new-pwd').classList.remove('opacity-50');
+                
+                confirmPwd.disabled = false;
+                confirmPwd.classList.remove('opacity-50', 'cursor-not-allowed');
+                document.getElementById('icon-confirm-pwd').classList.remove('opacity-50');
+                
+                btn.textContent = 'Verified';
+                btn.classList.replace('bg-secondary', 'bg-green-600');
+                btn.classList.replace('hover:bg-secondary/90', 'hover:bg-green-700');
+            } else {
+                showToast('Incorrect password', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Check';
+            }
+        } catch (e) {
+            console.error(e);
+            showToast('Verification failed', 'error');
+            btn.disabled = false;
+            btn.textContent = 'Check';
+        }
+    });
+
+    document.getElementById('profile-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const pw = document.getElementById('password').value;
+        const cpw = document.getElementById('confirm-password').value;
+        const phone = document.getElementById('phone').value.trim();
+
+        if (phone && !/^(0\d{9})$/.test(phone)) {
+            showToast('Please enter a valid 10-digit local phone number', 'error');
+            return;
+        }
+
+        if (pw && pw.length < 6) {
+            showToast('New password must be at least 6 characters', 'error');
+            return;
+        }
+
+        if (pw && pw !== cpw) { 
+            showToast('Passwords do not match', 'error'); 
+            return; 
+        }
+
+        const data = {
+            name: document.getElementById('name').value,
+            phone: phone,
+            address: document.getElementById('address').value,
+            password: pw || null
+        };
+
+        const btn = document.getElementById('save-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined text-base animate-spin">autorenew</span> Updating...';
+
+        try {
+            const res = await fetch('/api/v1/user/profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) {
+                showToast('Profile updated!', 'success');
+                document.getElementById('password').value = '';
+                document.getElementById('confirm-password').value = '';
+            } else { throw new Error(await res.text()); }
+        } catch (e) {
+            console.error(e);
+            showToast('Update failed', 'error');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<span class="material-symbols-outlined text-base">save</span> Save Changes';
+        }
+    });
+
+    function showToast(message, type) {
+        const c = document.getElementById('toast-container');
+        const t = document.createElement('div');
+        t.className = `px-6 py-3 rounded-full shadow-xl flex items-center gap-2 transition-all duration-500 scale-90 opacity-0 ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white`;
+        t.innerHTML = `<span class="material-symbols-outlined text-sm">${type === 'success' ? 'check_circle' : 'error'}</span><span class="font-semibold uppercase tracking-widest text-[10px]">${message}</span>`;
+        c.appendChild(t);
+        setTimeout(() => t.classList.remove('scale-90', 'opacity-0'), 10);
+        setTimeout(() => { t.classList.add('scale-90', 'opacity-0'); setTimeout(() => t.remove(), 500); }, 4000);
+    }
+
+    fetchProfile();
+
+    // Live Search
+    const searchInput = document.getElementById('live-search-input');
+    const searchResults = document.getElementById('live-search-results');
+    let searchTimeout;
+
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const query = e.target.value.trim();
+            
+            if (query.length < 2) {
+                searchResults.classList.add('hidden');
+                return;
+            }
+
+            searchTimeout = setTimeout(async () => {
+                try {
+                    const res = await fetch(`/api/v1/public/products/search?query=${encodeURIComponent(query)}`);
+                    if (res.ok) {
+                        const products = await res.json();
+                        renderSearchResults(products);
+                    }
+                } catch (error) {
+                    console.error('Search error:', error);
+                }
+            }, 300);
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.add('hidden');
+            }
+        });
+        
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.trim().length >= 2 && searchResults.innerHTML !== '') {
+                searchResults.classList.remove('hidden');
+            }
+        });
+    }
+
+    function renderSearchResults(products) {
+        searchResults.innerHTML = '';
+        if (products.length === 0) {
+            searchResults.innerHTML = '<div class="p-4 text-sm text-on-surface-variant text-center">No products found</div>';
+        } else {
+            products.forEach(p => {
+                const item = document.createElement('a');
+                item.href = `/product-details.html?id=${p.id}`;
+                item.className = 'flex items-center gap-3 p-3 hover:bg-surface-container-low transition-colors border-b border-outline-variant/10 last:border-0';
+                item.innerHTML = `
+                    <div class="w-12 h-12 rounded-lg bg-surface-container-low overflow-hidden flex-shrink-0">
+                        ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.name}" class="w-full h-full object-cover">` : '<div class="w-full h-full flex items-center justify-center text-outline-variant"><span class="material-symbols-outlined">image</span></div>'}
+                    </div>
+                    <div class="flex-grow min-w-0">
+                        <h4 class="text-sm font-semibold text-primary truncate">${p.name}</h4>
+                        <p class="text-xs text-secondary font-bold">Rs. ${p.price.toFixed(2)}</p>
+                    </div>
+                `;
+                searchResults.appendChild(item);
+            });
+        }
+        searchResults.classList.remove('hidden');
+    }
+
+    // Add Cart link logic (just redirect to home or show cart drawer? For simplicity, let's just make it redirect to home for now or add the drawer here too)
+    // Actually, it's better to add the drawer if possible, but for profile settings, maybe just a simple link is enough?
+    // No, let's keep it consistent.
+    document.getElementById('nav-cart-btn').addEventListener('click', () => {
+        window.location.href = '/#cart'; // Special hash to open cart on home page
+    });
+</script>
+</body>
+</html>

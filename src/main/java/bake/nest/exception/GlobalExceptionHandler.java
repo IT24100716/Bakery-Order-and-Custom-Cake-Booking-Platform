@@ -41,6 +41,29 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(org.springframework.dao.DataIntegrityViolationException ex) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+
+        String rootMsg = ex.getRootCause() != null ? ex.getRootCause().getMessage() : ex.getMessage();
+        String message = "A database constraint was violated.";
+
+        if (rootMsg != null && rootMsg.contains("Duplicate entry")) {
+            if (rootMsg.toLowerCase().contains("categories") || rootMsg.toLowerCase().contains("category")) {
+                message = "A category with this name already exists. Please choose a different name.";
+            } else if (rootMsg.toLowerCase().contains("products") || rootMsg.toLowerCase().contains("sku")) {
+                message = "A product SKU with this code already exists. Please choose a different SKU.";
+            } else {
+                message = "This value already exists. Please choose a different one.";
+            }
+        }
+
+        body.put("message", message);
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGeneralException(Exception ex) {
         Map<String, Object> body = new HashMap<>();

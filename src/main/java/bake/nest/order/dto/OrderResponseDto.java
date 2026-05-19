@@ -12,6 +12,10 @@ public class OrderResponseDto {
     private Double totalAmount;
     private OrderStatus status;
     private String paymentStatus;
+    private String paymentMethod;
+    private String paymentSlipUrl;
     private LocalDateTime createdAt;
+    private String customerName;
+    private String customerEmail;
     private List<OrderItemResponseDto> items;
 }

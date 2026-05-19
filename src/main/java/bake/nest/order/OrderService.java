@@ -84,6 +84,7 @@ public class OrderService {
         return convertToResponseDto(savedOrder);
     }
 
+    @Transactional(readOnly = true)
     public List<OrderResponseDto> getMyOrders() {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(userEmail)
@@ -93,7 +94,33 @@ public class OrderService {
                 .map(this::convertToResponseDto)
                 .collect(Collectors.toList());
     }
-    
+
+    @Transactional(readOnly = true)
+    public List<OrderResponseDto> getAllOrders() {
+        return orderRepository.findAll().stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public OrderResponseDto updateOrderStatus(Long id, OrderStatus newStatus) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setStatus(newStatus);
+        Order savedOrder = orderRepository.save(order);
+        return convertToResponseDto(savedOrder);
+    }
+
+    @Transactional
+    public OrderResponseDto updatePaymentStatus(Long id, String paymentStatus) {
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        order.setPaymentStatus(paymentStatus);
+        Order savedOrder = orderRepository.save(order);
+        return convertToResponseDto(savedOrder);
+    }
+
+    @Transactional(readOnly = true)
     public OrderResponseDto getOrderById(Long id) {
         String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(userEmail)
@@ -101,13 +128,49 @@ public class OrderService {
 
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
-                
+
         // Ensure user owns this order
         if (!order.getUser().getId().equals(user.getId())) {
-             throw new RuntimeException("Unauthorized to view this order");
+            throw new RuntimeException("Unauthorized to view this order");
         }
-        
+
         return convertToResponseDto(order);
+    }
+
+    @Transactional
+    public OrderResponseDto cancelOrder(Long id) {
+        String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        // Ensure user owns this order
+        if (!order.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Unauthorized to cancel this order");
+        }
+
+        // Only PENDING orders can be cancelled by customer
+        if (order.getStatus() != OrderStatus.PENDING) {
+            throw new RuntimeException("Order cannot be cancelled as it is already " + order.getStatus());
+        }
+
+        // Restore stock
+        for (OrderItem item : order.getItems()) {
+            Product product = item.getProduct();
+            if ("STOCK".equalsIgnoreCase(product.getStockType())) {
+                if (product.getStock() != null) {
+                    product.setStock(product.getStock() + item.getQuantity());
+                    productRepository.save(product);
+                }
+            }
+        }
+
+        order.setStatus(OrderStatus.CANCELLED);
+        Order savedOrder = orderRepository.save(order);
+
+        return convertToResponseDto(savedOrder);
     }
 
     private OrderResponseDto convertToResponseDto(Order order) {
@@ -116,7 +179,15 @@ public class OrderService {
         dto.setTotalAmount(order.getTotalAmount());
         dto.setStatus(order.getStatus());
         dto.setPaymentStatus(order.getPaymentStatus());
+        dto.setPaymentMethod(order.getPaymentMethod());
+        dto.setPaymentSlipUrl(order.getPaymentSlipUrl());
         dto.setCreatedAt(order.getCreatedAt());
+        
+        // Include customer info for admin views
+        if (order.getUser() != null) {
+            dto.setCustomerName(order.getUser().getName());
+            dto.setCustomerEmail(order.getUser().getEmail());
+        }
 
         List<OrderItemResponseDto> itemDtos = order.getItems().stream().map(item -> {
             OrderItemResponseDto itemDto = new OrderItemResponseDto();
@@ -132,10 +203,14 @@ public class OrderService {
         dto.setItems(itemDtos);
         return dto;
     }
+
     private String calculateInitialPaymentStatus(String method) {
-        if ("COD".equalsIgnoreCase(method)) return "PENDING";
-        if ("CARD".equalsIgnoreCase(method)) return "PAID";
-        if ("BANK_TRANSFER".equalsIgnoreCase(method)) return "WAITING_APPROVAL";
+        if ("COD".equalsIgnoreCase(method))
+            return "PENDING";
+        if ("CARD".equalsIgnoreCase(method))
+            return "PAID";
+        if ("BANK_TRANSFER".equalsIgnoreCase(method))
+            return "WAITING_APPROVAL";
         return "PENDING";
     }
 }

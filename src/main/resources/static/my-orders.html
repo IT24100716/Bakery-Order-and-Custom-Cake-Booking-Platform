@@ -87,7 +87,7 @@
         }
 
         .order-card.expanded {
-            ring: 2px solid #331f11;
+            outline: 2px solid #331f11;
         }
 
         .detail-pane {
@@ -99,29 +99,76 @@
         .order-card.expanded .detail-pane {
             max-height: 1000px;
         }
+
+        /* Toast Styles */
+        #toast-container {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .toast-msg {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid #725b2920;
+            border-radius: 999px;
+            padding: 12px 24px;
+            box-shadow: 0 10px 30px rgba(51, 31, 17, 0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: auto;
+        }
+        .toast-msg.show {
+            opacity: 100;
+            transform: translateY(0);
+        }
     </style>
 </head>
 
 <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased">
 
-    <header
-        class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm transition-all duration-300">
+    <header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-white/20 shadow-[0_30px_60px_-15px_rgba(114,91,41,0.08)] transition-all duration-300">
         <div class="max-w-[1440px] mx-auto px-8 flex justify-between items-center h-20">
-            <a class="font-headline-md text-3xl font-bold text-primary hover:scale-105 transition-transform duration-300"
-                href="/">BakeNest</a>
+            <a class="font-headline-md text-3xl font-bold text-primary hover:scale-105 transition-transform duration-300" href="/">BakeNest</a>
+            <nav class="hidden md:flex gap-8 items-center h-full">
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="/">Shop</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="/custom-cake.html">Custom Cakes</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-lg uppercase tracking-widest" href="#">About</a>
+            </nav>
             <div class="flex gap-4 items-center">
-                <a id="nav-orders" href="/my-orders.html"
-                    class="text-primary hover:scale-105 transition-all duration-300 flex items-center gap-1"
-                    title="My Orders">
-                    <span class="material-symbols-outlined">receipt_long</span>
-                    <span
-                        class="hidden lg:inline text-sm font-semibold uppercase tracking-widest border-b-2 border-primary">Orders</span>
+                <!-- Search Bar -->
+                <div class="relative hidden lg:block mr-2">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-[20px]">search</span>
+                    <input type="text" id="live-search-input" class="bg-surface border border-outline-variant/30 rounded-full pl-10 pr-4 py-2 text-sm text-primary placeholder:text-outline-variant focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary/20 transition-all w-48 focus:w-64" placeholder="Search...">
+                    
+                    <!-- Live Search Results Dropdown -->
+                    <div id="live-search-results" class="absolute top-full mt-2 right-0 w-80 bg-surface-container-lowest rounded-2xl shadow-xl border border-outline-variant/20 overflow-hidden hidden flex-col max-h-[400px] overflow-y-auto z-50">
+                        <!-- Results will be injected here -->
+                    </div>
+                </div>
+
+                <a id="nav-orders" href="/my-orders.html" class="text-primary hover:scale-105 transition-all duration-300 flex items-center" title="My Orders">
+                    <span class="material-symbols-outlined text-3xl border-b-2 border-primary pb-1">inventory_2</span>
                 </a>
-                <a id="nav-account" href="#"
-                    class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 flex items-center gap-1">
-                    <span class="material-symbols-outlined">logout</span>
-                    <span id="nav-account-text" class="text-sm font-semibold uppercase tracking-widest">Sign Out</span>
-                </a>
+                <button id="nav-cart-btn" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 relative mt-1">
+                    <span class="material-symbols-outlined text-3xl">shopping_bag</span>
+                    <span id="nav-cart-count" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+                <div class="relative group">
+                    <button id="nav-account" class="text-on-surface-variant hover:text-primary hover:scale-105 transition-all duration-300 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-3xl">account_circle</span>
+                    </button>
+                    <div id="profile-dropdown" class="absolute right-0 top-full w-48 bg-surface-container-lowest rounded-xl shadow-xl border border-outline-variant/20 py-2 hidden group-hover:block transition-all duration-300 before:content-[''] before:absolute before:-top-4 before:left-0 before:w-full before:h-4">
+                        <a href="/profile-settings.html" class="block px-4 py-2 text-sm text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors font-semibold uppercase tracking-wider border-b border-outline-variant/10 pb-2 mb-2">Settings</a>
+                        <button id="btn-logout-header" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors font-semibold uppercase tracking-wider">Logout</button>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -145,13 +192,82 @@
     </main>
 
     <script>
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (!token) window.location.href = '/auth.html';
 
-        document.getElementById('nav-account').addEventListener('click', (e) => {
+        document.getElementById('btn-logout-header').addEventListener('click', (e) => {
             e.preventDefault();
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
             window.location.href = '/';
+        });
+
+        // Live Search
+        const searchInput = document.getElementById('live-search-input');
+        const searchResults = document.getElementById('live-search-results');
+        let searchTimeout;
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                const query = e.target.value.trim();
+                
+                if (query.length < 2) {
+                    searchResults.classList.add('hidden');
+                    return;
+                }
+
+                searchTimeout = setTimeout(async () => {
+                    try {
+                        const res = await fetch(`/api/v1/public/products/search?query=${encodeURIComponent(query)}`);
+                        if (res.ok) {
+                            const products = await res.json();
+                            renderSearchResults(products);
+                        }
+                    } catch (error) {
+                        console.error('Search error:', error);
+                    }
+                }, 300);
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.add('hidden');
+                }
+            });
+            
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.trim().length >= 2 && searchResults.innerHTML !== '') {
+                    searchResults.classList.remove('hidden');
+                }
+            });
+        }
+
+        function renderSearchResults(products) {
+            searchResults.innerHTML = '';
+            if (products.length === 0) {
+                searchResults.innerHTML = '<div class="p-4 text-sm text-on-surface-variant text-center">No products found</div>';
+            } else {
+                products.forEach(p => {
+                    const item = document.createElement('a');
+                    item.href = `/product-details.html?id=${p.id}`;
+                    item.className = 'flex items-center gap-3 p-3 hover:bg-surface-container-low transition-colors border-b border-outline-variant/10 last:border-0';
+                    item.innerHTML = `
+                        <div class="w-12 h-12 rounded-lg bg-surface-container-low overflow-hidden flex-shrink-0">
+                            ${p.imageUrl ? `<img src="${p.imageUrl}" alt="${p.name}" class="w-full h-full object-cover">` : '<div class="w-full h-full flex items-center justify-center text-outline-variant"><span class="material-symbols-outlined">image</span></div>'}
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <h4 class="text-sm font-semibold text-primary truncate">${p.name}</h4>
+                            <p class="text-xs text-secondary font-bold">Rs. ${p.price.toFixed(2)}</p>
+                        </div>
+                    `;
+                    searchResults.appendChild(item);
+                });
+            }
+            searchResults.classList.remove('hidden');
+        }
+
+        document.getElementById('nav-cart-btn').addEventListener('click', () => {
+            window.location.href = '/#cart';
         });
 
         let allOrders = [];
@@ -164,60 +280,98 @@
             renderOrders();
         }
 
-        function getStatusBadge(status) {
+        function getStatusBadge(order) {
             const styles = {
-                'PENDING': 'bg-yellow-100 text-yellow-800',
-                'PAID': 'bg-green-100 text-green-800',
-                'BAKING': 'bg-orange-100 text-orange-800',
-                'OUT_FOR_DELIVERY': 'bg-blue-100 text-blue-800',
-                'DELIVERED': 'bg-green-100 text-green-800',
-                'CANCELLED': 'bg-red-100 text-red-800'
+                'PENDING': 'bg-amber-50 text-amber-700 border-amber-100',
+                'CONFIRMED': 'bg-blue-50 text-blue-700 border-blue-100',
+                'ON_THE_WAY': 'bg-purple-50 text-purple-700 border-purple-100',
+                'DELIVERED': 'bg-emerald-50 text-emerald-700 border-emerald-100',
+                'CANCELLED': 'bg-red-50 text-red-700 border-red-100',
+                'QUOTED': 'bg-indigo-50 text-indigo-700 border-indigo-100',
+                'ACCEPTED': 'bg-lime-50 text-lime-700 border-lime-100',
+                'APPROVED': 'bg-teal-50 text-teal-700 border-teal-100',
+                'REFUNDED': 'bg-orange-50 text-orange-700 border-orange-100'
             };
-            return `<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${styles[status] || 'bg-gray-100'}">${status.replace('_', ' ')}</span>`;
+            let s = (order.status || '').toUpperCase();
+            if (s === 'CANCELLED' && (order.paymentStatus === 'REFUND' || order.paymentStatus === 'REFUNDED')) {
+                s = 'REFUNDED';
+            }
+            return `<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${styles[s] || 'bg-gray-50 text-gray-600 border-gray-100'}">${s.replace('_', ' ')}</span>`;
         }
 
         function renderTracking(status) {
             const steps = [
                 { id: 'PENDING', label: 'Placed', icon: 'receipt' },
-                { id: 'BAKING', label: 'Baking', icon: 'bakery_dining' },
-                { id: 'OUT_FOR_DELIVERY', label: 'On Way', icon: 'delivery_dining' },
-                { id: 'DELIVERED', label: 'Arrived', icon: 'check_circle' }
+                { id: 'CONFIRMED', label: 'Confirmed', icon: 'check_circle' },
+                { id: 'ON_THE_WAY', label: 'On Way', icon: 'delivery_dining' },
+                { id: 'DELIVERED', label: 'Arrived', icon: 'done_all' }
             ];
 
             let currentIdx = steps.findIndex(s => s.id === status);
-            if (status === 'PAID') currentIdx = 0;
+            if (status === 'CANCELLED') return '';
 
             return `
-            <div class="flex justify-between mt-6 pt-6 border-t border-outline-variant/20">
+            <div class="flex justify-between items-center mt-8 mb-4 px-4 relative">
+                <div class="absolute top-1/2 left-0 w-full h-0.5 bg-outline-variant/30 -translate-y-1/2 z-0"></div>
                 ${steps.map((step, idx) => {
-                let state = '';
-                if (idx < currentIdx) state = 'completed';
-                else if (idx === currentIdx) state = 'active';
-                return `
-                        <div class="tracking-step ${state}">
-                            <div class="step-icon"><span class="material-symbols-outlined text-[18px]">${step.icon}</span></div>
-                            <div class="text-[10px] uppercase tracking-tighter font-bold ${state ? 'text-primary' : 'text-outline-variant'}">${step.label}</div>
+                    let state = '';
+                    if (idx < currentIdx) state = 'completed';
+                    else if (idx === currentIdx) state = 'active';
+                    
+                    return `
+                        <div class="relative z-10 flex flex-col items-center gap-2 group">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${state === 'completed' ? 'bg-secondary text-white' : (state === 'active' ? 'bg-white border-2 border-secondary text-secondary animate-pulse' : 'bg-white border-2 border-outline-variant text-outline-variant')} shadow-sm">
+                                <span class="material-symbols-outlined text-[20px]">${state === 'completed' ? 'done' : step.icon}</span>
+                            </div>
+                            <span class="text-[9px] font-bold uppercase tracking-widest ${state ? 'text-primary' : 'text-on-surface-variant/40'} transition-colors duration-300">${step.label}</span>
                         </div>
                     `;
-            }).join('')}
+                }).join('')}
             </div>
-        `;
+            `;
         }
 
         async function loadOrders() {
             try {
-                const res = await fetch('/api/v1/customer/orders', { headers: { 'Authorization': `Bearer ${token}` } });
-                if (!res.ok) throw new Error();
-                allOrders = await res.json();
+                const [ordersRes, customRes] = await Promise.all([
+                    fetch('/api/v1/customer/orders', { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch('/api/v1/customer/custom-cakes', { headers: { 'Authorization': `Bearer ${token}` } })
+                ]);
+
+                let orders = [];
+                let customRequests = [];
+
+                if (ordersRes.ok) orders = await ordersRes.json();
+                if (customRes.ok) customRequests = await customRes.json();
+
+                // Add type flag to distinguish
+                orders = orders.map(o => ({ ...o, _type: 'ORDER' }));
+                customRequests = customRequests.map(c => ({
+                    ...c,
+                    _type: 'CUSTOM_CAKE',
+                    totalAmount: (c.status === 'APPROVED' || c.status === 'CONFIRMED' || c.status === 'DELIVERED' || c.status === 'ACCEPTED') ? ((c.quotedPrice || 0) + (c.deliveryFee || 0)) : (c.quotedPrice || 0),
+                    status: c.status
+                }));
+
+                allOrders = [...orders, ...customRequests];
+                
+                // Sort by createdAt descending
+                allOrders.sort((a, b) => {
+                    const dateA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+                    const dateB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+                    return dateB - dateA || b.id - a.id;
+                });
+
                 renderOrders();
             } catch (e) {
+                console.error(e);
                 document.getElementById('orders-container').innerHTML = `<div class="text-center py-12 text-red-500">Failed to load orders.</div>`;
             }
         }
 
         function renderOrders() {
             const container = document.getElementById('orders-container');
-            const activeStatuses = ['PENDING', 'PAID', 'BAKING', 'OUT_FOR_DELIVERY'];
+            const activeStatuses = ['PENDING', 'CONFIRMED', 'ON_THE_WAY', 'QUOTED', 'APPROVED', 'CANCELLED'];
 
             const filtered = allOrders.filter(o => {
                 const isActive = activeStatuses.includes(o.status);
@@ -225,62 +379,260 @@
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="text-center py-16 text-on-surface-variant opacity-60">No ${currentTab} orders found.</div>`;
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-24 text-on-surface-variant opacity-60 bg-white/50 rounded-[2rem] border border-dashed border-outline-variant/50">
+                        <span class="material-symbols-outlined text-5xl mb-4 text-outline-variant">order_approve</span>
+                        <p class="font-medium tracking-wide">No ${currentTab} orders found.</p>
+                        <a href="/" class="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-secondary hover:text-primary transition-colors border-b border-secondary pb-1">Start Shopping</a>
+                    </div>
+                `;
                 return;
             }
 
-            container.innerHTML = filtered.map(order => `
-            <div class="order-card bg-surface-container-lowest rounded-2xl border border-outline-variant/30 shadow-sm transition-all hover:shadow-md cursor-pointer group overflow-hidden" onclick="this.classList.toggle('expanded')">
-                <div class="p-6">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <div class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold mb-1">Order #${String(order.id).padStart(5, '0')}</div>
-                            <div class="text-xs text-on-surface-variant font-medium">${new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
-                        </div>
-                        <div class="flex flex-col items-end gap-2">
-                            ${getStatusBadge(order.status)}
-                            <div class="text-[10px] text-on-surface-variant uppercase font-bold group-[.expanded]:rotate-180 transition-transform">View Details ▼</div>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="flex -space-x-3 overflow-hidden">
-                            ${order.items.slice(0, 3).map(item => `<img src="${item.productImageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80'}" class="inline-block h-10 w-10 rounded-full ring-2 ring-white object-cover">`).join('')}
-                            ${order.items.length > 3 ? `<div class="flex items-center justify-center h-10 w-10 rounded-full bg-surface-container-low ring-2 ring-white text-[10px] font-bold">+${order.items.length - 3}</div>` : ''}
-                        </div>
-                        <div class="flex-grow">
-                            <div class="text-sm font-semibold text-primary">${order.items.length} ${order.items.length === 1 ? 'item' : 'items'}</div>
-                            <div class="text-xs text-on-surface-variant">Rs. ${order.totalAmount.toFixed(2)}</div>
-                        </div>
-                    </div>
+            container.innerHTML = filtered.map(order => {
+                const isCustom = order._type === 'CUSTOM_CAKE';
+                const mainImage = isCustom 
+                    ? (order.referenceImageUrl || 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?q=80')
+                    : (order.items && order.items.length > 0 ? (order.items[0].productImageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80') : 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80');
 
-                    ${activeStatuses.includes(order.status) ? renderTracking(order.status) : ''}
-                    
-                    <!-- Detail Pane -->
-                    <div class="detail-pane pt-6 mt-6 border-t border-outline-variant/20">
-                        <h4 class="text-xs uppercase tracking-widest font-bold text-primary mb-4">Items Summary</h4>
-                        <div class="space-y-3">
-                            ${order.items.map(item => `
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-on-surface-variant">${item.productName} <span class="text-[10px] font-bold">x${item.quantity}</span></span>
-                                    <span class="font-semibold text-primary">Rs. ${(item.price * item.quantity).toFixed(2)}</span>
+                return `
+                <div class="order-card bg-white rounded-[2rem] border border-outline-variant/30 shadow-[0_4px_20px_-4px_rgba(51,31,17,0.05)] transition-all hover:shadow-[0_12px_40px_-12px_rgba(51,31,17,0.12)] group overflow-hidden mb-8" onclick="this.classList.toggle('expanded')">
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row gap-6 items-center">
+                            <!-- Product Image -->
+                            <div class="w-32 h-32 md:w-40 md:h-40 rounded-[2rem] overflow-hidden flex-shrink-0 bg-surface-container-low border border-outline-variant/20 shadow-inner group-hover:scale-[1.02] transition-transform duration-500">
+                                <img src="${mainImage}" class="w-full h-full object-cover" alt="Product">
+                            </div>
+
+                            <!-- Order Summary -->
+                            <div class="flex-grow text-center md:text-left">
+                                <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-3">
+                                    <span class="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40">Order #${String(order.id).padStart(5, '0')}</span>
+                                    ${isCustom ? '<span class="bg-primary text-white text-[8px] px-3 py-1 rounded-full font-black uppercase tracking-widest">Bespoke Design</span>' : ''}
+                                    ${getStatusBadge(order)}
                                 </div>
-                            `).join('')}
+                                
+                                <h3 class="font-headline-md text-2xl text-primary mb-2 leading-tight">
+                                    ${isCustom ? `${order.flavor} Custom Creation` : (order.items && order.items.length > 0 ? `${order.items[0].productName}${order.items.length > 1 ? ` & ${order.items.length - 1} more` : ''}` : 'Standard Bakery Order')}
+                                </h3>
+                                
+                                <div class="flex items-center justify-center md:justify-start gap-4 text-on-surface-variant/70">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                                        <span class="text-xs font-medium">${order.createdAt ? new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Pending Review'}</span>
+                                    </div>
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="material-symbols-outlined text-[16px]">payments</span>
+                                        <span class="text-xs font-bold text-secondary">Rs. ${order.totalAmount > 0 ? order.totalAmount.toFixed(2) : 'TBD'}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="flex flex-col items-center md:items-end gap-4 min-w-[120px]">
+                                <button class="group/btn flex items-center gap-2 px-6 py-3 bg-surface-container-low rounded-full hover:bg-primary hover:text-white transition-all duration-300 shadow-sm">
+                                    <span class="text-[10px] font-black uppercase tracking-widest">Details</span>
+                                    <span class="material-symbols-outlined text-[18px] group-[.expanded]:rotate-180 transition-transform duration-300">expand_more</span>
+                                </button>
+                            </div>
                         </div>
-                        <div class="mt-6 pt-4 border-t border-dashed border-outline-variant/30 flex justify-between items-center">
-                            <div class="text-xs text-on-surface-variant">Payment: <span class="font-bold text-primary uppercase">${order.paymentStatus || 'Pending'}</span></div>
-                            <div class="text-right">
-                                <span class="text-xs text-on-surface-variant uppercase tracking-widest">Total</span>
-                                <div class="text-lg font-bold text-primary">Rs. ${order.totalAmount.toFixed(2)}</div>
+
+                        <!-- Expanded Detail Pane -->
+                        <div class="detail-pane opacity-0 group-[.expanded]:opacity-100 transition-all duration-500">
+                            <div class="pt-8 mt-8 border-t border-dashed border-outline-variant/30">
+                                
+                                <!-- Tracking -->
+                                ${!isCustom && ['PENDING', 'CONFIRMED', 'ON_THE_WAY', 'DELIVERED'].includes(order.status) ? renderTracking(order.status) : ''}
+                                ${isCustom ? `
+                                    <div class="bg-surface-container-low/50 rounded-2xl p-6 mb-8">
+                                        <h4 class="text-[10px] uppercase tracking-[0.2em] font-black text-primary mb-6 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-[18px]">design_services</span>
+                                            Design Specification
+                                        </h4>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                                            <div>
+                                                <p class="text-[9px] text-on-surface-variant/60 uppercase font-black mb-1">Needed Date</p>
+                                                <p class="text-sm font-semibold text-primary">${order.neededDate ? new Date(order.neededDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'}) : 'Not Specified'}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-[9px] text-on-surface-variant/60 uppercase font-black mb-1">Cake Size</p>
+                                                <p class="text-sm font-semibold text-primary">${order.size}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-[9px] text-on-surface-variant/60 uppercase font-black mb-1">Flavor</p>
+                                                <p class="text-sm font-semibold text-primary">${order.flavor}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-[9px] text-on-surface-variant/60 uppercase font-black mb-1">Toppings</p>
+                                                <p class="text-sm font-semibold text-primary">${order.toppings || 'Standard'}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-[9px] text-on-surface-variant/60 uppercase font-black mb-1">Special Wording</p>
+                                                <p class="text-sm font-semibold text-primary">${order.cakeWording || 'None'}</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-6 pt-6 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between gap-6">
+                                            <div class="flex-1">
+                                                <p class="text-[9px] text-on-surface-variant/60 uppercase font-black mb-2">Designer Message</p>
+                                                <p class="text-sm text-on-surface-variant leading-relaxed italic">"${order.message || 'Craft a masterpiece with these details.'}"</p>
+                                            </div>
+                                            ${(order.status === 'APPROVED' || order.status === 'CONFIRMED' || order.status === 'DELIVERED' || order.status === 'ACCEPTED') ? `
+                                            <div class="flex-1 md:text-right">
+                                                <p class="text-[9px] text-on-surface-variant/60 uppercase font-black mb-2">Settlement Breakdown</p>
+                                                <div class="flex flex-col gap-1 text-sm text-on-surface-variant">
+                                                    <div class="flex justify-between md:justify-end gap-4"><span>Cake Quote:</span> <span class="font-bold">Rs. ${order.quotedPrice ? order.quotedPrice.toFixed(2) : '0.00'}</span></div>
+                                                    <div class="flex justify-between md:justify-end gap-4"><span>Delivery (${order.deliveryMethod === 'DELIVERY' ? 'Home Delivery' : 'Store Pickup'}):</span> <span class="font-bold">Rs. ${order.deliveryFee ? order.deliveryFee.toFixed(2) : '0.00'}</span></div>
+                                                    <div class="flex justify-between md:justify-end gap-4 border-t border-outline-variant/20 pt-1 mt-1 text-primary"><span>Total Settled:</span> <span class="font-black">Rs. ${((order.quotedPrice || 0) + (order.deliveryFee || 0)).toFixed(2)}</span></div>
+                                                </div>
+                                            </div>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                ` : `
+                                    <div class="mb-8">
+                                        <h4 class="text-[10px] uppercase tracking-[0.2em] font-black text-primary mb-4 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-[18px]">shopping_basket</span>
+                                            Order Summary
+                                        </h4>
+                                        <div class="bg-surface-container-low/30 rounded-2xl overflow-hidden border border-outline-variant/10">
+                                            ${order.items.map(item => `
+                                                <div class="flex justify-between items-center p-4 border-b border-outline-variant/10 last:border-0 hover:bg-white transition-colors">
+                                                    <div class="flex items-center gap-3">
+                                                        <div class="w-10 h-10 rounded-lg overflow-hidden bg-white border border-outline-variant/20">
+                                                            <img src="${item.productImageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80'}" class="w-full h-full object-cover">
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-sm font-bold text-primary">${item.productName}</p>
+                                                            <p class="text-[10px] text-on-surface-variant/60">Quantity: ${item.quantity}</p>
+                                                        </div>
+                                                    </div>
+                                                    <span class="text-sm font-black text-primary">Rs. ${(item.price * item.quantity).toFixed(2)}</span>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                `}
+
+                                <div class="flex flex-col sm:flex-row justify-between items-center gap-6">
+                                    <div class="flex items-center gap-4">
+                                        ${(order.status === 'PENDING' || (isCustom && order.status === 'QUOTED')) ? `
+                                            <button onclick="event.stopPropagation(); handleCancelOrder(${order.id}, ${isCustom})" class="px-6 py-3 rounded-full bg-red-50 text-red-600 text-[10px] font-black uppercase tracking-[0.2em] border border-red-100 hover:bg-red-600 hover:text-white transition-all shadow-sm">
+                                                Cancel Request
+                                            </button>
+                                        ` : ''}
+                                        ${(isCustom && order.status === 'QUOTED') ? `
+                                            <a href="/custom-checkout.html?id=${order.id}" onclick="event.stopPropagation();" class="px-6 py-3 rounded-full bg-primary text-white text-[10px] font-black uppercase tracking-[0.2em] hover:bg-secondary transition-all shadow-sm flex items-center gap-2">
+                                                <span class="material-symbols-outlined text-[16px]">payment</span> Pay Now
+                                            </a>
+                                        ` : ''}
+                                        <div class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest ml-2">
+                                            ${isCustom ? 'Payment: ' : 'Method: '}
+                                            <span class="text-primary">${isCustom ? (order.quotedPrice ? (order.status === 'QUOTED' ? 'Pending Payment' : (order.status === 'ACCEPTED' ? 'Verifying Slip' : 'Paid/Approved')) : 'Awaiting Review') : (order.paymentMethod || 'Credit Card')}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center sm:text-right px-8 py-4 bg-secondary/5 rounded-[2rem] border border-secondary/10">
+                                        <span class="text-[9px] text-secondary font-black uppercase tracking-[0.3em]">Total Amount</span>
+                                        <div class="text-2xl font-black text-primary">${order.totalAmount > 0 ? 'Rs. ' + order.totalAmount.toFixed(2) : 'Awaiting Quote'}</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+                `;
+            }).join('');
+        }
+
+        // Success Toast Logic
+        async function handleCancelOrder(orderId, isCustom = false) {
+            const type = isCustom ? 'request' : 'order';
+            if (!confirm(`Are you sure you want to cancel this ${type}? This action cannot be undone.`)) return;
+
+            try {
+                const endpoint = isCustom 
+                    ? `/api/v1/customer/custom-cakes/${orderId}/cancel`
+                    : `/api/v1/customer/orders/${orderId}/cancel`;
+
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (res.ok) {
+                    showToast(`${isCustom ? 'Request' : 'Order'} Cancelled`, `Your ${type} has been successfully cancelled.`, 'check_circle');
+                    loadOrders(); // Reload to update UI
+                } else {
+                    const err = await res.json();
+                    showToast('Cancellation Failed', err.message || `Could not cancel ${type}.`, 'error');
+                }
+            } catch (e) {
+                console.error(e);
+                showToast('Error', 'A connection error occurred.', 'error');
+            }
+        }
+
+        function showToast(title, message, icon) {
+            const container = document.getElementById('toast-container') || (() => {
+                const c = document.createElement('div');
+                c.id = 'toast-container';
+                document.body.appendChild(c);
+                return c;
+            })();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-msg';
+            toast.innerHTML = `
+                <div class="w-8 h-8 bg-[#725b29]/10 rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[#725b29] text-[20px]">${icon}</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-[10px] font-bold text-primary uppercase tracking-widest">${title}</span>
+                    <span class="text-[11px] text-on-surface-variant font-medium">${message}</span>
+                </div>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 500);
+            }, 6000);
+        }
+
+        function showSuccessToast() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('success') === 'custom_cake') {
+                const container = document.createElement('div');
+                container.id = 'toast-container';
+                document.body.appendChild(container);
+
+                const toast = document.createElement('div');
+                toast.className = 'toast-msg';
+                toast.innerHTML = `
+                    <div class="w-8 h-8 bg-[#725b29]/10 rounded-full flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[#725b29] text-[20px]">check_circle</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-bold text-primary uppercase tracking-widest">Submission Successful</span>
+                        <span class="text-[11px] text-on-surface-variant font-medium">Thank you! Your custom cake design has been sent for approval.</span>
+                    </div>
+                `;
+                container.appendChild(toast);
+                setTimeout(() => toast.classList.add('show'), 100);
+                
+                // Clear URL param without refresh
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                // Auto-remove after 6 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => container.remove(), 500);
+                }, 6000);
+            }
         }
 
         loadOrders();
+        showSuccessToast();
     </script>
 </body>
 

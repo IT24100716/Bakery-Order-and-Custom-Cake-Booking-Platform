@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>BakeNest - User Manager</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fff8f5",
+                        "surface": "#fff8f5",
+                        "surface-variant": "#ffdcc7",
+                        "surface-container-low": "#fff1ea",
+                        "surface-container": "#ffeade",
+                        "surface-container-highest": "#ffdcc7",
+                        "on-background": "#2a170a",
+                        "on-surface": "#2a170a",
+                        "on-surface-variant": "#4a463f",
+                        "primary": "#625e59",
+                        "secondary": "#6d5c40",
+                        "tertiary": "#725b29",
+                        "secondary-container": "#f4dcb9",
+                        "on-secondary-container": "#726044",
+                        "tertiary-container": "#fff8f1",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#cdc5bc",
+                    },
+                    "fontFamily": {
+                        "display": ["Playfair Display"],
+                        "body": ["Montserrat"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(75, 52, 37, 0.04);
+        }
+
+        .smooth-transition {
+            transition: all 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .tab-active {
+            border-bottom: 2px solid var(--md-sys-color-secondary);
+            color: var(--md-sys-color-primary);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex font-body-md antialiased overflow-x-hidden">
+
+    <!-- SideNavBar -->
+    <nav class="bg-[#2a170a] font-body text-xs font-semibold uppercase tracking-widest fixed left-0 top-0 bottom-0 h-screen w-72 flex flex-col p-8 z-50 smooth-transition hidden md:flex text-white/70 overflow-y-auto">
+        <div class="mb-12 flex flex-col items-center justify-center text-center mt-4">
+            <div class="w-20 h-20 rounded-2xl bg-white/5 mb-6 flex items-center justify-center border border-white/10 shadow-2xl backdrop-blur-md">
+                <span class="material-symbols-outlined text-4xl text-white/90">bakery_dining</span>
+            </div>
+            <h1 class="font-display text-3xl text-white tracking-[0.1em] font-bold mb-1">BAKENEST</h1>
+            <p class="text-[9px] text-white/30 uppercase tracking-[0.3em] font-bold" id="user-role-badge">SUPER ADMIN</p>
+        </div>
+
+        <div class="flex flex-col gap-3 flex-grow" id="admin-nav-links">
+            <!-- Standard Admin Links (Filtered by Role) -->
+            <div id="nav-group-standard" class="hidden flex-col gap-3">
+                <a id="nav-dashboard" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/admin.html">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">grid_view</span>
+                    <span class="tracking-widest">Dashboard</span>
+                </a>
+                <a id="nav-products" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/admin-products.html">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">inventory_2</span>
+                    <span class="tracking-widest">Products</span>
+                </a>
+                <a id="nav-categories" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/admin-categories.html">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">category</span>
+                    <span class="tracking-widest">Categories</span>
+                </a>
+                <a id="nav-custom" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/admin-custom-requests.html">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">volunteer_activism</span>
+                    <span class="tracking-widest">Custom Requests</span>
+                </a>
+                <a id="nav-orders" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/order/orders.html">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">receipt_long</span>
+                    <span class="tracking-widest">Orders</span>
+                </a>
+                <a id="nav-payments" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/order/payments.html">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">payments</span>
+                    <span class="tracking-widest">Payments</span>
+                </a>
+            </div>
+
+            <!-- Specialized User Admin Links -->
+            <div id="nav-group-users" class="flex flex-col gap-3 mt-4 pt-4 border-t border-white/10">
+                <span class="px-6 text-[10px] text-white/30 uppercase tracking-widest font-bold">User Management</span>
+                <a onclick="switchTab('customers')" id="side-nav-customers" class="flex items-center gap-4 px-6 py-4 bg-white/10 text-white shadow-xl rounded-2xl smooth-transition border border-white/10 cursor-pointer" href="#">
+                    <span class="material-symbols-outlined text-[22px] fill">person</span>
+                    <span class="tracking-widest text-[11px]">Customers</span>
+                </a>
+                <a onclick="switchTab('staff')" id="side-nav-staff" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group cursor-pointer" href="#">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">badge</span>
+                    <span class="tracking-widest text-[11px]">Staff Members</span>
+                </a>
+                <a onclick="switchTab('roles')" id="side-nav-roles" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group cursor-pointer" href="#">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">admin_panel_settings</span>
+                    <span class="tracking-widest text-[11px]">Roles & Access</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="mt-auto flex flex-col gap-4 pb-12">
+            <a id="btn-logout" class="flex items-center gap-4 px-6 py-4 text-white/40 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl justify-center cursor-pointer border border-transparent hover:border-white/10 group">
+                <span class="material-symbols-outlined text-[22px] transition-transform group-hover:-translate-x-1">logout</span>
+                <span class="tracking-widest">Logout</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-1 md:ml-72 relative min-h-screen flex flex-col w-full">
+        <!-- TopNavBar -->
+        <header class="bg-white/60 backdrop-blur-[40px] font-body-md w-full h-20 sticky top-0 border-b border-white/40 flex justify-between items-center px-12 z-40">
+            <div class="hidden md:flex items-center relative w-64 lg:w-96">
+                <span class="material-symbols-outlined absolute left-4 text-on-surface-variant/50 z-10">search</span>
+                <input id="search-input" class="w-full pl-11 pr-4 py-2.5 bg-surface-container-low/50 border border-outline-variant/30 rounded-[28px] focus:outline-none focus:border-secondary focus:ring-1 text-sm shadow-inner" placeholder="Search by name or email..." type="text" />
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-secondary-container border-2 border-white shadow-sm overflow-hidden ml-2 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-secondary">person</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="p-4 md:p-12 flex-1">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+                <div>
+                    <h2 id="page-title" class="font-headline-lg text-2xl font-bold text-on-surface tracking-tight">Community Manager</h2>
+                    <p class="font-body-lg text-sm text-on-surface-variant mt-1 max-w-2xl opacity-80">Manage your customers, staff members, and their access privileges.</p>
+                </div>
+                <div id="staff-actions" class="hidden">
+                    <button onclick="document.getElementById('modal-add-staff').classList.remove('hidden'); document.getElementById('modal-add-staff').classList.add('flex')" class="flex items-center gap-2 bg-secondary text-white px-6 py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-secondary/20">
+                        <span class="material-symbols-outlined text-[18px]">person_add</span>
+                        Add Staff Member
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex gap-8 mb-8 border-b border-outline-variant/20">
+                <button onclick="switchTab('customers')" id="tab-customers" class="pb-4 text-sm font-bold uppercase tracking-widest text-on-surface-variant border-b-2 border-transparent transition-all hover:text-primary">Customers</button>
+                <button onclick="switchTab('staff')" id="tab-staff" class="pb-4 text-sm font-bold uppercase tracking-widest text-on-surface-variant border-b-2 border-transparent transition-all hover:text-primary">Staff</button>
+                <button onclick="switchTab('roles')" id="tab-roles" class="pb-4 text-sm font-bold uppercase tracking-widest text-on-surface-variant border-b-2 border-transparent transition-all hover:text-primary">Roles Overview</button>
+            </div>
+
+            <!-- Users Table -->
+            <div class="glass-panel rounded-xl overflow-hidden shadow-[0_8px_32px_rgba(75,52,37,0.04)]">
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-white/30 border-b border-outline-variant/30 uppercase tracking-widest text-[10px] text-on-surface-variant/70">
+                                <th class="py-4 px-6 font-semibold w-12">ID</th>
+                                <th class="py-4 px-6 font-semibold">User Details</th>
+                                <th class="py-4 px-6 font-semibold">Contact</th>
+                                <th class="py-4 px-6 font-semibold">Current Role</th>
+                                <th class="py-4 px-6 font-semibold">Joined Date</th>
+                                <th class="py-4 px-6 font-semibold text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="font-body-md text-on-surface" id="users-tbody">
+                            <tr>
+                                <td colspan="6" class="py-8 text-center text-on-surface-variant">Loading user data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Role Modification Modal -->
+    <div id="role-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="bg-white/90 backdrop-blur-xl w-full max-w-md rounded-3xl shadow-2xl border border-white/20 overflow-hidden animate-fade-in">
+            <div class="p-8 border-b border-outline-variant/10">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-secondary text-2xl">shield_person</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-primary tracking-tight">Modify Access</h3>
+                        <p class="text-xs text-on-surface-variant/60" id="modal-user-name">User Name</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-8 space-y-3" id="role-options">
+                <!-- Roles will be injected here -->
+            </div>
+            <div class="p-8 bg-surface-container-low/50 flex gap-4">
+                <button onclick="closeRoleModal()" class="flex-1 py-3 rounded-xl font-bold text-xs uppercase tracking-widest text-on-surface-variant hover:bg-white transition-all">Cancel</button>
+                <button id="save-role-btn" class="flex-1 bg-secondary text-white py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-secondary/20">Update Privileges</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Details Edit Modal -->
+    <div id="modal-edit-user" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="bg-white/90 backdrop-blur-xl w-full max-w-md rounded-3xl shadow-2xl border border-white/20 overflow-hidden animate-fade-in">
+            <div class="p-8 border-b border-outline-variant/10">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-2xl">person_edit</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-primary tracking-tight">Edit Profile</h3>
+                        <p class="text-xs text-on-surface-variant/60">Update basic customer information.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-8 space-y-5">
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Full Name</label>
+                    <input id="edit-user-name" type="text" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all" />
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Phone Number</label>
+                    <input id="edit-user-phone" type="text" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="0XXXXXXXXX" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all" />
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Primary Address</label>
+                    <textarea id="edit-user-address" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all h-24 resize-none"></textarea>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Email Address</label>
+                    <input id="edit-user-email" type="email" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all" />
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">New Password <span class="lowercase text-on-surface-variant/50 font-normal">(leave blank to keep current)</span></label>
+                    <input id="edit-user-password" type="password" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all" />
+                </div>
+            </div>
+            <div class="p-8 bg-surface-container-low/50 flex gap-4">
+                <button onclick="document.getElementById('modal-edit-user').classList.add('hidden')" class="flex-1 py-3 rounded-xl font-bold text-xs uppercase tracking-widest text-on-surface-variant hover:bg-white transition-all">Cancel</button>
+                <button id="btn-save-user-details" class="flex-1 bg-primary text-white py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Staff Modal -->
+    <div id="modal-add-staff" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="bg-white/90 backdrop-blur-xl w-full max-w-md rounded-3xl shadow-2xl border border-white/20 overflow-hidden animate-fade-in">
+            <div class="p-8 border-b border-outline-variant/10">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-secondary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-secondary text-2xl">person_add</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-primary tracking-tight">New Staff Member</h3>
+                        <p class="text-xs text-on-surface-variant/60">Create a new administrative account.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-8 space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Full Name</label>
+                        <input id="new-staff-name" type="text" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary transition-all" placeholder="John Doe" />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Phone</label>
+                        <input id="new-staff-phone" type="text" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary transition-all" placeholder="0XXXXXXXXX" />
+                    </div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Email Address</label>
+                    <input id="new-staff-email" type="email" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary transition-all" placeholder="staff@bakenest.com" />
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Initial Password</label>
+                    <input id="new-staff-password" type="password" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary transition-all" placeholder="••••••••" />
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Assigned Role</label>
+                    <select id="new-staff-role" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-secondary transition-all">
+                        <option value="PRODUCT_ADMIN">Product Admin</option>
+                        <option value="ORDER_ADMIN">Order Admin</option>
+                        <option value="USER_ADMIN">User Admin</option>
+                        <option value="SUPER_ADMIN">Super Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="p-8 bg-surface-container-low/50 flex gap-4">
+                <button onclick="document.getElementById('modal-add-staff').classList.add('hidden')" class="flex-1 py-3 rounded-xl font-bold text-xs uppercase tracking-widest text-on-surface-variant hover:bg-white transition-all">Cancel</button>
+                <button id="btn-create-staff" class="flex-1 bg-secondary text-white py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-secondary/20">Create Staff</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Role Modal -->
+    <div id="modal-add-role" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="bg-white/90 backdrop-blur-xl w-full max-w-md rounded-3xl shadow-2xl border border-white/20 overflow-hidden animate-fade-in">
+            <div class="p-8 border-b border-outline-variant/10">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-tertiary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-tertiary text-2xl">shield_person</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-primary tracking-tight">Create New Role</h3>
+                        <p class="text-xs text-on-surface-variant/60">Define a new system access level.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-8 space-y-5">
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Role Name (ID)</label>
+                    <input id="new-role-name" type="text" oninput="this.value = this.value.toUpperCase().replace(/[^A-Z_]/g, '')" placeholder="e.g. MANAGER_ADMIN" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all font-mono" />
+                    <p class="text-[9px] text-on-surface-variant/40 mt-1 uppercase">Use uppercase and underscores only (e.g., SHIPMENT_ADMIN).</p>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Role Description</label>
+                    <textarea id="new-role-desc" class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all h-24 resize-none" placeholder="What can this role do?"></textarea>
+                </div>
+            </div>
+            <div class="p-8 bg-surface-container-low/50 flex gap-4">
+                <button onclick="document.getElementById('modal-add-role').classList.add('hidden')" class="flex-1 py-3 rounded-xl font-bold text-xs uppercase tracking-widest text-on-surface-variant hover:bg-white transition-all">Cancel</button>
+                <button id="btn-save-role" class="flex-1 bg-tertiary text-white py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-tertiary/20">Save Role</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const token = sessionStorage.getItem('token');
+        if (!token) window.location.href = '/auth.html';
+
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            sessionStorage.removeItem('token');
+            window.location.href = '/auth.html';
+        });
+
+        let rolesList = [];
+
+        async function loadRoles() {
+            try {
+                const res = await fetch('/api/v1/user/admin/roles', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                rolesList = await res.json();
+
+                const roleSelect = document.getElementById('new-staff-role');
+                if (roleSelect) {
+                    roleSelect.innerHTML = rolesList.map(r => 
+                        `<option value="${r.name}">${r.name.replace('_', ' ')}</option>`
+                    ).join('');
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        let allUsers = [];
+        let currentTab = 'customers';
+        let editingUserId = null;
+
+        function getRoleBadge(role) {
+            const styles = {
+                'SUPER_ADMIN': 'bg-purple-100 text-purple-700 border-purple-200',
+                'PRODUCT_ADMIN': 'bg-blue-100 text-blue-700 border-blue-200',
+                'ORDER_ADMIN': 'bg-orange-100 text-orange-700 border-orange-200',
+                'USER_ADMIN': 'bg-teal-100 text-teal-700 border-teal-200',
+                'USER': 'bg-surface-container-low text-on-surface-variant/70 border-outline-variant/30'
+            };
+            const label = role.replace('_', ' ');
+            return `<span class="px-3 py-1 ${styles[role] || styles.USER} rounded-full text-[10px] font-bold uppercase tracking-widest border">${label}</span>`;
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update Title
+            const titles = {
+                'customers': 'Customer Relations',
+                'staff': 'Staff Management',
+                'roles': 'Access Control'
+            };
+            document.getElementById('page-title').textContent = titles[tab];
+            
+            // Update Tab Buttons
+            const tabs = ['customers', 'staff', 'roles'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (btn) {
+                    btn.className = `pb-4 text-sm font-bold uppercase tracking-widest ${tab === t ? 'border-b-2 border-secondary text-primary' : 'text-on-surface-variant border-b-2 border-transparent'} transition-all hover:text-primary`;
+                }
+            });
+
+            // Update Sidebar Links
+            const sideLinks = {
+                'customers': 'side-nav-customers',
+                'staff': 'side-nav-staff',
+                'roles': 'side-nav-roles'
+            };
+
+            Object.keys(sideLinks).forEach(t => {
+                const link = document.getElementById(sideLinks[t]);
+                if (link) {
+                    if (tab === 'staff') {
+                    document.getElementById('staff-actions').classList.remove('hidden');
+                } else {
+                    document.getElementById('staff-actions').classList.add('hidden');
+                }
+                
+                if (tab === 'staff') {
+                    document.getElementById('staff-actions').classList.remove('hidden');
+                    document.getElementById('staff-actions').classList.add('flex');
+                } else {
+                    document.getElementById('staff-actions').classList.add('hidden');
+                    document.getElementById('staff-actions').classList.remove('flex');
+                }
+
+                if (tab === t) {
+                        link.className = "flex items-center gap-4 px-6 py-4 bg-white/10 text-white shadow-xl rounded-2xl smooth-transition border border-white/10 cursor-pointer";
+                        link.querySelector('span:first-child').classList.add('fill');
+                        link.querySelector('span:first-child').classList.remove('text-white/40');
+                    } else {
+                        link.className = "flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group cursor-pointer";
+                        link.querySelector('span:first-child').classList.remove('fill');
+                        link.querySelector('span:first-child').classList.add('text-white/40');
+                    }
+                }
+            });
+            
+            renderContent();
+        }
+
+        function renderContent() {
+            if (currentTab === 'roles') {
+                renderRolesTab();
+            } else {
+                renderUsers();
+            }
+        }
+
+        function renderRolesTab() {
+            const tbody = document.getElementById('users-tbody');
+            const table = tbody.closest('table');
+            table.querySelector('thead').innerHTML = `
+                <tr class="bg-white/30 border-b border-outline-variant/30 uppercase tracking-widest text-[10px] text-on-surface-variant/70">
+                    <th class="py-4 px-6 font-semibold">Role Name</th>
+                    <th class="py-4 px-6 font-semibold">Description</th>
+                    <th class="py-4 px-6 font-semibold">Total Users</th>
+                    <th class="py-4 px-6 font-semibold text-right">Actions</th>
+                </tr>
+            `;
+
+            const rolesData = rolesList.map(role => {
+                const count = allUsers.filter(u => u.role === role.name).length;
+                return { ...role, count };
+            });
+
+            tbody.innerHTML = `
+                <div class="p-8 bg-surface-container-low/30 border-b border-outline-variant/10">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <h4 class="text-sm font-bold text-primary uppercase tracking-widest">System Roles</h4>
+                            <p class="text-xs text-on-surface-variant/60">Define and manage access levels for your staff and customers.</p>
+                        </div>
+                        <button onclick="document.getElementById('modal-add-role').classList.remove('hidden'); document.getElementById('modal-add-role').classList.add('flex')" class="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest hover:scale-105 transition-all shadow-md">
+                            <span class="material-symbols-outlined text-[18px]">add_moderator</span>
+                            Create New Role
+                        </button>
+                    </div>
+                </div>
+                ${rolesData.map(r => `
+                    <tr class="group hover:bg-white/40 transition-colors border-b border-outline-variant/10 last:border-0">
+                        <td class="py-6 px-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-2 h-2 rounded-full bg-secondary"></div>
+                                <span class="font-bold text-primary uppercase tracking-widest text-xs">${r.name.replace('_', ' ')}</span>
+                            </div>
+                        </td>
+                        <td class="py-6 px-6 text-xs text-on-surface-variant/70 italic">${r.description}</td>
+                        <td class="py-6 px-6 font-mono text-xs">${r.count} users</td>
+                        <td class="py-6 px-6 text-right">
+                            <button onclick="deleteRole(${r.id})" class="p-2 text-on-surface-variant/40 hover:text-error transition-colors">
+                                <span class="material-symbols-outlined text-[18px]">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                `).join('')}
+            `;
+        }
+
+        function renderUsers() {
+            const tbody = document.getElementById('users-tbody');
+            // Reset header if coming from roles
+            const table = tbody.closest('table');
+            table.querySelector('thead').innerHTML = `
+                <tr class="bg-white/30 border-b border-outline-variant/30 uppercase tracking-widest text-[10px] text-on-surface-variant/70">
+                    <th class="py-4 px-6 font-semibold w-12">ID</th>
+                    <th class="py-4 px-6 font-semibold">User Details</th>
+                    <th class="py-4 px-6 font-semibold">Contact</th>
+                    <th class="py-4 px-6 font-semibold">Current Role</th>
+                    <th class="py-4 px-6 font-semibold">Joined Date</th>
+                    <th class="py-4 px-6 font-semibold text-right">Actions</th>
+                </tr>
+            `;
+            const search = document.getElementById('search-input').value.toLowerCase();
+
+            let filtered = allUsers.filter(u => 
+                u.name.toLowerCase().includes(search) || 
+                u.email.toLowerCase().includes(search)
+            );
+
+            if (currentTab === 'customers') {
+                filtered = filtered.filter(u => u.role === 'USER');
+            } else if (currentTab === 'staff') {
+                filtered = filtered.filter(u => u.role !== 'USER');
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-on-surface-variant opacity-60">No members found in this section.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(u => `
+                <tr class="group hover:bg-white/40 transition-colors border-b border-outline-variant/10 last:border-0">
+                    <td class="py-6 px-6 text-on-surface-variant/50 font-mono">#${u.id}</td>
+                    <td class="py-6 px-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-primary font-bold shadow-sm">
+                                ${u.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                                <div class="font-bold text-primary">${u.name}</div>
+                                <div class="text-xs text-on-surface-variant/60">${u.email}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-6 px-6">
+                        <div class="text-xs font-medium text-on-surface-variant">${u.phone || 'No phone'}</div>
+                        <div class="text-[10px] text-on-surface-variant/40 truncate max-w-[150px]">${u.address || 'No address'}</div>
+                    </td>
+                    <td class="py-6 px-6">${getRoleBadge(u.role)}</td>
+                    <td class="py-6 px-6 text-on-surface-variant/60 text-xs">${new Date(u.createdAt).toLocaleDateString()}</td>
+                    <td class="py-6 px-6 text-right">
+                        <div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onclick='openEditModal(${JSON.stringify(u)})' class="p-2 text-on-surface-variant/40 hover:text-primary hover:bg-primary/5 rounded-lg transition-all" title="Edit Profile">
+                                <span class="material-symbols-outlined text-[20px]">edit_note</span>
+                            </button>
+                            <button onclick="openRoleModal(${u.id})" class="p-2 text-on-surface-variant hover:text-secondary hover:bg-white/50 rounded-full transition-colors" title="Manage Role">
+                                <span class="material-symbols-outlined text-[20px]">manage_accounts</span>
+                            </button>
+                            <button onclick="confirmDelete(${u.id})" class="p-2 text-on-surface-variant hover:text-error hover:bg-error-container/30 rounded-full transition-colors" title="Delete User">
+                                <span class="material-symbols-outlined text-[20px]">delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openEditModal(user) {
+            editingUserId = user.id;
+            document.getElementById('edit-user-name').value = user.name || '';
+            document.getElementById('edit-user-phone').value = user.phone || '';
+            document.getElementById('edit-user-address').value = user.address || '';
+            document.getElementById('edit-user-email').value = user.email || '';
+            document.getElementById('edit-user-password').value = '';
+            document.getElementById('modal-edit-user').classList.remove('hidden');
+            document.getElementById('modal-edit-user').classList.add('flex');
+        }
+
+        document.getElementById('btn-save-user-details').addEventListener('click', async () => {
+            if (!editingUserId) return;
+            
+            const name = document.getElementById('edit-user-name').value.trim();
+            const phone = document.getElementById('edit-user-phone').value.trim();
+            const address = document.getElementById('edit-user-address').value.trim();
+            const email = document.getElementById('edit-user-email').value.trim();
+            const password = document.getElementById('edit-user-password').value;
+
+            if (!name) {
+                showToast('Error', 'Name is required.', 'error');
+                return;
+            }
+            if (!email) {
+                showToast('Error', 'Email is required.', 'error');
+                return;
+            }
+
+            // Validate Phone: 10 digits numeric
+            if (phone && !/^\d{10}$/.test(phone)) {
+                showToast('Error', 'Please enter a valid 10-digit phone number.', 'error');
+                return;
+            }
+
+            const payload = { name, phone, address, email };
+            if (password) payload.password = password;
+
+            try {
+                const res = await fetch(`/api/v1/user/admin/users/${editingUserId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    showToast('Success', 'User profile updated successfully.', 'check_circle');
+                    document.getElementById('modal-edit-user').classList.add('hidden');
+                    // Reload users data
+                    const usersRes = await fetch('/api/v1/user/admin/users', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    allUsers = await usersRes.json();
+                    renderUsers();
+                } else {
+                    const data = await res.json();
+                    showToast('Error', data.message || 'Failed to update user.', 'error');
+                }
+            } catch (e) {
+                showToast('Error', 'Network error.', 'error');
+            }
+        });
+
+        function openRoleModal(userId) {
+            const user = allUsers.find(u => u.id === userId);
+            if (!user) return;
+            currentUserToEdit = user;
+            
+            document.getElementById('modal-user-name').textContent = user.name;
+            const container = document.getElementById('role-options');
+            container.innerHTML = rolesList.map(role => `
+                <label class="flex items-center gap-4 p-4 rounded-xl border border-outline-variant/30 cursor-pointer hover:bg-white transition-all group has-[:checked]:border-secondary has-[:checked]:bg-secondary/5">
+                    <input type="radio" name="user-role" value="${role.name}" ${user.role === role.name ? 'checked' : ''} class="w-4 h-4 text-secondary focus:ring-secondary border-outline-variant">
+                    <div class="flex flex-col">
+                        <span class="text-xs font-bold text-primary uppercase tracking-widest">${role.name.replace('_', ' ')}</span>
+                        <span class="text-[10px] text-on-surface-variant opacity-60">${role.description}</span>
+                    </div>
+                </label>
+            `).join('');
+
+            document.getElementById('role-modal').classList.remove('hidden');
+            document.getElementById('role-modal').classList.add('flex');
+        }
+
+        function closeRoleModal() {
+            document.getElementById('role-modal').classList.add('hidden');
+            document.getElementById('role-modal').classList.remove('flex');
+            currentUserToEdit = null;
+        }
+
+        document.getElementById('save-role-btn').addEventListener('click', async () => {
+            if (!currentUserToEdit) return;
+            const selectedRole = document.querySelector('input[name="user-role"]:checked').value;
+            
+            try {
+                const res = await fetch(`/api/v1/user/admin/users/${currentUserToEdit.id}/role`, {
+                    method: 'PUT',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ role: selectedRole })
+                });
+
+                if (res.ok) {
+                    currentUserToEdit.role = selectedRole;
+                    renderUsers();
+                    closeRoleModal();
+                    showToast('Success', 'Access privileges updated.');
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        });
+
+        async function confirmDelete(id) {
+            if (!confirm('Are you sure you want to permanently delete this user? This action cannot be undone.')) return;
+            
+            try {
+                const res = await fetch(`/api/v1/user/admin/users/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    allUsers = allUsers.filter(u => u.id !== id);
+                    renderUsers();
+                    showToast('Deleted', 'User account has been removed.');
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        document.getElementById('search-input').addEventListener('input', renderUsers);
+
+        async function loadUsersPage() {
+            try {
+                const authRes = await fetch('/api/v1/auth/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!authRes.ok) throw new Error("Unauthorized");
+                const user = await authRes.json();
+                const userRole = (typeof user.role === 'object') ? user.role.name : user.role;
+
+                if (userRole !== 'SUPER_ADMIN' && userRole !== 'USER_ADMIN') {
+                    window.location.href = '/admin.html';
+                    return;
+                }
+
+                const roleBadge = document.getElementById('user-role-badge');
+                if (roleBadge) {
+                    roleBadge.textContent = userRole.replace('_', ' ');
+                }
+
+                const navOrders = document.getElementById('nav-orders');
+                const navPayments = document.getElementById('nav-payments');
+                const navGroupUsers = document.getElementById('nav-group-users');
+                const navGroupStandard = document.getElementById('nav-group-standard');
+                const navProducts = document.getElementById('nav-products');
+                const navCategories = document.getElementById('nav-categories');
+                const navCustom = document.getElementById('nav-custom');
+
+                if (userRole === 'SUPER_ADMIN') {
+                    if (navGroupStandard) {
+                        navGroupStandard.classList.remove('hidden');
+                        navGroupStandard.classList.add('flex');
+                    }
+                }
+
+                const res = await fetch('/api/v1/user/admin/users', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                allUsers = await res.json();
+                allUsers.sort((a, b) => b.id - a.id);
+                
+                await loadRoles();
+                
+                // Handle tab from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const tab = urlParams.get('tab');
+                if (tab && ['customers', 'staff', 'roles'].includes(tab)) {
+                    switchTab(tab);
+                } else {
+                    renderContent();
+                }
+
+            } catch (e) {
+                console.error(e);
+                window.location.href = '/auth.html';
+            }
+        }
+
+        function showToast(title, message, icon = 'check_circle') {
+            const container = document.getElementById('toast-container') || (() => {
+                const c = document.createElement('div');
+                c.id = 'toast-container';
+                document.body.appendChild(c);
+                return c;
+            })();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-msg';
+            toast.innerHTML = `
+                <div class="w-8 h-8 bg-secondary/10 rounded-full flex items-center justify-center">
+                    <span class="material-symbols-outlined text-secondary text-[20px]">${icon}</span>
+                </div>
+                <div class="flex flex-col text-left">
+                    <span class="text-[10px] font-bold text-primary uppercase tracking-widest">${title}</span>
+                    <span class="text-[11px] text-on-surface-variant font-medium">${message}</span>
+                </div>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+
+        document.getElementById('btn-create-staff').addEventListener('click', async () => {
+            const payload = {
+                name: document.getElementById('new-staff-name').value.trim(),
+                email: document.getElementById('new-staff-email').value.trim(),
+                phone: document.getElementById('new-staff-phone').value.trim(),
+                password: document.getElementById('new-staff-password').value,
+                role: document.getElementById('new-staff-role').value,
+                address: "" 
+            };
+
+            if (!payload.name || !payload.email || !payload.password) {
+                showToast('Error', 'Please fill in all required fields.', 'error');
+                return;
+            }
+
+            if (payload.phone && !/^\d{10}$/.test(payload.phone)) {
+                showToast('Error', 'Phone number must be 10 digits.', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/v1/user/admin/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    showToast('Success', 'Staff member created successfully.', 'check_circle');
+                    document.getElementById('modal-add-staff').classList.add('hidden');
+                    loadUsers();
+                } else {
+                    const msg = await res.text();
+                    showToast('Error', msg || 'Failed to create staff.', 'error');
+                }
+            } catch (e) { console.error(e); }
+        });
+
+        document.getElementById('btn-save-role').addEventListener('click', async () => {
+            const payload = {
+                name: document.getElementById('new-role-name').value.trim(),
+                description: document.getElementById('new-role-desc').value.trim()
+            };
+
+            if (!payload.name) {
+                showToast('Error', 'Role ID is required.', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/v1/user/admin/roles', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    showToast('Success', 'Role created successfully.', 'check_circle');
+                    document.getElementById('modal-add-role').classList.add('hidden');
+                    await loadRoles();
+                    renderContent();
+                } else {
+                    showToast('Error', await res.text(), 'error');
+                }
+            } catch (e) { console.error(e); }
+        });
+
+        async function deleteRole(id) {
+            if (!confirm('Are you sure you want to delete this role? This will not affect users already assigned this role but may cause access issues.')) return;
+            try {
+                const res = await fetch(`/api/v1/user/admin/roles/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    showToast('Success', 'Role deleted.', 'check_circle');
+                    await loadRoles();
+                    renderContent();
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        loadUsersPage();
+    </script>
+
+    <style>
+        #toast-container {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            pointer-events: none;
+        }
+        .toast-msg {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid #725b2920;
+            border-radius: 999px;
+            padding: 12px 24px;
+            box-shadow: 0 10px 30px rgba(51, 31, 17, 0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: auto;
+            margin-bottom: 8px;
+        }
+        .toast-msg.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</body>
+
+</html>
+
+

@@ -1,174 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>BakeNest - Authentication</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
+    <script src="https://cdn.tailwindcss.com?plugins=container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
         tailwind.config = {
-            darkMode: "class",
             theme: {
                 extend: {
-                    "colors": {
-                        "on-secondary-fixed-variant": "#584413",
-                        "secondary-fixed": "#ffdf9f",
-                        "on-error": "#ffffff",
-                        "background": "#fff8f3",
-                        "on-surface-variant": "#4f453f",
-                        "on-primary-fixed-variant": "#5a4132",
-                        "on-tertiary": "#ffffff",
-                        "surface-tint": "#745948",
-                        "on-secondary-fixed": "#261a00",
-                        "on-tertiary-fixed-variant": "#54442a",
-                        "on-primary-container": "#bd9c88",
-                        "on-tertiary-fixed": "#251a04",
-                        "surface-dim": "#e5d8c9",
-                        "tertiary-fixed": "#f7dfbc",
-                        "primary-fixed-dim": "#e3bfab",
-                        "inverse-on-surface": "#fcefdf",
-                        "secondary-container": "#ffdf9f",
-                        "error": "#ba1a1a",
-                        "surface": "#fff8f3",
-                        "tertiary-container": "#45371e",
-                        "surface-container": "#f9ecdc",
-                        "secondary-fixed-dim": "#e1c386",
-                        "on-secondary-container": "#78612e",
-                        "outline": "#81756e",
-                        "secondary": "#725b29",
-                        "on-primary": "#ffffff",
-                        "surface-container-low": "#fff2e1",
-                        "surface-bright": "#fff8f3",
-                        "on-error-container": "#93000a",
-                        "inverse-primary": "#e3bfab",
-                        "on-surface": "#211b11",
-                        "inverse-surface": "#362f25",
-                        "primary-fixed": "#ffdcc7",
-                        "on-secondary": "#ffffff",
-                        "tertiary-fixed-dim": "#dac3a1",
+                    colors: {
                         "primary": "#331f11",
+                        "secondary": "#725b29",
+                        "background": "#fff8f3",
+                        "surface": "#ffffff",
+                        "on-background": "#1a0e04",
+                        "on-surface": "#1a0e04",
+                        "on-surface-variant": "#5a4e45",
+                        "outline": "#81756e",
                         "outline-variant": "#d3c3bb",
-                        "on-tertiary-container": "#b5a080",
-                        "on-primary-fixed": "#2a170a",
-                        "tertiary": "#2e220b",
-                        "primary-container": "#4b3425",
-                        "on-background": "#211b11",
-                        "surface-container-high": "#f3e6d6",
-                        "error-container": "#ffdad6",
-                        "surface-container-highest": "#ede1d1",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-variant": "#ede1d1"
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
                     },
-                    "fontFamily": {
-                        "label-lg": ["Inter"],
-                        "headline-lg": ["Playfair Display"],
-                        "body-md": ["Inter"]
+                    fontFamily: {
+                        "display": ["Playfair Display"],
+                        "body": ["Inter"]
                     }
                 }
             }
         }
     </script>
     <style>
-        .glass-card {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-top: 1px solid rgba(255, 255, 255, 0.4);
-            border-left: 1px solid rgba(255, 255, 255, 0.4);
-            border-bottom: 1px solid rgba(114, 91, 41, 0.1);
-            border-right: 1px solid rgba(114, 91, 41, 0.1);
-            box-shadow: 0 30px 60px -15px rgba(114, 91, 41, 0.08)
+        * {
+            box-sizing: border-box;
         }
-        .bg-image-blur {
-            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCk5SuyuA-w_lvNoLeUzNKDvu2zq9BGHeaR0kk4K0WKwvIil0QD7jkCDas0f-tC6knCuUvRXyHqt7H-A9CZmXpLZta2-EMnN2tw6PhNnjzr4uLq8EQa6W1jWUoL5uJaulGyGvMundgucqTadBYWm_4NyzSaGvmWFro2BnRVQcT2j2QM49RaxhnLlkpBOlg3nU7FQNXBmHbvlu7X_7-mSVSLgDdPQXClpBeUYRDIg_BSLDIV-_m2QIbsL2ECAg87VF-scw-Cnrvm);
-            background-size: cover;
-            background-position: center;
-            filter: blur(8px) opacity(0.4);
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-y: auto;
+        }
+
+        /* Form input styling */
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 16px;
+            background: #e5ddd4;
+            font-size: 15px;
+            font-weight: 500;
+            color: #1a0e04;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input::placeholder {
+            color: #8a7e72;
+            font-weight: 400;
+        }
+
+        .form-input:focus {
+            background: #dbd0c5;
+            box-shadow: 0 0 0 3px rgba(51, 31, 17, 0.12);
+        }
+
+        .form-input:hover:not(:focus) {
+            background: #ded5cb;
+        }
+
+        /* Password Wrapper */
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            color: #8a7e72;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .password-toggle:hover {
+            color: #331f11;
+        }
+
+        .password-toggle .material-symbols-outlined {
+            font-size: 22px;
+        }
+
+        /* Tab button */
+        .tab-btn {
+            flex: 1;
+            padding: 14px 0;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: none;
+            color: #a89888;
+        }
+
+        .tab-btn.active {
+            color: #331f11;
+            border-bottom-color: #331f11;
+        }
+
+        .tab-btn:hover:not(.active) {
+            color: #725b29;
+        }
+
+        /* Submit button */
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
             position: absolute;
             inset: 0;
-            z-index: -1
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
         }
-        .input-line {
-            border-bottom: 1px solid var(--tw-colors-outline-variant);
-            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1)
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(51, 31, 17, 0.3);
         }
-        .input-line:focus-within {
-            border-bottom-color: var(--tw-colors-primary);
-            background: rgba(255, 255, 255, 0.1)
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Form label */
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #5a4e45;
+            margin-bottom: 8px;
+        }
+
+        /* Slide animation */
+        .form-container {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scrollbar for form */
+        .form-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .form-scroll::-webkit-scrollbar-thumb {
+            background: #d3c3bb;
+            border-radius: 4px;
         }
     </style>
 </head>
-<body class="bg-background text-on-background min-h-screen relative flex items-center justify-center p-4">
-    <div class="bg-image-blur"></div>
 
-    <main class="w-full max-w-md relative z-10">
-        <!-- Brand Header -->
-        <div class="text-center mb-12">
-            <h1 class="font-headline-lg text-4xl text-primary mb-2">BakeNest</h1>
-            <p class="font-body-md text-on-surface-variant">Artisanal Patisserie</p>
-        </div>
+<body class="bg-background text-on-background min-h-screen flex">
 
-        <div class="glass-card rounded-xl p-8 w-full transition-transform duration-500 ease-[cubic-bezier(0.2,0,0,1)] hover:scale-[1.01]">
-            <!-- Error/Success Message Area -->
-            <div id="message-area" class="hidden mb-4 p-3 rounded text-sm text-center"></div>
-
-            <!-- Tabs -->
-            <div class="flex border-b border-outline-variant/30 mb-8">
-                <button id="tab-login" class="flex-1 pb-4 uppercase tracking-widest text-primary border-b-2 border-primary transition-colors text-sm font-semibold">
-                    Sign In
-                </button>
-                <button id="tab-register" class="flex-1 pb-4 uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors text-sm font-semibold">
-                    Create Account
-                </button>
+    <!-- LEFT PANEL - Auth Form -->
+    <div class="flex-1 flex items-center justify-center p-6 sm:p-8 lg:p-12 order-1">
+        <main class="w-full max-w-[440px]">
+            <!-- Mobile brand header -->
+            <div class="text-center mb-10 lg:hidden">
+                <div class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <span class="material-symbols-outlined text-white text-3xl"
+                        style="font-variation-settings: 'FILL' 1;">bakery_dining</span>
+                </div>
+                <h1 class="font-display text-3xl font-bold text-primary">BakeNest</h1>
+                <p class="text-on-surface-variant text-sm mt-1">Artisanal Patisserie</p>
             </div>
 
-            <!-- LOGIN FORM -->
-            <form id="login-form" class="space-y-8">
-                <div class="relative pt-6 input-line group">
-                    <label class="absolute top-0 left-0 text-xs text-on-surface-variant transition-all duration-300 group-focus-within:text-primary">Email Address</label>
-                    <input id="login-email" required class="w-full bg-transparent border-none p-0 pb-2 text-on-surface focus:ring-0 placeholder-transparent" placeholder="Email Address" type="email"/>
-                </div>
-                <div class="relative pt-6 input-line group">
-                    <label class="absolute top-0 left-0 text-xs text-on-surface-variant transition-all duration-300 group-focus-within:text-primary">Password</label>
-                    <input id="login-password" required class="w-full bg-transparent border-none p-0 pb-2 text-on-surface focus:ring-0 placeholder-transparent" placeholder="Password" type="password"/>
-                </div>
-                
-                <button class="w-full bg-primary text-on-primary py-4 rounded-[32px] uppercase tracking-widest hover:bg-secondary transition-colors duration-300 shadow-sm text-sm font-semibold" type="submit">
-                    Sign In
-                </button>
-            </form>
+            <!-- Desktop heading -->
+            <div class="hidden lg:block mb-10">
+                <h2 class="text-3xl font-bold text-on-background mb-2">Welcome back</h2>
+                <p class="text-on-surface-variant text-base">Sign in to your account or create a new one</p>
+            </div>
 
-            <!-- REGISTER FORM -->
-            <form id="register-form" class="space-y-6 hidden">
-                <div class="relative pt-6 input-line group">
-                    <label class="absolute top-0 left-0 text-xs text-on-surface-variant transition-all duration-300 group-focus-within:text-primary">Full Name</label>
-                    <input id="reg-name" required class="w-full bg-transparent border-none p-0 pb-2 text-on-surface focus:ring-0 placeholder-transparent" placeholder="Full Name" type="text"/>
-                </div>
-                <div class="relative pt-6 input-line group">
-                    <label class="absolute top-0 left-0 text-xs text-on-surface-variant transition-all duration-300 group-focus-within:text-primary">Email Address</label>
-                    <input id="reg-email" required class="w-full bg-transparent border-none p-0 pb-2 text-on-surface focus:ring-0 placeholder-transparent" placeholder="Email Address" type="email"/>
-                </div>
-                <div class="relative pt-6 input-line group">
-                    <label class="absolute top-0 left-0 text-xs text-on-surface-variant transition-all duration-300 group-focus-within:text-primary">Password (min 6 chars)</label>
-                    <input id="reg-password" required minlength="6" class="w-full bg-transparent border-none p-0 pb-2 text-on-surface focus:ring-0 placeholder-transparent" placeholder="Password" type="password"/>
-                </div>
-                <div class="relative pt-6 input-line group">
-                    <label class="absolute top-0 left-0 text-xs text-on-surface-variant transition-all duration-300 group-focus-within:text-primary">Phone Number</label>
-                    <input id="reg-phone" class="w-full bg-transparent border-none p-0 pb-2 text-on-surface focus:ring-0 placeholder-transparent" placeholder="Phone Number" type="text"/>
-                </div>
-                <div class="relative pt-6 input-line group">
-                    <label class="absolute top-0 left-0 text-xs text-on-surface-variant transition-all duration-300 group-focus-within:text-primary">Delivery Address</label>
-                    <input id="reg-address" class="w-full bg-transparent border-none p-0 pb-2 text-on-surface focus:ring-0 placeholder-transparent" placeholder="Address" type="text"/>
+            <!-- Auth Card -->
+            <div
+                class="bg-white rounded-2xl shadow-[0_4px_40px_rgba(51,31,17,0.06)] border border-outline-variant/20 overflow-hidden">
+                <!-- Error/Success Message -->
+                <div id="message-area" class="hidden mx-6 mt-6 p-4 rounded-xl text-sm text-center font-semibold"></div>
+
+                <!-- Tabs -->
+                <div class="flex border-b border-outline-variant/30 mx-6 mt-6">
+                    <button id="tab-login" class="tab-btn active">Sign In</button>
+                    <button id="tab-register" class="tab-btn">Create Account</button>
                 </div>
 
-                <button class="w-full bg-primary text-on-primary py-4 rounded-[32px] uppercase tracking-widest hover:bg-secondary transition-colors duration-300 shadow-sm text-sm font-semibold mt-4" type="submit">
-                    Create Account
-                </button>
-            </form>
+                <!-- LOGIN FORM -->
+                <form id="login-form" class="p-6 pt-8 space-y-5 form-container">
+                    <div>
+                        <label class="form-label" for="login-email">Email Address</label>
+                        <input id="login-email" required
+                            class="form-input"
+                            placeholder="example@com.com" type="email" />
+                    </div>
+                    <div>
+                        <label class="form-label" for="login-password">Password</label>
+                        <div class="password-wrapper">
+                            <input id="login-password" required
+                                class="form-input pr-12"
+                                placeholder="Enter your password" type="password" />
+                            <button type="button" class="password-toggle" onclick="togglePassword('login-password')">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button class="submit-btn bg-primary text-on-primary" type="submit">
+                            Sign In
+                        </button>
+                    </div>
+
+                    <p class="text-center text-sm text-on-surface-variant pt-2">
+                        Don't have an account?
+                        <button type="button" id="switch-to-register"
+                            class="text-primary font-bold hover:underline">Create Account</button>
+                    </p>
+                </form>
+
+                <!-- REGISTER FORM -->
+                <form id="register-form" class="p-6 pt-8 space-y-4 hidden form-container form-scroll"
+                    style="max-height: 70vh; overflow-y: auto;">
+                    <div>
+                        <label class="form-label" for="reg-name">User Name</label>
+                        <input id="reg-name" required
+                            class="form-input"
+                            placeholder="Enter your full name" type="text" />
+                    </div>
+                    <div>
+                        <label class="form-label" for="reg-email">Email Address</label>
+                        <input id="reg-email" required
+                            class="form-input"
+                            placeholder="example@email.com" type="email" />
+                    </div>
+                    <div>
+                        <label class="form-label" for="reg-address">Delivery Address</label>
+                        <input id="reg-address"
+                            class="form-input"
+                            placeholder="Enter delivery address" type="text" />
+                    </div>
+                    <div>
+                        <label class="form-label" for="reg-phone">Phone Number</label>
+                        <input id="reg-phone"
+                            class="form-input"
+                            placeholder="07xxxxxxxx" type="tel" maxlength="10" 
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                    </div>
+                    <div>
+                        <label class="form-label" for="reg-password">Password</label>
+                        <div class="password-wrapper">
+                            <input id="reg-password" required minlength="6"
+                                class="form-input pr-12"
+                                placeholder="Min. 6 characters" type="password" />
+                            <button type="button" class="password-toggle" onclick="togglePassword('reg-password')">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="reg-confirm-password">Confirm Password</label>
+                        <div class="password-wrapper">
+                            <input id="reg-confirm-password" required minlength="6"
+                                class="form-input pr-12"
+                                placeholder="Re-enter your password" type="password" />
+                            <button type="button" class="password-toggle" onclick="togglePassword('reg-confirm-password')">
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button class="submit-btn bg-primary text-on-primary" type="submit">
+                            Create Account
+                        </button>
+                    </div>
+
+                    <p class="text-center text-sm text-on-surface-variant pt-1 pb-2">
+                        Already have an account?
+                        <button type="button" id="switch-to-login" class="text-primary font-bold hover:underline">Sign
+                            in</button>
+                    </p>
+                </form>
+            </div>
+
+            <!-- Footer -->
+            <p class="text-center text-xs text-on-surface-variant/50 mt-8">&copy; 2026 BakeNest. All rights reserved.
+            </p>
+        </main>
+    </div>
+
+    <!-- RIGHT PANEL - Bakery Image -->
+    <div class="hidden lg:block lg:w-[45%] xl:w-[50%] relative order-2 overflow-hidden">
+        <img src="/images/bakery-hero.png" alt="Artisanal bakery display"
+            class="absolute inset-0 w-full h-full object-cover" />
+        <!-- Dark overlay for text readability -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10"></div>
+
+        <!-- Brand content overlaid on image -->
+        <div class="absolute inset-0 flex flex-col items-center justify-end p-12 pb-16 z-10">
+            <div class="text-center max-w-md">
+                <div
+                    class="w-20 h-20 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <span class="material-symbols-outlined text-white text-4xl"
+                        style="font-variation-settings: 'FILL' 1;">bakery_dining</span>
+                </div>
+                <h1 class="font-display text-5xl xl:text-6xl font-bold text-white mb-3 leading-tight drop-shadow-lg">
+                    BakeNest</h1>
+                <p class="text-white/70 text-lg font-light tracking-widest uppercase mb-10">Artisanal Patisserie</p>
+
+                <div class="flex gap-3 justify-center flex-wrap">
+                    <div
+                        class="bg-white/10 backdrop-blur-md rounded-full px-5 py-2.5 border border-white/20 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-white/90 text-base">local_shipping</span>
+                        <span class="text-white/90 text-xs font-semibold">Free Delivery</span>
+                    </div>
+                    <div
+                        class="bg-white/10 backdrop-blur-md rounded-full px-5 py-2.5 border border-white/20 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-white/90 text-base">verified</span>
+                        <span class="text-white/90 text-xs font-semibold">Premium Quality</span>
+                    </div>
+                    <div
+                        class="bg-white/10 backdrop-blur-md rounded-full px-5 py-2.5 border border-white/20 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-white/90 text-base">schedule</span>
+                        <span class="text-white/90 text-xs font-semibold">Fresh Daily</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </main>
+    </div>
 
     <script>
         // Tab logic
@@ -177,32 +385,57 @@
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         const msgArea = document.getElementById('message-area');
+        const switchToRegister = document.getElementById('switch-to-register');
+        const switchToLogin = document.getElementById('switch-to-login');
 
         function showMessage(msg, isError = false) {
             msgArea.textContent = msg;
-            msgArea.className = `mb-4 p-3 rounded text-sm text-center ${isError ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`;
+            msgArea.className = `mx-6 mt-6 p-4 rounded-xl text-sm text-center font-semibold ${isError ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-green-50 text-green-700 border border-green-200'}`;
             msgArea.classList.remove('hidden');
         }
 
-        tabLogin.addEventListener('click', () => {
+        function showLogin() {
             loginForm.classList.remove('hidden');
             registerForm.classList.add('hidden');
-            tabLogin.classList.add('text-primary', 'border-b-2', 'border-primary');
-            tabLogin.classList.remove('text-on-surface-variant');
-            tabRegister.classList.remove('text-primary', 'border-b-2', 'border-primary');
-            tabRegister.classList.add('text-on-surface-variant');
+            tabLogin.classList.add('active');
+            tabRegister.classList.remove('active');
             msgArea.classList.add('hidden');
-        });
+            // re-trigger animation
+            loginForm.style.animation = 'none';
+            loginForm.offsetHeight;
+            loginForm.style.animation = '';
+        }
 
-        tabRegister.addEventListener('click', () => {
+        function showRegister() {
             registerForm.classList.remove('hidden');
             loginForm.classList.add('hidden');
-            tabRegister.classList.add('text-primary', 'border-b-2', 'border-primary');
-            tabRegister.classList.remove('text-on-surface-variant');
-            tabLogin.classList.remove('text-primary', 'border-b-2', 'border-primary');
-            tabLogin.classList.add('text-on-surface-variant');
+            tabRegister.classList.add('active');
+            tabLogin.classList.remove('active');
             msgArea.classList.add('hidden');
-        });
+            registerForm.style.animation = 'none';
+            registerForm.offsetHeight;
+            registerForm.style.animation = '';
+        }
+
+        tabLogin.addEventListener('click', showLogin);
+        tabRegister.addEventListener('click', showRegister);
+        switchToRegister.addEventListener('click', showRegister);
+        switchToLogin.addEventListener('click', showLogin);
+
+        // Password visibility toggle
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const btn = input.nextElementSibling;
+            const icon = btn.querySelector('.material-symbols-outlined');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        }
 
         // API Logic
         const API_BASE = '/api/v1/auth';
@@ -220,22 +453,25 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (response.ok) {
-                    localStorage.setItem('token', data.accessToken);
-                    showMessage('Login successful! Checking permissions...', false);
-                    
-                    // Fetch user role to determine redirect
+                    sessionStorage.setItem('token', data.accessToken);
+                    showMessage('Login successful! Redirecting...', false);
+
                     try {
                         const userRes = await fetch('/api/v1/auth/me', {
                             headers: { 'Authorization': `Bearer ${data.accessToken}` }
                         });
                         const userData = await userRes.json();
-                        
+
                         setTimeout(() => {
-                            if (userData.role === 'USER') {
+                            const redirectUrl = sessionStorage.getItem('redirectAfterLogin');
+                            if (redirectUrl) {
+                                sessionStorage.removeItem('redirectAfterLogin');
+                                window.location.href = redirectUrl;
+                            } else if (((typeof userData.role === 'object') ? userData.role.name : userData.role) === 'USER') {
                                 window.location.href = '/index.html';
                             } else {
                                 window.location.href = '/admin.html';
@@ -254,10 +490,25 @@
 
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match!', true);
+                return;
+            }
+
+            const phone = document.getElementById('reg-phone').value;
+            if (phone.length !== 10 || !phone.startsWith('0')) {
+                showMessage('Please enter a valid 10-digit phone number (e.g., 07xxxxxxxx)', true);
+                return;
+            }
+
             const payload = {
                 name: document.getElementById('reg-name').value,
                 email: document.getElementById('reg-email').value,
-                password: document.getElementById('reg-password').value,
+                password: password,
                 phone: document.getElementById('reg-phone').value,
                 address: document.getElementById('reg-address').value
             };
@@ -268,11 +519,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                
+
                 if (response.ok) {
                     showMessage('Registration successful! Please sign in.', false);
                     registerForm.reset();
-                    setTimeout(() => tabLogin.click(), 2000);
+                    setTimeout(() => showLogin(), 2000);
                 } else {
                     const errorData = await response.json();
                     showMessage(errorData.message || 'Registration failed.', true);
@@ -283,4 +534,5 @@
         });
     </script>
 </body>
+
 </html>

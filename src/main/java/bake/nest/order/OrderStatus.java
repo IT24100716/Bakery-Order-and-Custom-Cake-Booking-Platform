@@ -2,9 +2,8 @@ package bake.nest.order;
 
 public enum OrderStatus {
     PENDING,
-    PAID,
-    BAKING,
-    OUT_FOR_DELIVERY,
+    CONFIRMED,
+    ON_THE_WAY,
     DELIVERED,
     CANCELLED
 }

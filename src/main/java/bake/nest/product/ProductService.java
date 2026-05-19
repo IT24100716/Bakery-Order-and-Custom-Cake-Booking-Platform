@@ -64,6 +64,7 @@ public class ProductService {
 
     public List<ProductDto> searchProducts(String query) {
         return productRepository.findByNameContainingIgnoreCase(query).stream()
+                .filter(p -> p.getActive() && !p.getDeleted())
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }

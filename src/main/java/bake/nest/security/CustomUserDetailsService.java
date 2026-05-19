@@ -1,6 +1,5 @@
 package bake.nest.security;
 
-import bake.nest.user.User;
 import bake.nest.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

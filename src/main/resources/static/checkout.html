@@ -173,7 +173,7 @@
         .s-line .val { font-weight: 500; }
         .s-line.total { padding-top: 1.25rem; border-top: 1px solid var(--beige); margin-top: 0.5rem; }
         .s-line.total .lbl { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--brown); font-weight: 600; }
-        .s-line.total .val { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); font-weight: 700; } }
+        .s-line.total .val { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); font-weight: 700; }
 
         .secure-note { text-align: center; margin-top: 0.75rem; font-size: 0.65rem; color: var(--brown-lt); display: flex; align-items: center; justify-content: center; gap: 0.3rem; }
         .secure-note .material-symbols-outlined { font-size: 0.8rem; color: var(--green); }
@@ -272,7 +272,7 @@
             <div id="card-details" class="pay-details">
                 <div class="field"><label>Card Number</label><input type="text" id="card-num" placeholder="0000 0000 0000 0000" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
                 <div class="card-form">
-                    <div class="field"><label>Expiry</label><input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5"></div>
+                    <div class="field"><label>Expiry</label><input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^([0-9]{2})([0-9]{1,2})/, '$1/$2')"></div>
                     <div class="field"><label>CVV</label><input type="text" id="card-cvv" placeholder="000" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
                 </div>
             </div>
@@ -315,32 +315,68 @@
 </main>
 
 <script>
-    const token = localStorage.getItem('token');
-    if (!token) { localStorage.setItem('redirectAfterLogin', '/checkout.html'); window.location.href = '/auth.html'; }
-    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    if (cartItems.length === 0) window.location.href = '/';
+    const token = sessionStorage.getItem('token');
+    if (!token) { 
+        localStorage.setItem('redirectAfterLogin', '/checkout.html'); 
+        window.location.href = '/auth.html'; 
+    }
+    
+    let cartItems = [];
+    try {
+        const stored = localStorage.getItem('cartItems');
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed)) {
+                cartItems = parsed;
+            } else {
+                // If corrupted, clear it
+                localStorage.removeItem('cartItems');
+            }
+        }
+    } catch(e) {
+        console.error("Failed to parse cart items", e);
+        localStorage.removeItem('cartItems');
+    }
 
     let subtotal = 0;
-    document.getElementById('checkout-items').innerHTML = cartItems.map(item => {
-        subtotal += item.price * item.quantity;
-        return `<div class="s-item">
-            <div class="s-img-wrap"><img class="s-img" src="${item.imageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80'}"><span class="s-qty">${item.quantity}</span></div>
-            <span class="s-name">${item.name}</span>
-            <span class="s-price">Rs. ${(item.price * item.quantity).toFixed(2)}</span>
-        </div>`;
-    }).join('');
-    document.getElementById('summary-subtotal').textContent = 'Rs. ' + subtotal.toFixed(2);
-
-    let deliveryFee = 200;
-    function updateTotal() {
-        const sel = document.querySelector('input[name="delivery"]:checked');
-        deliveryFee = sel ? parseInt(sel.dataset.fee) : 200;
-        document.getElementById('summary-delivery').textContent = deliveryFee === 0 ? 'Free' : 'Rs. ' + deliveryFee.toFixed(2);
-        document.getElementById('summary-total').textContent = 'Rs. ' + (subtotal + deliveryFee).toFixed(2);
-        document.getElementById('address-wrap').style.display = (sel && sel.value === 'PICKUP') ? 'none' : 'block';
+    
+    if (cartItems.length === 0) {
+        window.location.href = '/';
+    } else {
+        initCheckout();
     }
-    document.querySelectorAll('input[name="delivery"]').forEach(r => r.addEventListener('change', updateTotal));
-    updateTotal();
+
+    function initCheckout() {
+        try {
+            document.getElementById('checkout-items').innerHTML = cartItems.map(item => {
+                const price = parseFloat(item.price !== undefined ? item.price : (item.productPrice || 0));
+                const quantity = parseInt(item.quantity) || 1;
+                const name = item.name || item.productName || 'Unknown Item';
+                const imageUrl = item.imageUrl || item.productImageUrl || 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80';
+                
+                subtotal += price * quantity;
+                return `<div class="s-item">
+                    <div class="s-img-wrap"><img class="s-img" src="${imageUrl}"><span class="s-qty">${quantity}</span></div>
+                    <span class="s-name">${name}</span>
+                    <span class="s-price">Rs. ${(price * quantity).toFixed(2)}</span>
+                </div>`;
+            }).join('');
+            document.getElementById('summary-subtotal').textContent = 'Rs. ' + subtotal.toFixed(2);
+        } catch(e) {
+            console.error("Error rendering cart items", e);
+        }
+
+        let deliveryFee = 200;
+        function updateTotal() {
+            const sel = document.querySelector('input[name="delivery"]:checked');
+            deliveryFee = sel ? parseInt(sel.dataset.fee) : 200;
+            document.getElementById('summary-delivery').textContent = deliveryFee === 0 ? 'Free' : 'Rs. ' + deliveryFee.toFixed(2);
+            document.getElementById('summary-total').textContent = 'Rs. ' + (subtotal + deliveryFee).toFixed(2);
+            const addressWrap = document.getElementById('address-wrap');
+            if(addressWrap) addressWrap.style.display = (sel && sel.value === 'PICKUP') ? 'none' : 'block';
+        }
+        document.querySelectorAll('input[name="delivery"]').forEach(r => r.addEventListener('change', updateTotal));
+        updateTotal();
 
     // Toggle Payment Details
     function updatePaymentUI() {
@@ -429,6 +465,12 @@
                 localStorage.removeItem('cartItems');
                 window.location.href = '/order-success.html?id=' + d.id;
             } else {
+                if (res.status === 401) {
+                    sessionStorage.removeItem('token');
+                    localStorage.setItem('redirectAfterLogin', '/checkout.html');
+                    window.location.href = '/auth.html';
+                    return;
+                }
                 const e = await res.json().catch(() => ({ message: 'Server error' }));
                 showErr(e.message || 'Failed to place order.');
                 console.error('Order placement failed:', e);
@@ -442,6 +484,7 @@
     });
     function showErr(m) { errorText.textContent = m; errorBox.classList.add('show'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function resetBtn() { btnSubmit.disabled = false; btnSubmit.innerHTML = '<span class="material-symbols-outlined" style="font-size:1rem">lock</span> Place Order'; }
+    } // End of initCheckout
 </script>
 <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
 </body>

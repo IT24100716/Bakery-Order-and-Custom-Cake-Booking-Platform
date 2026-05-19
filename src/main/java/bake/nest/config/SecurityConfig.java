@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/public/**").permitAll()
                         .requestMatchers("/api/v1/uploads/files/**").permitAll() // Allow viewing slips
-                        .requestMatchers("/", "/*.html", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/", "/*.html", "/user/**", "/order/**", "/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

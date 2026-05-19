@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Custom Cake Checkout — BakeNest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL@20..48,100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #f7f0e8;
+            --surface: #ffffff;
+            --card: #faf6f1;
+            --brown: #3d2b1f;
+            --brown-mid: #6b5344;
+            --brown-lt: #a08a7a;
+            --beige: #e8ddd0;
+            --beige-dk: #d4c4b0;
+            --gold: #b8943f;
+            --gold-lt: #d4b05c;
+            --green: #2d8a4e;
+            --green-bg: #e8f5ec;
+            --blue: #3a7bc8;
+            --blue-bg: #e8f0fa;
+            --orange-bg: #fef3e2;
+            --red: #c0392b;
+        }
+        body { background: var(--bg); color: var(--brown); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+        /* Header */
+        header {
+            background: var(--surface); border-bottom: 1px solid var(--beige);
+            padding: 0.9rem 2rem; display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--brown); text-decoration: none; }
+        .back-link { color: var(--brown-lt); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; align-items: center; gap: 0.3rem; transition: color .2s; }
+        .back-link:hover { color: var(--brown); }
+
+        /* Layout */
+        main { max-width: 960px; margin: 1.5rem auto; padding: 0 1.25rem; display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; align-items: start; }
+        @media(max-width: 780px) { main { grid-template-columns: 1fr; } }
+
+        /* Error */
+        .error-box { background: #fdeaea; border: 1px solid #f5c6c6; color: var(--red); padding: 0.7rem 1rem; border-radius: 0.5rem; font-size: 0.8rem; margin-bottom: 1rem; display: none; }
+        .error-box.show { display: flex; align-items: center; gap: 0.4rem; }
+
+        /* Form area */
+        .form-area { background: var(--surface); border: 1px solid var(--beige); border-radius: 0.75rem; padding: 1.5rem; }
+
+        /* Inline grid for name + phone */
+        .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media(max-width: 500px) { .row-2 { grid-template-columns: 1fr; } }
+
+        /* Field */
+        .field { margin-bottom: 1rem; }
+        .field:last-child { margin-bottom: 0; }
+        .field label { display: block; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brown-lt); margin-bottom: 0.35rem; font-weight: 600; }
+        input[type=text], textarea {
+            width: 100%; background: var(--card); border: 1px solid var(--beige);
+            border-radius: 0.5rem; padding: 0.65rem 0.85rem; color: var(--brown);
+            font-family: 'Inter', sans-serif; font-size: 0.85rem; outline: none; transition: border-color .2s;
+        }
+        input:focus, textarea:focus { border-color: var(--gold); }
+        input::placeholder, textarea::placeholder { color: var(--brown-lt); }
+        textarea { resize: none; height: 58px; }
+
+        /* Section divider */
+        .section-divider { display: flex; align-items: center; gap: 0.6rem; margin: 1.25rem 0 1rem; }
+        .section-divider .material-symbols-outlined { font-size: 1.1rem; color: var(--gold); }
+        .section-divider h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--brown); font-weight: 600; }
+
+        /* Delivery options - compact inline row */
+        .del-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; margin-bottom: 1rem; }
+        @media(max-width: 500px) { .del-row { grid-template-columns: 1fr; } }
+        .del-opt { position: relative; }
+        .del-opt input { position: absolute; opacity: 0; }
+        .del-opt-label {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            padding: 0.85rem 0.5rem; border: 1.5px solid var(--beige); border-radius: 0.6rem;
+            background: var(--card); cursor: pointer; transition: all .2s; gap: 0.3rem;
+        }
+        .del-opt input:checked + .del-opt-label { border-color: var(--gold); background: var(--orange-bg); }
+        .del-opt-label:hover { border-color: var(--beige-dk); }
+        .del-opt-label .material-symbols-outlined { font-size: 1.2rem; color: var(--brown-mid); }
+        .del-opt input:checked + .del-opt-label .material-symbols-outlined { color: var(--gold); }
+        .del-name { font-weight: 600; font-size: 0.72rem; color: var(--brown); text-transform: uppercase; letter-spacing: 0.04em; }
+        .del-meta { font-size: 0.65rem; color: var(--brown-lt); }
+        .del-fee { font-weight: 700; font-size: 0.75rem; margin-top: 0.15rem; }
+        .del-fee.paid { color: var(--brown); }
+        .del-fee.free { color: var(--green); }
+
+        /* Payment options - compact */
+        .pay-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; }
+        .pay-opt { position: relative; }
+        .pay-opt input { position: absolute; opacity: 0; }
+        .pay-opt-label {
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+            padding: 0.85rem 0.5rem; border: 1.5px solid var(--beige); border-radius: 0.6rem;
+            background: var(--card); cursor: pointer; transition: all .2s; gap: 0.3rem;
+        }
+        .pay-opt input:checked + .pay-opt-label { border-color: var(--gold); background: var(--orange-bg); }
+        .pay-opt-label:hover { border-color: var(--beige-dk); }
+        .pay-opt-label .material-symbols-outlined { font-size: 1.2rem; color: var(--brown-mid); }
+        .pay-opt input:checked + .pay-opt-label .material-symbols-outlined { color: var(--gold); }
+        .pay-name { font-weight: 600; font-size: 0.72rem; color: var(--brown); text-transform: uppercase; letter-spacing: 0.04em; }
+        .pay-sub { font-size: 0.65rem; color: var(--brown-lt); }
+        .pay-opt.disabled .pay-opt-label { opacity: 0.45; cursor: not-allowed; }
+
+        /* Payment detail boxes */
+        .pay-details { background: var(--orange-bg); border: 1px solid var(--gold-lt); border-radius: 0.6rem; padding: 1rem; margin-top: 1rem; display: none; }
+        .pay-details.show { display: block; }
+        .bank-info { font-size: 0.8rem; color: var(--brown); margin-bottom: 0.75rem; line-height: 1.4; }
+        .bank-info strong { color: var(--brown-mid); }
+        .slip-upload { 
+            border: 2px dashed var(--beige-dk); 
+            border-radius: 0.6rem; 
+            padding: 1.5rem; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: all .2s; 
+            background: rgba(255,255,255,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .slip-upload:hover { border-color: var(--gold); background: rgba(255,255,255,0.5); }
+        .slip-upload input { display: none; }
+        .slip-preview { max-width: 100%; max-height: 200px; margin-top: 1rem; border-radius: 0.4rem; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        
+        .card-form { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0.75rem; }
+        @media(max-width: 500px) { .card-form { grid-template-columns: 1fr; } }
+
+        /* Submit */
+        .btn-submit {
+            width: 100%; margin-top: 1.25rem; padding: 0.85rem;
+            background: var(--brown); color: #fff; border: none; border-radius: 0.6rem;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.8rem;
+            letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+            transition: background .2s;
+        }
+        .btn-submit:hover { background: var(--brown-mid); }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }        /* Summary */
+        .summary { 
+            background: var(--surface); 
+            border: 1px solid var(--beige); 
+            border-radius: 0.75rem; 
+            padding: 2rem 1.5rem; 
+            position: sticky; 
+            top: 1.5rem; 
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        .summary-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--brown); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--beige); }
+        .s-items { display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 2rem; max-height: 400px; overflow-y: auto; flex-grow: 1; }
+        .s-items::-webkit-scrollbar { width: 3px; }
+        .s-items::-webkit-scrollbar-thumb { background: var(--beige-dk); border-radius: 3px; }
+        .s-item { display: flex; align-items: center; gap: 0.85rem; }
+        .s-img-wrap { position: relative; flex-shrink: 0; }
+        .s-img { width: 3.5rem; height: 3.5rem; border-radius: 0.5rem; object-fit: cover; border: 1px solid var(--beige); }
+        .s-qty { position: absolute; top: -0.4rem; right: -0.4rem; background: var(--brown); color: #fff; width: 1.2rem; height: 1.2rem; border-radius: 50%; font-size: 0.6rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+        .s-name { flex: 1; font-size: 0.85rem; font-weight: 500; color: var(--brown-mid); }
+        .s-price { font-size: 0.85rem; font-weight: 600; color: var(--brown); white-space: nowrap; }
+        
+        .s-total-area { margin-top: auto; }
+        .s-lines { border-top: 1px solid var(--beige); padding-top: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .s-line { display: flex; justify-content: space-between; font-size: 0.9rem; }
+        .s-line .lbl { color: var(--brown-lt); }
+        .s-line .val { font-weight: 500; }
+        .s-line.total { padding-top: 1.25rem; border-top: 1px solid var(--beige); margin-top: 0.5rem; }
+        .s-line.total .lbl { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--brown); font-weight: 600; }
+        .s-line.total .val { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); font-weight: 700; }
+
+        .secure-note { text-align: center; margin-top: 0.75rem; font-size: 0.65rem; color: var(--brown-lt); display: flex; align-items: center; justify-content: center; gap: 0.3rem; }
+        .secure-note .material-symbols-outlined { font-size: 0.8rem; color: var(--green); }
+    </style>
+</head>
+<body>
+
+<header>
+    <a class="logo" href="/">BakeNest</a>
+    <a class="back-link" href="/"><span class="material-symbols-outlined" style="font-size:.85rem">arrow_back</span> Back to shop</a>
+</header>
+
+<main>
+    <div>
+        <div class="error-box" id="error-box"><span class="material-symbols-outlined" style="font-size:.9rem">error</span> <span id="error-text"></span></div>
+
+        <div class="form-area">
+            <!-- Contact -->
+            <div class="section-divider" style="margin-top:0">
+                <span class="material-symbols-outlined">person</span>
+                <h3>Contact</h3>
+            </div>
+            <div class="row-2">
+                <div class="field"><label>Full Name</label><input type="text" id="input-name" placeholder="e.g. Hiruni Perera"></div>
+                <div class="field"><label>Phone</label><input type="text" id="input-phone" placeholder="077 000 0000" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+            </div>
+
+            <!-- Delivery -->
+            <div class="section-divider">
+                <span class="material-symbols-outlined">local_shipping</span>
+                <h3>Delivery</h3>
+            </div>
+            <div class="del-row">
+                <div class="del-opt">
+                    <input type="radio" name="delivery" id="del-express" value="EXPRESS" data-fee="500">
+                    <label class="del-opt-label" for="del-express">
+                        <span class="material-symbols-outlined">bolt</span>
+                        <span class="del-name">Express</span>
+                        <span class="del-fee paid">Rs. 500</span>
+                    </label>
+                </div>
+                <div class="del-opt">
+                    <input type="radio" name="delivery" id="del-normal" value="NORMAL" data-fee="200" checked>
+                    <label class="del-opt-label" for="del-normal">
+                        <span class="material-symbols-outlined">local_shipping</span>
+                        <span class="del-name">Normal</span>
+                        <span class="del-fee paid">Rs. 200</span>
+                    </label>
+                </div>
+                <div class="del-opt">
+                    <input type="radio" name="delivery" id="del-pickup" value="PICKUP" data-fee="0">
+                    <label class="del-opt-label" for="del-pickup">
+                        <span class="material-symbols-outlined">store</span>
+                        <span class="del-name">Pickup</span>
+                        <span class="del-fee free">Free</span>
+                    </label>
+                </div>
+            </div>
+            <div id="address-wrap">
+                <div class="field"><label>Delivery Address</label><textarea id="input-address" placeholder="No. 45, Galle Road, Colombo 03"></textarea></div>
+            </div>
+
+            <!-- Payment -->
+            <div class="section-divider">
+                <span class="material-symbols-outlined">payments</span>
+                <h3>Payment</h3>
+            </div>
+            <div class="pay-row">
+                
+                <div class="pay-opt">
+                    <input type="radio" name="payment" id="pay-card" value="CARD" checked>
+                    <label class="pay-opt-label" for="pay-card">
+                        <span class="material-symbols-outlined">credit_card</span>
+                        <span class="pay-name">Card</span>
+                        <span class="pay-sub">Online Pay</span>
+                    </label>
+                </div>
+                <div class="pay-opt">
+                    <input type="radio" name="payment" id="pay-bank" value="BANK_TRANSFER">
+                    <label class="pay-opt-label" for="pay-bank">
+                        <span class="material-symbols-outlined">account_balance</span>
+                        <span class="pay-name">Bank</span>
+                        <span class="pay-sub">Upload Slip</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Card Details (Simulated) -->
+            <div id="card-details" class="pay-details">
+                <div class="field"><label>Card Number</label><input type="text" id="card-num" placeholder="0000 0000 0000 0000" maxlength="16" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+                <div class="card-form">
+                    <div class="field"><label>Expiry</label><input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/^([0-9]{2})([0-9]{1,2})/, '$1/$2')"></div>
+                    <div class="field"><label>CVV</label><input type="text" id="card-cvv" placeholder="000" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+                </div>
+            </div>
+
+            <!-- Bank Details -->
+            <div id="bank-details" class="pay-details">
+                <div class="bank-info">
+                    <strong>Bank:</strong> BakeNest Bank<br>
+                    <strong>Account Name:</strong> BakeNest Pvt Ltd<br>
+                    <strong>Account Number:</strong> 1234 5678 9012<br>
+                    <strong>Branch:</strong> Colombo Main
+                </div>
+                <label class="slip-upload" for="slip-file" id="slip-dropzone">
+                    <span class="material-symbols-outlined">upload_file</span>
+                    <div style="font-size: 0.75rem; color: var(--brown-mid); font-weight: 500;">Click to upload payment slip</div>
+                    <input type="file" id="slip-file" accept="image/*">
+                    <img id="slip-preview" class="slip-preview">
+                </label>
+            </div>
+
+            <button class="btn-submit" id="btn-submit">
+                <span class="material-symbols-outlined" style="font-size:1rem">lock</span> Confirm & Pay
+            </button>
+            <div class="secure-note"><span class="material-symbols-outlined">verified_user</span> Secure checkout</div>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div>
+        <div class="summary">
+            <div class="summary-title">Order Summary</div>
+            <div class="s-items" id="checkout-items"></div>
+            <div class="s-lines">
+                <div class="s-line"><span class="lbl">Subtotal</span><span class="val" id="summary-subtotal">Rs. 0.00</span></div>
+                <div class="s-line"><span class="lbl">Delivery</span><span class="val" id="summary-delivery">Rs. 200.00</span></div>
+                <div class="s-line total"><span class="lbl">Total</span><span class="val" id="summary-total">Rs. 0.00</span></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<script>
+    const token = sessionStorage.getItem('token');
+    if (!token) { 
+        localStorage.setItem('redirectAfterLogin', window.location.pathname + window.location.search); 
+        window.location.href = '/auth.html'; 
+    }
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const customId = urlParams.get('id');
+    if (!customId) {
+        window.location.href = '/my-orders.html';
+    }
+
+    let customCake = null;
+    let subtotal = 0;
+
+    async function fetchCustomCake() {
+        try {
+            const res = await fetch('/api/v1/customer/custom-cakes', {
+                headers: { 'Authorization': 'Bearer ' + token }
+            });
+            if (res.ok) {
+                const requests = await res.json();
+                customCake = requests.find(r => r.id == customId);
+                if (!customCake || customCake.status !== 'QUOTED') {
+                    alert('Invalid custom cake request or it is not ready for payment.');
+                    window.location.href = '/my-orders.html';
+                    return;
+                }
+                initCheckout();
+            } else {
+                throw new Error('Failed to fetch request details.');
+            }
+        } catch (e) {
+            console.error(e);
+            alert('Failed to load checkout details.');
+        }
+    }
+
+    function initCheckout() {
+        subtotal = customCake.quotedPrice || 0;
+        const imageUrl = customCake.referenceImageUrl || 'https://images.unsplash.com/photo-1535141192574-5d4897c12636?q=80';
+        
+        document.getElementById('checkout-items').innerHTML = `<div class="s-item">
+            <div class="s-img-wrap"><img class="s-img" src="${imageUrl}"><span class="s-qty">1</span></div>
+            <span class="s-name">${customCake.flavor} Custom Creation (${customCake.size})</span>
+            <span class="s-price">Rs. ${subtotal.toFixed(2)}</span>
+        </div>`;
+        
+        document.getElementById('summary-subtotal').textContent = 'Rs. ' + subtotal.toFixed(2);
+
+        let deliveryFee = 200;
+        function updateTotal() {
+            const sel = document.querySelector('input[name="delivery"]:checked');
+            deliveryFee = sel ? parseInt(sel.dataset.fee) : 200;
+            document.getElementById('summary-delivery').textContent = deliveryFee === 0 ? 'Free' : 'Rs. ' + deliveryFee.toFixed(2);
+            document.getElementById('summary-total').textContent = 'Rs. ' + (subtotal + deliveryFee).toFixed(2);
+            const addressWrap = document.getElementById('address-wrap');
+            if(addressWrap) addressWrap.style.display = (sel && sel.value === 'PICKUP') ? 'none' : 'block';
+        }
+        document.querySelectorAll('input[name="delivery"]').forEach(r => r.addEventListener('change', updateTotal));
+        updateTotal();
+
+        // Toggle Payment Details
+        function updatePaymentUI() {
+            const method = document.querySelector('input[name="payment"]:checked').value;
+            document.getElementById('card-details').classList.toggle('show', method === 'CARD');
+            document.getElementById('bank-details').classList.toggle('show', method === 'BANK_TRANSFER');
+        }
+        document.querySelectorAll('input[name="payment"]').forEach(r => r.addEventListener('change', updatePaymentUI));
+        updatePaymentUI();
+
+        // Slip Preview
+        const slipFile = document.getElementById('slip-file');
+        const slipPreview = document.getElementById('slip-preview');
+        slipFile.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    slipPreview.src = e.target.result;
+                    slipPreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        const btnSubmit = document.getElementById('btn-submit');
+        const errorBox = document.getElementById('error-box');
+        const errorText = document.getElementById('error-text');
+
+        btnSubmit.addEventListener('click', async () => {
+            errorBox.classList.remove('show');
+            const address = document.getElementById('input-address').value.trim();
+            const phone = document.getElementById('input-phone').value.trim();
+            const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+            // Validations
+            if (!phone) { showErr('Please provide your phone number.'); return; }
+            if (!/^(07[0-9]{8})$/.test(phone)) { showErr('Please enter a valid 10-digit Sri Lankan phone number (e.g. 0771234567).'); return; }
+            if (deliveryMethod !== 'PICKUP' && !address) { showErr('Please provide your delivery address.'); return; }
+
+            const payload = {
+                paymentMethod, 
+                shippingAddress: deliveryMethod === 'PICKUP' ? 'PICKUP' : address,
+                phone, 
+                deliveryMethod, 
+                deliveryFee,
+                paymentSlipUrl: null
+            };
+
+            // Handle Payment Specifics
+            if (paymentMethod === 'CARD') {
+                const num = document.getElementById('card-num').value.trim();
+                const exp = document.getElementById('card-expiry').value.trim();
+                const cvv = document.getElementById('card-cvv').value.trim();
+                if (!num || !exp || !cvv) { showErr('Please enter card details.'); return; }
+                if (num.length !== 16) { showErr('Please enter a valid 16-digit card number.'); return; }
+                if (!/^[0-9]{2}\/[0-9]{2}$/.test(exp)) { showErr('Please enter expiry in MM/YY format.'); return; }
+                if (cvv.length !== 3) { showErr('Please enter a valid 3-digit CVV.'); return; }
+            } else if (paymentMethod === 'BANK_TRANSFER') {
+                const file = slipFile.files[0];
+                if (!file) { showErr('Please upload your payment slip.'); return; }
+                
+                const formData = new FormData();
+                formData.append('file', file);
+                
+                try {
+                    const uploadRes = await fetch('/api/v1/uploads/payment-slip', {
+                        method: 'POST',
+                        headers: { 'Authorization': 'Bearer ' + token },
+                        body: formData
+                    });
+                    if (!uploadRes.ok) throw new Error('Slip upload failed.');
+                    payload.paymentSlipUrl = await uploadRes.text();
+                } catch (e) {
+                    showErr('Failed to upload payment slip.');
+                    resetBtn();
+                    return;
+                }
+            }
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<span class="material-symbols-outlined" style="font-size:1rem;animation:spin 1s linear infinite">autorenew</span> Processing...';
+            
+            try {
+                const res = await fetch(`/api/v1/customer/custom-cakes/${customId}/pay`, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, 
+                    body: JSON.stringify(payload) 
+                });
+                
+                if (res.ok) {
+                    window.location.href = '/my-orders.html';
+                } else {
+                    const e = await res.json().catch(() => ({ message: 'Server error' }));
+                    showErr(e.message || 'Failed to process payment.');
+                    resetBtn();
+                }
+            } catch (e) {
+                showErr('Connection error. Please try again.');
+                resetBtn();
+            }
+        });
+
+        function showErr(m) { errorText.textContent = m; errorBox.classList.add('show'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        function resetBtn() { btnSubmit.disabled = false; btnSubmit.innerHTML = '<span class="material-symbols-outlined" style="font-size:1rem">lock</span> Confirm & Pay'; }
+    }
+
+    fetchCustomCake();
+</script>
+
+<style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+</body>
+</html>

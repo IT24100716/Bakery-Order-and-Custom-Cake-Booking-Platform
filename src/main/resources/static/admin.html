@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>BakeNest - Product Management Dashboard</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -34,12 +38,8 @@
                         "outline-variant": "#cdc5bc",
                     },
                     "fontFamily": {
-                        "headline-lg": ["Montserrat"],
-                        "headline-md": ["Montserrat"],
-                        "headline-sm": ["Montserrat"],
-                        "body-md": ["Montserrat"],
-                        "body-lg": ["Montserrat"],
-                        "label-md": ["Montserrat"]
+                        "display": ["Playfair Display"],
+                        "body": ["Montserrat"]
                     }
                 }
             }
@@ -47,11 +47,13 @@
     </script>
     <style>
         .material-symbols-outlined {
-          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
         .material-symbols-outlined.fill {
             font-variation-settings: 'FILL' 1;
         }
+
         .glass-panel {
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(40px);
@@ -59,186 +61,486 @@
             border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 8px 32px rgba(75, 52, 37, 0.04);
         }
+
         .smooth-transition {
             transition: all 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
         }
     </style>
 </head>
+
 <body class="bg-background text-on-background min-h-screen flex font-body-md antialiased overflow-x-hidden">
 
-<!-- SideNavBar -->
-<nav class="bg-[#ebd8c3]/90 backdrop-blur-[50px] font-label-md text-xs font-semibold uppercase tracking-widest fixed left-0 top-0 bottom-0 h-screen w-72 border-r border-white/40 shadow-[4px_0_24px_rgba(75,52,37,0.04)] flex flex-col p-6 z-50 smooth-transition hidden md:flex">
-    <div class="mb-12 flex flex-col items-center justify-center text-center mt-6">
-        <div class="w-20 h-20 rounded-full bg-secondary-container/30 mb-4 flex items-center justify-center border border-secondary/20 shadow-sm overflow-hidden">
-            <span class="material-symbols-outlined text-4xl text-secondary">bakery_dining</span>
-        </div>
-        <h1 class="font-headline-md text-2xl text-on-surface tracking-tight">BakeNest</h1>
-        <p class="text-[10px] text-on-surface-variant/70 mt-1 uppercase tracking-[0.15em]" id="user-role-badge">Admin Panel</p>
-    </div>
-
-    <div class="flex flex-col gap-2 flex-grow">
-        <a class="flex items-center gap-4 px-6 py-3 bg-secondary-container/50 text-on-secondary-container shadow-sm rounded-xl smooth-transition" href="/admin.html">
-            <span class="material-symbols-outlined text-[20px] fill">dashboard</span>
-            <span>Dashboard</span>
-        </a>
-        <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="/admin-products.html">
-            <span class="material-symbols-outlined text-[20px]">inventory_2</span>
-            <span>Products</span>
-        </a>
-        <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="/admin-categories.html">
-            <span class="material-symbols-outlined text-[20px]">category</span>
-            <span>Categories</span>
-        </a>
-        <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="#">
-            <span class="material-symbols-outlined text-[20px]">receipt_long</span>
-            <span>Orders</span>
-        </a>
-        
-        <!-- Super Admin Only Link -->
-        <a id="nav-users" class="hidden items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl" href="#">
-            <span class="material-symbols-outlined text-[20px]">group</span>
-            <span>Users & Roles</span>
-        </a>
-    </div>
-
-    <div class="mt-auto flex flex-col gap-4">
-        <a id="btn-logout" class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 smooth-transition rounded-xl justify-center cursor-pointer">
-            <span class="material-symbols-outlined text-[20px]">logout</span>
-            <span>Logout</span>
-        </a>
-    </div>
-</nav>
-
-<!-- Main Content Canvas -->
-<main class="flex-1 md:ml-72 relative min-h-screen flex flex-col w-full">
-    <!-- TopNavBar -->
-    <header class="bg-white/60 backdrop-blur-[40px] font-body-md w-full h-20 sticky top-0 border-b border-white/40 flex justify-between items-center px-12 z-40">
-        <div class="hidden md:flex items-center relative w-64 lg:w-96">
-            <span class="material-symbols-outlined absolute left-4 text-on-surface-variant/50 z-10">search</span>
-            <input class="w-full pl-11 pr-4 py-2.5 bg-surface-container-low/50 border border-outline-variant/30 rounded-[28px] focus:outline-none focus:border-secondary focus:ring-1 text-sm shadow-inner" placeholder="Search products..." type="text"/>
-        </div>
-        
-        <div class="flex items-center gap-4">
-            <button class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-secondary to-[#877254] text-white px-5 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all text-[13px] tracking-wide uppercase font-bold">
-                <span class="material-symbols-outlined text-[18px]">add</span>
-                <span>Add Product</span>
-            </button>
-            <div class="w-10 h-10 rounded-full bg-secondary-container border-2 border-white shadow-sm overflow-hidden ml-2 flex items-center justify-center">
-                <span class="material-symbols-outlined text-secondary">person</span>
+    <!-- SideNavBar -->
+    <nav
+        class="bg-[#2a170a] font-body text-xs font-semibold uppercase tracking-widest fixed left-0 top-0 bottom-0 h-screen w-72 flex flex-col p-8 z-50 smooth-transition hidden md:flex text-white/70 overflow-y-auto">
+        <div class="mb-12 flex flex-col items-center justify-center text-center mt-4">
+            <div
+                class="w-20 h-20 rounded-2xl bg-white/5 mb-6 flex items-center justify-center border border-white/10 shadow-2xl backdrop-blur-md">
+                <span class="material-symbols-outlined text-4xl text-white/90">bakery_dining</span>
             </div>
+            <h1 class="font-display text-3xl text-white tracking-[0.1em] font-bold mb-1">BAKENEST</h1>
+            <p class="text-[9px] text-white/30 uppercase tracking-[0.3em] font-bold" id="user-role-badge">Artisanal
+                Admin</p>
         </div>
-    </header>
 
-    <!-- Page Content -->
-    <div class="p-4 md:p-12 flex-1">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
-            <div>
-                <h2 class="font-headline-lg text-2xl font-bold text-on-background mb-1 tracking-tight">Product Performance</h2>
-                <p class="text-on-surface-variant font-body-lg text-sm max-w-2xl opacity-80">A curated overview of your artisanal offerings and their market resonance.</p>
+        <div class="flex flex-col gap-3 flex-grow" id="admin-nav-links">
+            <!-- Constant Link: Dashboard -->
+            <a id="nav-dashboard"
+                class="flex items-center gap-4 px-6 py-4 bg-white/10 text-white shadow-xl rounded-2xl smooth-transition border border-white/10"
+                href="/admin.html">
+                <span class="material-symbols-outlined text-[22px] fill">grid_view</span>
+                <span class="tracking-widest">Dashboard</span>
+            </a>
+
+            <!-- Standard Admin Links (Filtered by Role) -->
+            <div id="nav-group-standard" class="flex flex-col gap-3">
+                <a id="nav-products"
+                    class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/admin-products.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">inventory_2</span>
+                    <span class="tracking-widest">Products</span>
+                </a>
+                <a id="nav-categories"
+                    class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/admin-categories.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">category</span>
+                    <span class="tracking-widest">Categories</span>
+                </a>
+                <a id="nav-custom"
+                    class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/admin-custom-requests.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">volunteer_activism</span>
+                    <span class="tracking-widest">Custom Requests</span>
+                </a>
+                <a id="nav-orders"
+                    class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/order/orders.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">receipt_long</span>
+                    <span class="tracking-widest">Orders</span>
+                </a>
+                <a id="nav-payments"
+                    class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/order/payments.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white group-hover:fill transition-colors">payments</span>
+                    <span class="tracking-widest">Payments</span>
+                </a>
             </div>
-        </div>
 
-        <!-- Bento Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
             
-            <div class="md:col-span-4 glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden group smooth-transition">
-                <div class="flex justify-between items-start mb-6">
-                    <div class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
-                        <span class="material-symbols-outlined text-secondary text-[24px]">inventory</span>
-                    </div>
-                </div>
-                <div>
-                    <p class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest mb-1 opacity-70">Total Offerings</p>
-                    <p id="kpi-total" class="font-headline-md text-2xl font-bold text-on-background">Loading...</p>
-                </div>
+            <!-- User Admin Links -->
+            
+            <!-- User Admin Links -->
+            <div id="nav-group-users" class="hidden flex-col gap-3 mt-4 pt-4 border-t border-white/10">
+                <span class="px-6 text-[10px] text-white/30 uppercase tracking-widest font-bold">User Management</span>
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/user/admin-users.html?tab=customers">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">person</span>
+                    <span class="tracking-widest">Customers</span>
+                </a>
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/user/admin-users.html?tab=staff">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">badge</span>
+                    <span class="tracking-widest">Staff Members</span>
+                </a>
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/user/admin-users.html?tab=roles">
+                    <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">admin_panel_settings</span>
+                    <span class="tracking-widest">Roles & Access</span>
+                </a>
             </div>
 
-            <div class="md:col-span-4 glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden group smooth-transition">
-                <div class="flex justify-between items-start mb-6">
-                    <div class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
-                        <span class="material-symbols-outlined text-tertiary text-[24px]">check_circle</span>
-                    </div>
-                </div>
-                <div>
-                    <p class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest mb-1 opacity-70">Active Batches</p>
-                    <p id="kpi-active" class="font-headline-md text-2xl font-bold text-on-background">Loading...</p>
-                </div>
-            </div>
-
-            <div class="md:col-span-4 glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden group smooth-transition">
-                <div class="flex justify-between items-start mb-6">
-                    <div class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
-                        <span class="material-symbols-outlined text-error text-[24px]">warning</span>
-                    </div>
-                </div>
-                <div>
-                    <p class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest mb-1 opacity-70">Out of Stock</p>
-                    <p id="kpi-oos" class="font-headline-md text-2xl font-bold text-error">Loading...</p>
-                </div>
-            </div>
             
         </div>
-        
-        <!-- Table Area -->
-        <div class="mt-8 glass-panel rounded-xl p-6">
-            <h3 class="font-headline-sm text-xl font-bold mb-4 tracking-tight">Recent Products</h3>
-            <div id="products-table" class="text-on-surface-variant text-sm">Loading data...</div>
+
+        <div class="mt-auto flex flex-col gap-4 pb-12">
+            <a id="btn-logout"
+                class="flex items-center gap-4 px-6 py-4 text-white/40 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl justify-center cursor-pointer border border-transparent hover:border-white/10 group">
+                <span
+                    class="material-symbols-outlined text-[22px] transition-transform group-hover:-translate-x-1">logout</span>
+                <span class="tracking-widest">Logout</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Canvas -->
+    <main class="flex-1 md:ml-72 relative min-h-screen flex flex-col w-full">
+        <!-- TopNavBar -->
+        <header
+            class="bg-white/60 backdrop-blur-[40px] font-body-md w-full h-20 sticky top-0 border-b border-white/40 flex justify-between items-center px-12 z-40">
+            <div class="hidden md:flex items-center relative w-64 lg:w-96">
+                <span class="material-symbols-outlined absolute left-4 text-on-surface-variant/50 z-10">search</span>
+                <input
+                    class="w-full pl-11 pr-4 py-2.5 bg-surface-container-low/50 border border-outline-variant/30 rounded-[28px] focus:outline-none focus:border-secondary focus:ring-1 text-sm shadow-inner"
+                    placeholder="Search products..." type="text" />
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button id="btn-add-action" onclick="window.location.href='/admin-add-product.html'"
+                    class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-secondary to-[#877254] text-white px-5 py-2 rounded-full shadow-sm hover:shadow-md hover:scale-105 transition-all text-[13px] tracking-wide uppercase font-bold">
+                    <span class="material-symbols-outlined text-[18px]">add</span>
+                    <span id="btn-add-text">Add Product</span>
+                </button>
+                <div
+                    class="w-10 h-10 rounded-full bg-secondary-container border-2 border-white shadow-sm overflow-hidden ml-2 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-secondary">person</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="p-4 md:p-12 flex-1">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
+                <div>
+                    <h2 id="dashboard-title"
+                        class="font-headline-lg text-2xl font-bold text-on-background mb-1 tracking-tight">Product
+                        Performance</h2>
+                    <p id="dashboard-subtitle"
+                        class="text-on-surface-variant font-body-lg text-sm max-w-2xl opacity-80">A curated overview of
+                        your artisanal offerings and their market resonance.</p>
+                </div>
+            </div>
+
+            <!-- Bento Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+
+                <div
+                    class="md:col-span-4 glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden group smooth-transition">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
+                            <span class="material-symbols-outlined text-secondary text-[24px]">inventory</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p id="kpi-label-1"
+                            class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest mb-1 opacity-70">
+                            Total Offerings</p>
+                        <p id="kpi-total" class="font-headline-md text-2xl font-bold text-on-background">Loading...</p>
+                    </div>
+                </div>
+
+                <div
+                    class="md:col-span-4 glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden group smooth-transition">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
+                            <span class="material-symbols-outlined text-tertiary text-[24px]">check_circle</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p id="kpi-label-2"
+                            class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest mb-1 opacity-70">
+                            Active Batches</p>
+                        <p id="kpi-active" class="font-headline-md text-2xl font-bold text-on-background">Loading...</p>
+                    </div>
+                </div>
+
+                <div
+                    class="md:col-span-4 glass-panel rounded-xl p-6 flex flex-col justify-between relative overflow-hidden group smooth-transition">
+                    <div class="flex justify-between items-start mb-6">
+                        <div
+                            class="w-12 h-12 rounded-full bg-white/50 flex items-center justify-center shadow-inner border border-white/60">
+                            <span class="material-symbols-outlined text-error text-[24px]">warning</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p id="kpi-label-3"
+                            class="font-label-md text-xs text-on-surface-variant uppercase tracking-widest mb-1 opacity-70">
+                            Out of Stock</p>
+                        <p id="kpi-oos" class="font-headline-md text-2xl font-bold text-error">Loading...</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Table Area -->
+            <div class="mt-8 glass-panel rounded-xl p-6">
+                <h3 id="table-title" class="font-headline-sm text-xl font-bold mb-4 tracking-tight">Recent Products</h3>
+                <div id="products-table" class="text-on-surface-variant text-sm">Loading data...</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- User Details Edit Modal -->
+    <div id="modal-edit-user"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div
+            class="bg-white/90 backdrop-blur-xl w-full max-w-md rounded-3xl shadow-2xl border border-white/20 overflow-hidden animate-fade-in">
+            <div class="p-8 border-b border-outline-variant/10">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-2xl">person_edit</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-primary tracking-tight">Edit Profile</h3>
+                        <p class="text-xs text-on-surface-variant/60">Update basic customer information.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-8 space-y-5">
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Full Name</label>
+                    <input id="edit-user-name" type="text"
+                        class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all" />
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Phone Number</label>
+                    <input id="edit-user-phone" type="text" maxlength="10"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="0XXXXXXXXX"
+                        class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all" />
+                </div>
+                <div class="space-y-1.5">
+                    <label class="text-[10px] font-bold text-secondary uppercase tracking-widest">Primary
+                        Address</label>
+                    <textarea id="edit-user-address"
+                        class="w-full bg-surface-variant/30 border border-outline-variant/30 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-secondary transition-all h-24 resize-none"></textarea>
+                </div>
+            </div>
+            <div class="p-8 bg-surface-container-low/50 flex gap-4">
+                <button onclick="document.getElementById('modal-edit-user').classList.add('hidden')"
+                    class="flex-1 py-3 rounded-xl font-bold text-xs uppercase tracking-widest text-on-surface-variant hover:bg-white transition-all">Cancel</button>
+                <button id="btn-save-user-details"
+                    class="flex-1 bg-primary text-white py-3 rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20">Save
+                    Changes</button>
+            </div>
         </div>
     </div>
-</main>
 
-<script>
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = '/auth.html'; // Protect page
-    }
+    <script>
+        const token = sessionStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/auth.html'; // Protect page
+        }
 
-    // Logout
-    document.getElementById('btn-logout').addEventListener('click', () => {
-        localStorage.removeItem('token');
-        window.location.href = '/auth.html';
-    });
+        // Logout
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            sessionStorage.removeItem('token');
+            window.location.href = '/auth.html';
+        });
 
-    async function initDashboard() {
-        try {
-            // 1. Verify Role
-            const authRes = await fetch('/api/v1/auth/me', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (!authRes.ok) throw new Error("Unauthorized");
-            const user = await authRes.json();
-            
-            if (user.role === 'USER') {
-                alert("Access Denied. Admins only.");
-                window.location.href = '/';
+        async function initDashboard() {
+            try {
+                // 1. Verify Role
+                const authRes = await fetch('/api/v1/auth/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!authRes.ok) throw new Error("Unauthorized");
+                const user = await authRes.json();
+                const userRole = (typeof user.role === 'object') ? user.role.name : user.role;
+
+                if (userRole === 'USER') {
+                    alert("Access Denied. Admins only.");
+                    window.location.href = '/';
+                    return;
+                }
+
+                const roleBadge = document.getElementById('user-role-badge');
+                if (roleBadge) {
+                    roleBadge.textContent = userRole.replace('_', ' ');
+                }
+
+                const navOrders = document.getElementById('nav-orders');
+                const navPayments = document.getElementById('nav-payments');
+                const navGroupUsers = document.getElementById('nav-group-users');
+                const navGroupStandard = document.getElementById('nav-group-standard');
+                const navProducts = document.getElementById('nav-products');
+                const navCategories = document.getElementById('nav-categories');
+                const navCustom = document.getElementById('nav-custom');
+
+                if (userRole === 'USER_ADMIN') {
+                    setupUserAdminDashboard();
+                } else if (userRole === 'ORDER_ADMIN') {
+                    if (navProducts) navProducts.classList.add('hidden');
+                    if (navCategories) navCategories.classList.add('hidden');
+                    if (navCustom) navCustom.classList.add('hidden');
+                    loadStandardDashboard();
+                } else if (userRole === 'PRODUCT_ADMIN') {
+                    if (navOrders) navOrders.classList.add('hidden');
+                    if (navPayments) navPayments.classList.add('hidden');
+                    loadStandardDashboard();
+                } else if (userRole === 'SUPER_ADMIN') {
+                    if (navGroupUsers) {
+                        navGroupUsers.classList.remove('hidden');
+                        navGroupUsers.classList.add('flex');
+                    }
+                    loadStandardDashboard();
+                } else {
+                    loadStandardDashboard();
+                }
+            } catch (e) {
+                console.error(e);
+                window.location.href = '/auth.html';
+            }
+        }
+
+        async function setupUserAdminDashboard() {
+            // Hide standard resource groups but keep Dashboard
+            document.getElementById('nav-group-standard').classList.add('hidden');
+            document.getElementById('nav-group-users').classList.remove('hidden');
+
+            // Update UI Labels
+            document.getElementById('dashboard-title').textContent = "Community Hub";
+            document.getElementById('dashboard-subtitle').textContent = "A specialized overview of your member relations and artisanal community.";
+            document.getElementById('btn-add-text').textContent = "User Manager";
+            document.getElementById('btn-add-action').onclick = () => window.location.href = '/user/admin-users.html';
+
+            document.getElementById('kpi-label-1').textContent = "Total Members";
+            document.getElementById('kpi-label-2').textContent = "Staff Members";
+            document.getElementById('kpi-label-3').textContent = "Pending Access";
+            document.getElementById('table-title').textContent = "Recent Customers";
+
+            try {
+                const res = await fetch('/api/v1/user/admin/users', {
+                    headers: { 'Authorization': `Bearer ${sessionStorage.getItem('token')}` }
+                });
+                if (!res.ok) throw new Error("Failed to fetch users");
+                const users = await res.json();
+
+                const customers = users.filter(u => u.role === 'USER');
+                const staff = users.filter(u => u.role !== 'USER');
+
+                document.getElementById('kpi-total').textContent = customers.length;
+                document.getElementById('kpi-active').textContent = staff.length;
+                document.getElementById('kpi-oos').textContent = "0";
+                document.getElementById('kpi-oos').classList.remove('text-error');
+                document.getElementById('kpi-oos').classList.add('text-secondary');
+
+                const tableContainer = document.getElementById('products-table');
+                const recentUsers = [...customers].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+
+                if (recentUsers.length === 0) {
+                    tableContainer.innerHTML = "No customers found.";
+                    return;
+                }
+
+                let html = `
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="text-left font-label-md text-xs text-on-surface-variant uppercase tracking-widest border-b border-outline-variant">
+                            <th class="py-4 font-semibold">Name</th>
+                            <th class="py-4 font-semibold">Contact</th>
+                            <th class="py-4 font-semibold">Joined Date</th>
+                            <th class="py-4 font-semibold text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+
+                recentUsers.forEach(u => {
+                    html += `
+                    <tr class="border-b border-outline-variant/30 hover:bg-white/40 transition-all group">
+                        <td class="py-4 font-body-md text-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-[10px]">
+                                    ${u.name ? u.name.charAt(0) : '?'}
+                                </div>
+                                <span class="font-bold text-primary">${u.name}</span>
+                            </div>
+                        </td>
+                        <td class="py-4 font-body-md text-sm text-on-surface-variant">
+                            ${u.email}
+                        </td>
+                        <td class="py-4 font-body-md text-sm text-on-surface-variant">
+                            ${new Date(u.createdAt).toLocaleDateString()}
+                        </td>
+                        <td class="py-4 text-right">
+                            <div class="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button onclick='openEditModal(${JSON.stringify(u)})' class="p-2 text-on-surface-variant/40 hover:text-primary hover:bg-primary/5 rounded-lg transition-all">
+                                    <span class="material-symbols-outlined text-[18px]">edit_note</span>
+                                </button>
+                                <button onclick='confirmDelete(${u.id})' class="p-2 text-on-surface-variant/40 hover:text-error hover:bg-error/5 rounded-lg transition-all">
+                                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    `;
+                });
+
+                html += `</tbody></table>`;
+                tableContainer.innerHTML = html;
+
+            } catch (e) {
+                console.error(e);
+                document.getElementById('products-table').innerHTML = "Error loading community data.";
+            }
+        }
+
+        let editingUserId = null;
+        function openEditModal(user) {
+            editingUserId = user.id;
+            document.getElementById('edit-user-name').value = user.name || '';
+            document.getElementById('edit-user-phone').value = user.phone || '';
+            document.getElementById('edit-user-address').value = user.address || '';
+            document.getElementById('modal-edit-user').classList.remove('hidden');
+            document.getElementById('modal-edit-user').classList.add('flex');
+        }
+
+        document.getElementById('btn-save-user-details').addEventListener('click', async () => {
+            if (!editingUserId) return;
+            const name = document.getElementById('edit-user-name').value.trim();
+            const phone = document.getElementById('edit-user-phone').value.trim();
+            const address = document.getElementById('edit-user-address').value.trim();
+
+            if (!name) return;
+
+            // Validate Phone: 10 digits numeric
+            if (phone && !/^\d{10}$/.test(phone)) {
+                alert("Please enter a valid 10-digit phone number.");
                 return;
             }
 
-            document.getElementById('user-role-badge').textContent = user.role.replace('_', ' ');
+            const payload = { name, phone, address };
 
-            if (user.role === 'SUPER_ADMIN') {
-                document.getElementById('nav-users').classList.remove('hidden');
-                document.getElementById('nav-users').classList.add('flex');
-            }
+            try {
+                const res = await fetch(`/api/v1/user/admin/users/${editingUserId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    document.getElementById('modal-edit-user').classList.add('hidden');
+                    setupUserAdminDashboard();
+                }
+            } catch (e) { console.error(e); }
+        });
 
-            // 2. Fetch KPI Data
-            const prodRes = await fetch('/api/v1/public/products');
-            const products = await prodRes.json();
-            
-            const total = products.length;
-            const oos = products.filter(p => p.stock === 0).length;
-            const active = total - oos;
+        async function confirmDelete(id) {
+            if (!confirm('Are you sure?')) return;
+            try {
+                const res = await fetch(`/api/v1/user/admin/users/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) setupUserAdminDashboard();
+            } catch (e) { console.error(e); }
+        }
 
-            document.getElementById('kpi-total').textContent = total;
-            document.getElementById('kpi-active').textContent = active;
-            document.getElementById('kpi-oos').textContent = oos;
+        async function loadStandardDashboard() {
+            try {
+                // 2. Fetch KPI Data
+                const prodRes = await fetch('/api/v1/public/products');
+                const products = await prodRes.json();
 
-            // 3. Render Table
-            const tableContainer = document.getElementById('products-table');
-            if (products.length === 0) {
-                tableContainer.innerHTML = "No products found.";
-            } else {
-                let html = `<table class="w-full text-left border-collapse text-sm">
+                const total = products.length;
+                const oos = products.filter(p => p.stock === 0).length;
+                const active = total - oos;
+
+                document.getElementById('kpi-total').textContent = total;
+                document.getElementById('kpi-active').textContent = active;
+                document.getElementById('kpi-oos').textContent = oos;
+
+                // 3. Render Table
+                const tableContainer = document.getElementById('products-table');
+                if (products.length === 0) {
+                    tableContainer.innerHTML = "No products found.";
+                } else {
+                    let html = `<table class="w-full text-left border-collapse text-sm">
                     <thead>
                         <tr class="border-b border-outline-variant/20 uppercase tracking-widest text-[10px] text-on-surface-variant/70">
                             <th class="py-3 font-semibold">Name</th>
@@ -248,25 +550,28 @@
                         </tr>
                     </thead>
                     <tbody>`;
-                products.slice(0, 5).forEach(p => {
-                    html += `<tr class="border-b border-outline-variant/5 hover:bg-white/20 transition-colors">
+                    products.slice(0, 5).forEach(p => {
+                        html += `<tr class="border-b border-outline-variant/5 hover:bg-white/20 transition-colors">
                         <td class="py-3 font-medium text-primary">${p.name}</td>
                         <td class="py-3 opacity-80">${p.category}</td>
                         <td class="py-3 font-medium">Rs. ${p.price.toFixed(2)}</td>
                         <td class="py-3 ${p.stock === 0 ? 'text-error font-bold' : 'opacity-80'}">${p.stock}</td>
                     </tr>`;
-                });
-                html += `</tbody></table>`;
-                tableContainer.innerHTML = html;
+                    });
+                    html += `</tbody></table>`;
+                    tableContainer.innerHTML = html;
+                }
+            } catch (err) {
+                console.error(err);
+                sessionStorage.removeItem('token');
+                window.location.href = '/auth.html';
             }
-        } catch (err) {
-            console.error(err);
-            localStorage.removeItem('token');
-            window.location.href = '/auth.html';
         }
-    }
 
-    initDashboard();
-</script>
+        initDashboard();
+    </script>
 </body>
+
 </html>
+
+

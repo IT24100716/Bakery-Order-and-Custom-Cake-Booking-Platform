@@ -6,44 +6,32 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>BakeNest - Edit Product</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&amp;display=swap"
-        rel="stylesheet" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     "colors": {
-                        "background": "#fff8f5",
-                        "surface": "#fff8f5",
-                        "surface-variant": "#ffdcc7",
-                        "surface-container-low": "#fff1ea",
-                        "surface-container": "#ffeade",
-                        "surface-container-highest": "#ffdcc7",
-                        "on-background": "#2a170a",
-                        "on-surface": "#2a170a",
-                        "on-surface-variant": "#4a463f",
-                        "primary": "#625e59",
-                        "secondary": "#6d5c40",
-                        "tertiary": "#725b29",
-                        "secondary-container": "#f4dcb9",
-                        "on-secondary-container": "#726044",
-                        "tertiary-container": "#fff8f1",
+                        "background": "#fffbf7",
+                        "surface": "#ffffff",
+                        "surface-variant": "#f4ede6",
+                        "on-background": "#1a0e04",
+                        "on-surface": "#1a0e04",
+                        "on-surface-variant": "#5a4e45",
+                        "primary": "#331f11",
+                        "secondary": "#725b29",
+                        "tertiary": "#8a6d35",
+                        "secondary-container": "#fdf3e7",
+                        "on-secondary-container": "#4a3b1d",
                         "error": "#ba1a1a",
-                        "error-container": "#ffdad6",
+                        "outline-variant": "#d3c3bb",
                         "on-primary": "#ffffff",
-                        "outline-variant": "#cdc5bc",
                     },
                     "fontFamily": {
-                        "headline-lg": ["Montserrat"],
-                        "headline-md": ["Montserrat"],
-                        "headline-sm": ["Montserrat"],
-                        "body-md": ["Montserrat"],
-                        "body-lg": ["Montserrat"],
-                        "label-md": ["Montserrat"]
+                        "display": ["Playfair Display"],
+                        "body": ["Montserrat"]
                     }
                 }
             }
@@ -59,11 +47,11 @@
         }
 
         .glass-panel {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 32px rgba(75, 52, 37, 0.04);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 30px rgba(51, 31, 17, 0.04);
         }
 
         .premium-input {
@@ -222,53 +210,70 @@
 <body class="bg-background text-on-background min-h-screen flex font-body-md antialiased overflow-x-hidden">
 
     <!-- SideNavBar -->
-    <nav
-        class="bg-[#ebd8c3]/90 backdrop-blur-[50px] font-label-md text-xs font-semibold uppercase tracking-widest fixed left-0 top-0 bottom-0 h-screen w-72 border-r border-white/40 shadow-[4px_0_24px_rgba(75,52,37,0.04)] flex flex-col p-6 z-50 smooth-transition hidden md:flex">
-        <div class="mb-12 flex flex-col items-center justify-center text-center mt-6">
-            <div
-                class="w-20 h-20 rounded-full bg-secondary-container/30 mb-4 flex items-center justify-center border border-secondary/20 shadow-sm overflow-hidden">
-                <span class="material-symbols-outlined text-4xl text-secondary">bakery_dining</span>
+    <!-- SideNavBar -->
+    <nav class="bg-[#2a170a] font-body text-xs font-semibold uppercase tracking-widest fixed left-0 top-0 bottom-0 h-screen w-72 flex flex-col p-8 z-50 smooth-transition hidden md:flex text-white/70 overflow-y-auto">
+        <div class="mb-12 flex flex-col items-center justify-center text-center mt-4">
+            <div class="w-20 h-20 rounded-2xl bg-white/5 mb-6 flex items-center justify-center border border-white/10 shadow-2xl backdrop-blur-md">
+                <span class="material-symbols-outlined text-4xl text-white/90">bakery_dining</span>
             </div>
-            <h1 class="font-headline-md text-2xl tracking-tight text-on-surface">BakeNest</h1>
-            <p class="text-[10px] text-on-surface-variant/70 mt-1 uppercase tracking-[0.15em]" id="user-role-badge">
-                Admin Panel</p>
+            <h1 class="font-display text-3xl text-white tracking-[0.1em] font-bold mb-1">BAKENEST</h1>
+            <p class="text-[9px] text-white/30 uppercase tracking-[0.3em] font-bold" id="user-role-badge">Artisanal Admin</p>
         </div>
 
-        <div class="flex flex-col gap-2 flex-grow">
-            <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl"
-                href="/admin.html">
-                <span class="material-symbols-outlined text-[20px]">dashboard</span>
-                <span>Dashboard</span>
+        <div class="flex flex-col gap-3 flex-grow">
+            <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/admin.html">
+                <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">grid_view</span>
+                <span class="tracking-widest">Dashboard</span>
             </a>
-            <a class="flex items-center gap-4 px-6 py-3 bg-secondary-container/50 text-on-secondary-container shadow-sm rounded-xl smooth-transition"
-                href="/admin-products.html">
-                <span class="material-symbols-outlined text-[20px] fill">inventory_2</span>
-                <span>Products</span>
+            <a id="nav-products" class="flex items-center gap-4 px-6 py-4 bg-white/10 text-white shadow-xl rounded-2xl smooth-transition border border-white/10" href="/admin-products.html">
+                <span class="material-symbols-outlined text-[22px] fill">inventory_2</span>
+                <span class="tracking-widest">Products</span>
             </a>
-            <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl"
-                href="/admin-categories.html">
-                <span class="material-symbols-outlined text-[20px]">category</span>
-                <span>Categories</span>
+            <a id="nav-categories" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/admin-categories.html">
+                <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">category</span>
+                <span class="tracking-widest">Categories</span>
             </a>
-            <a class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl"
-                href="#">
-                <span class="material-symbols-outlined text-[20px]">receipt_long</span>
-                <span>Orders</span>
+            <a id="nav-custom" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/admin-custom-requests.html">
+                <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">volunteer_activism</span>
+                <span class="tracking-widest">Custom Requests</span>
+            </a>
+            <a id="nav-orders" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/order/orders.html">
+                <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">receipt_long</span>
+                <span class="tracking-widest">Orders</span>
+            </a>
+            <a id="nav-payments" class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group" href="/order/payments.html">
+                <span class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">payments</span>
+                <span class="tracking-widest">Payments</span>
             </a>
 
-            <a id="nav-users"
-                class="hidden items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 hover:scale-[1.02] smooth-transition rounded-xl"
-                href="#">
-                <span class="material-symbols-outlined text-[20px]">group</span>
-                <span>Users & Roles</span>
-            </a>
+            <!-- User Admin Links -->
+            <div id="nav-group-users" class="hidden flex-col gap-3 mt-4 pt-4 border-t border-white/10">
+                <span class="px-6 text-[10px] text-white/30 uppercase tracking-widest font-bold">User Management</span>
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/user/admin-users.html?tab=customers">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">person</span>
+                    <span class="tracking-widest">Customers</span>
+                </a>
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/user/admin-users.html?tab=staff">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">badge</span>
+                    <span class="tracking-widest">Staff Members</span>
+                </a>
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/user/admin-users.html?tab=roles">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">admin_panel_settings</span>
+                    <span class="tracking-widest">Roles & Access</span>
+                </a>
+            </div>
         </div>
 
-        <div class="mt-auto flex flex-col gap-4">
-            <a id="btn-logout"
-                class="flex items-center gap-4 px-6 py-3 text-on-surface-variant hover:text-on-surface hover:bg-white/40 smooth-transition rounded-xl justify-center cursor-pointer">
-                <span class="material-symbols-outlined text-[20px]">logout</span>
-                <span>Logout</span>
+        <div class="mt-auto flex flex-col gap-4 pb-12">
+            <a id="btn-logout" class="flex items-center gap-4 px-6 py-4 text-white/40 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl justify-center cursor-pointer border border-transparent hover:border-white/10 group">
+                <span class="material-symbols-outlined text-[22px] transition-transform group-hover:-translate-x-1">logout</span>
+                <span class="tracking-widest">Logout</span>
             </a>
         </div>
     </nav>
@@ -276,34 +281,31 @@
     <!-- Main Content Canvas -->
     <main class="flex-1 md:ml-72 relative min-h-screen flex flex-col w-full pb-32">
         <!-- TopNavBar -->
-        <header
-            class="bg-white/60 backdrop-blur-[40px] font-body-md w-full h-20 sticky top-0 border-b border-white/40 flex justify-between items-center px-12 z-40">
+        <!-- TopNavBar -->
+        <header class="bg-white/80 backdrop-blur-md w-full h-20 sticky top-0 border-b border-outline-variant/20 flex justify-between items-center px-12 z-40">
             <div class="hidden md:flex items-center relative w-64 lg:w-96">
-                <span class="material-symbols-outlined absolute left-4 text-on-surface-variant/50 z-10">search</span>
-                <input
-                    class="w-full pl-11 pr-4 py-2.5 bg-surface-container-low/50 border border-outline-variant/30 rounded-[28px] focus:outline-none focus:border-secondary focus:ring-1 text-sm shadow-inner"
-                    placeholder="Search products..." type="text" />
+                <span class="material-symbols-outlined absolute left-4 text-on-surface-variant/40 z-10">search</span>
+                <input class="w-full pl-12 pr-4 py-3 bg-surface-variant/50 border border-transparent rounded-2xl focus:outline-none focus:bg-white focus:border-secondary/30 text-sm transition-all placeholder:text-on-surface-variant/40" placeholder="Search masterpiece..." type="text"/>
             </div>
 
             <div class="flex items-center gap-4">
-                <div
-                    class="w-10 h-10 rounded-full bg-secondary-container border-2 border-white shadow-sm overflow-hidden ml-2 flex items-center justify-center">
+                <div class="w-10 h-10 rounded-full bg-secondary-container border border-outline-variant/30 shadow-sm overflow-hidden ml-2 flex items-center justify-center">
                     <span class="material-symbols-outlined text-secondary">person</span>
                 </div>
             </div>
         </header>
 
         <!-- Page Content -->
-        <div class="p-4 md:p-8 flex-1">
-            <header class="mb-6 animate-fade-in">
-                <div class="flex items-center gap-3">
-                    <div
-                        class="w-9 h-9 rounded-xl bg-gradient-to-br from-secondary to-[#877254] flex items-center justify-center shadow-md">
-                        <span class="material-symbols-outlined text-white text-lg">edit</span>
+        <!-- Page Content -->
+        <div class="p-8 md:p-12 flex-1">
+            <header class="mb-10 animate-fade-in">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center shadow-lg">
+                        <span class="material-symbols-outlined text-white text-2xl">edit</span>
                     </div>
                     <div>
-                        <h1 class="font-headline-lg text-xl font-bold text-on-surface tracking-tight">Edit Product</h1>
-                        <p class="font-body-lg text-xs text-on-surface-variant opacity-80">Update your creation details below.</p>
+                        <h1 class="font-headline text-3xl font-bold text-on-surface tracking-tight">Edit Masterpiece</h1>
+                        <p class="font-body text-sm text-on-surface-variant opacity-70">Update your creation details below.</p>
                     </div>
                 </div>
             </header>
@@ -370,14 +372,14 @@
                             <div class="flex flex-col gap-1.5">
                                 <label
                                     class="font-label-md text-[10px] font-bold text-secondary uppercase tracking-[0.15em] flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[13px]">attach_money</span>
-                                    Price <span class="text-error">*</span>
+                                    <span class="material-symbols-outlined text-[13px]">payments</span>
+                                    Price (LKR) <span class="text-error">*</span>
                                 </label>
                                 <div class="field-group">
-                                    <span class="field-icon text-[15px] font-bold font-body-md"
-                                        style="font-variation-settings: initial; font-family: Montserrat;">$</span>
+                                    <span class="field-icon text-[11px] font-bold font-body-md"
+                                        style="font-variation-settings: initial; font-family: Montserrat;">LKR</span>
                                     <input id="input-price"
-                                        class="premium-input has-icon rounded-xl w-full px-4 py-3 font-body-md text-sm text-on-surface placeholder:text-on-surface-variant/40"
+                                        class="premium-input rounded-xl w-full pl-14 pr-4 py-3 font-body-md text-sm text-on-surface placeholder:text-on-surface-variant/40"
                                         placeholder="0.00" type="number" step="0.01" />
                                 </div>
                             </div>
@@ -521,21 +523,57 @@
     </div>
 
     <script>
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (!token) window.location.href = '/auth.html';
         const productId = new URLSearchParams(window.location.search).get('id');
         if (!productId) window.location.href = '/admin-products.html';
 
-        document.getElementById('btn-logout').addEventListener('click', () => { localStorage.removeItem('token'); window.location.href = '/auth.html'; });
+        document.getElementById('btn-logout').addEventListener('click', () => { sessionStorage.removeItem('token'); window.location.href = '/auth.html'; });
 
         async function verifyAdmin() {
             try {
                 const r = await fetch('/api/v1/auth/me', { headers: { 'Authorization': `Bearer ${token}` } });
-                if (!r.ok) throw 0; const u = await r.json();
-                if (u.role === 'USER') window.location.href = '/';
-                document.getElementById('user-role-badge').textContent = u.role.replace('_', ' ');
-                if (u.role === 'SUPER_ADMIN') { document.getElementById('nav-users').classList.remove('hidden'); document.getElementById('nav-users').classList.add('flex'); }
-            } catch (e) { window.location.href = '/auth.html'; }
+                if (!r.ok) throw 0;
+                const u = await r.json();
+                const userRole = (typeof u.role === 'object') ? u.role.name : u.role;
+                
+                if (userRole === 'USER') window.location.href = '/';
+                const roleBadge = document.getElementById('user-role-badge');
+                if (roleBadge) {
+                    roleBadge.textContent = userRole.replace('_', ' ');
+                }
+                
+                const navOrders = document.getElementById('nav-orders');
+                const navPayments = document.getElementById('nav-payments');
+                const navGroupUsers = document.getElementById('nav-group-users');
+                const navGroupStandard = document.getElementById('nav-group-standard');
+                const navProducts = document.getElementById('nav-products');
+                const navCategories = document.getElementById('nav-categories');
+                const navCustom = document.getElementById('nav-custom');
+
+                if (userRole === 'PRODUCT_ADMIN') {
+                    if (navOrders) navOrders.classList.add('hidden');
+                    if (navPayments) navPayments.classList.add('hidden');
+                } else if (userRole === 'SUPER_ADMIN') {
+                    if (navGroupUsers) {
+                        navGroupUsers.classList.remove('hidden');
+                        navGroupUsers.classList.add('flex');
+                    }
+                } else if (userRole === 'USER_ADMIN') {
+                    if (navGroupStandard) navGroupStandard.classList.add('hidden');
+                    if (navGroupUsers) {
+                        navGroupUsers.classList.remove('hidden');
+                        navGroupUsers.classList.add('flex');
+                    }
+                } else if (userRole === 'ORDER_ADMIN') {
+                    if (navProducts) navProducts.classList.add('hidden');
+                    if (navCategories) navCategories.classList.add('hidden');
+                    if (navCustom) navCustom.classList.add('hidden');
+                }
+            } catch (e) { 
+                console.error("Admin verification error:", e);
+                window.location.href = '/auth.html'; 
+            }
         }
         verifyAdmin();
 
@@ -662,3 +700,5 @@
 </body>
 
 </html>
+
+

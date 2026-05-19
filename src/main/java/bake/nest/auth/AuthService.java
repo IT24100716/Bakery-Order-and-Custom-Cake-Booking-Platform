@@ -1,7 +1,6 @@
 package bake.nest.auth;
 
-import bake.nest.user.User;
-import bake.nest.user.UserRepository;
+import bake.nest.user.*;
 import bake.nest.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import bake.nest.user.Role;
 
 @Service
 public class AuthService {
@@ -20,6 +18,9 @@ public class AuthService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,13 +46,16 @@ public class AuthService {
             throw new RuntimeException("Email address already in use!");
         }
 
+        RoleEntity defaultRole = roleRepository.findByName("USER")
+                .orElseThrow(() -> new RuntimeException("Default role USER not found"));
+
         User user = User.builder()
                 .name(registerRequest.getName())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .phone(registerRequest.getPhone())
                 .address(registerRequest.getAddress())
-                .role(Role.USER)
+                .role(defaultRole)
                 .build();
 
         return userRepository.save(user);

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>BakeNest - Custom Requests Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#fff8f5",
+                        "surface": "#fff8f5",
+                        "on-background": "#1a0e04",
+                        "on-surface": "#1a0e04",
+                        "primary": "#331f11",
+                        "secondary": "#6d5c40",
+                        "accent": "#d4af37",
+                        "outline-variant": "#cdc5bc",
+                    },
+                    "fontFamily": {
+                        "display": ["Playfair Display"],
+                        "body": ["Montserrat"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 24px rgba(75, 52, 37, 0.08);
+        }
+
+        .smooth-transition {
+            transition: all 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex font-body antialiased overflow-x-hidden">
+
+    <!-- SideNavBar -->
+    <nav
+        class="bg-[#2a170a] font-body text-xs font-semibold uppercase tracking-widest fixed left-0 top-0 bottom-0 h-screen w-72 flex flex-col p-8 z-50 smooth-transition hidden md:flex text-white/70 overflow-y-auto">
+        <div class="mb-12 flex flex-col items-center justify-center text-center mt-4">
+            <div
+                class="w-20 h-20 rounded-2xl bg-white/5 mb-6 flex items-center justify-center border border-white/10 shadow-2xl backdrop-blur-md">
+                <span class="material-symbols-outlined text-4xl text-white/90">bakery_dining</span>
+            </div>
+            <h1 class="font-display text-3xl text-white tracking-[0.1em] font-bold mb-1">BAKENEST</h1>
+            <p id="user-role-badge" class="text-[9px] text-white/30 uppercase tracking-[0.3em] font-bold">Product Admin
+            </p>
+        </div>
+
+        <div class="flex flex-col gap-3 flex-grow">
+            <!-- Standard Admin Links -->
+            <div id="nav-group-standard" class="flex flex-col gap-3">
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/admin.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">grid_view</span>
+                    <span class="tracking-widest">Dashboard</span>
+                </a>
+                <a id="nav-products"
+                    class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/admin-products.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">inventory_2</span>
+                    <span class="tracking-widest">Products</span>
+                </a>
+                <a id="nav-categories"
+                    class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/admin-categories.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">category</span>
+                    <span class="tracking-widest">Categories</span>
+                </a>
+                <a id="nav-custom"
+                    class="flex items-center gap-4 px-6 py-4 bg-white/10 text-white shadow-xl rounded-2xl smooth-transition border border-white/10"
+                    href="/admin-custom-requests.html">
+                    <span class="material-symbols-outlined text-[22px] fill">volunteer_activism</span>
+                    <span class="tracking-widest">Custom Requests</span>
+                </a>
+                <a id="nav-orders"
+                    class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/order/orders.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">receipt_long</span>
+                    <span class="tracking-widest">Orders</span>
+                </a>
+                <a id="nav-payments"
+                    class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/order/payments.html">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">payments</span>
+                    <span class="tracking-widest">Payments</span>
+                </a>
+            </div>
+
+
+            <!-- User Admin Links -->
+
+            <!-- User Admin Links -->
+            <div id="nav-group-users" class="hidden flex-col gap-3 mt-4 pt-4 border-t border-white/10">
+                <span class="px-6 text-[10px] text-white/30 uppercase tracking-widest font-bold">User Management</span>
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/user/admin-users.html?tab=customers">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">person</span>
+                    <span class="tracking-widest">Customers</span>
+                </a>
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/user/admin-users.html?tab=staff">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">badge</span>
+                    <span class="tracking-widest">Staff Members</span>
+                </a>
+                <a class="flex items-center gap-4 px-6 py-4 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl group"
+                    href="/user/admin-users.html?tab=roles">
+                    <span
+                        class="material-symbols-outlined text-[22px] text-white/40 group-hover:text-white transition-colors">admin_panel_settings</span>
+                    <span class="tracking-widest">Roles & Access</span>
+                </a>
+            </div>
+
+
+        </div>
+
+        <div class="mt-auto flex flex-col gap-4 pb-12">
+            <a id="btn-logout"
+                class="flex items-center gap-4 px-6 py-4 text-white/40 hover:text-white hover:bg-white/5 smooth-transition rounded-2xl justify-center cursor-pointer border border-transparent hover:border-white/10 group">
+                <span
+                    class="material-symbols-outlined text-[22px] transition-transform group-hover:-translate-x-1">logout</span>
+                <span class="tracking-widest">Logout</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-72 relative min-h-screen flex flex-col w-full">
+        <div class="p-8 md:p-12">
+            <header class="mb-10 flex justify-between items-end">
+                <div>
+                    <h2 class="font-display text-4xl font-bold text-primary mb-2">Custom Cake Requests</h2>
+                    <p class="text-secondary/70 text-sm font-medium">Review and price the bespoke visions of your
+                        clientele.</p>
+                </div>
+                <div class="flex gap-2">
+                    <span
+                        class="px-4 py-2 bg-white rounded-xl shadow-sm text-[10px] font-bold uppercase tracking-widest border border-outline-variant/20">All
+                        Requests</span>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 gap-8" id="requests-container">
+                <!-- Data will be loaded here -->
+                <p class="text-center py-20 text-secondary/30 italic">Loading masterpieces...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="quote-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center bg-primary/20 backdrop-blur-md">
+        <div class="bg-white w-full max-w-lg rounded-[3rem] p-10 shadow-2xl m-4">
+            <h3 class="font-display text-3xl font-bold text-primary mb-8">Set Valuation</h3>
+            <div class="space-y-6">
+                <div>
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-primary/40 mb-3 block">Quoted
+                        Price (LKR)</label>
+                    <input type="number" id="quote-price"
+                        class="w-full bg-background border-none rounded-2xl px-8 py-5 focus:ring-4 focus:ring-accent/10 outline-none font-bold text-2xl text-primary"
+                        placeholder="0.00" />
+                </div>
+                <div class="flex gap-4 pt-4">
+                    <button onclick="closeModal()"
+                        class="flex-1 px-6 py-5 rounded-2xl border border-outline-variant/30 font-bold text-primary hover:bg-background transition-colors uppercase tracking-widest text-[10px]">Cancel</button>
+                    <button onclick="submitQuote()"
+                        class="flex-1 px-6 py-5 rounded-2xl bg-primary text-white font-bold hover:bg-secondary transition-all shadow-lg uppercase tracking-widest text-[10px]">Confirm
+                        Quote</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Preview Modal -->
+    <div id="image-modal" class="fixed inset-0 z-[110] bg-primary/80 backdrop-blur-md hidden items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+        <div class="relative max-w-2xl w-full bg-background rounded-[3rem] p-8 shadow-2xl flex flex-col items-center border border-outline-variant/30 scale-90 transition-transform duration-300">
+            <!-- Close Button -->
+            <button onclick="closeImage()" class="absolute top-6 right-6 w-12 h-12 rounded-full bg-primary/10 hover:bg-primary/20 flex items-center justify-center smooth-transition text-primary z-10">
+                <span class="material-symbols-outlined text-[24px]">close</span>
+            </button>
+            <h4 class="font-display text-2xl font-bold text-primary mb-6 self-start tracking-tight">Reference Design</h4>
+            <div class="w-full bg-[#ffeade]/40 rounded-3xl overflow-hidden flex items-center justify-center relative border border-outline-variant/20 p-2 mb-6">
+                <img id="modal-img" src="" alt="Design Preview" class="max-w-full max-h-[60vh] object-contain shadow-md rounded-2xl"/>
+            </div>
+            <a id="modal-download-btn" href="" download="cake-reference.png" class="flex items-center gap-2 px-8 py-4 rounded-2xl bg-primary text-white font-bold hover:bg-secondary transition-all shadow-lg uppercase tracking-widest text-[11px] self-end">
+                <span class="material-symbols-outlined text-[18px]">download</span>
+                Download Image
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const token = sessionStorage.getItem('token');
+        let currentRequestId = null;
+
+        if (!token) window.location.href = '/auth.html';
+
+        async function loadRequests() {
+            try {
+                // 1. Verify Role
+                const authRes = await fetch('/api/v1/auth/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!authRes.ok) throw new Error("Unauthorized");
+                const user = await authRes.json();
+                const userRole = (typeof user.role === 'object') ? user.role.name : user.role;
+
+                if (userRole === 'USER') {
+                    window.location.href = '/';
+                    return;
+                }
+
+                const roleBadge = document.getElementById('user-role-badge');
+                if (roleBadge) {
+                    roleBadge.textContent = userRole.replace('_', ' ');
+                }
+
+                const navOrders = document.getElementById('nav-orders');
+                const navPayments = document.getElementById('nav-payments');
+                const navGroupUsers = document.getElementById('nav-group-users');
+                const navGroupStandard = document.getElementById('nav-group-standard');
+                const navProducts = document.getElementById('nav-products');
+                const navCategories = document.getElementById('nav-categories');
+                const navCustom = document.getElementById('nav-custom');
+
+                if (userRole === 'USER_ADMIN') {
+                    if (navGroupStandard) {
+                        navGroupStandard.classList.remove('flex');
+                        navGroupStandard.classList.add('hidden');
+                    }
+                    if (navGroupUsers) navGroupUsers.classList.remove('hidden');
+                } else if (userRole === 'ORDER_ADMIN') {
+                    if (navProducts) {
+                        navProducts.classList.remove('flex');
+                        navProducts.classList.add('hidden');
+                    }
+                    if (navCategories) {
+                        navCategories.classList.remove('flex');
+                        navCategories.classList.add('hidden');
+                    }
+                    if (navCustom) {
+                        navCustom.classList.remove('flex');
+                        navCustom.classList.add('hidden');
+                    }
+                } else if (userRole === 'PRODUCT_ADMIN') {
+                    if (navOrders) {
+                        navOrders.classList.remove('flex');
+                        navOrders.classList.add('hidden');
+                    }
+                    if (navPayments) {
+                        navPayments.classList.remove('flex');
+                        navPayments.classList.add('hidden');
+                    }
+                } else if (userRole === 'SUPER_ADMIN') {
+                    if (navGroupUsers) {
+                        navGroupUsers.classList.remove('hidden');
+                        navGroupUsers.classList.add('flex');
+                    }
+                }
+
+                const res = await fetch('/api/v1/admin/custom-cakes', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const requests = await res.json();
+                const container = document.getElementById('requests-container');
+
+                if (requests.length === 0) {
+                    container.innerHTML = '<p class="text-center py-20 text-secondary/30 italic font-display text-xl">No requests awaiting your magic touch.</p>';
+                    return;
+                }
+
+                container.innerHTML = requests.map(req => `
+                    <div class="glass-panel p-6 rounded-[2rem] flex flex-col sm:flex-row gap-8 hover:shadow-xl transition-all border-none group relative">
+                        <!-- Minimal Thumbnail -->
+                        <div class="w-32 h-32 rounded-2xl bg-background overflow-hidden border border-outline-variant/10 shrink-0 shadow-sm ${req.referenceImageUrl ? 'cursor-pointer hover:shadow-lg' : ''}" ${req.referenceImageUrl ? `onclick="showImage('${req.referenceImageUrl}')"` : ''}>
+                            ${req.referenceImageUrl ? `<img src="${req.referenceImageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"/>` : `<div class="w-full h-full flex items-center justify-center"><span class="material-symbols-outlined text-secondary/20 text-4xl">cake</span></div>`}
+                        </div>
+                        
+                        <div class="flex-1 min-w-0 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start mb-3">
+                                    <div>
+                                        <h4 class="font-display text-2xl font-bold text-primary truncate leading-tight">${req.flavor}</h4>
+                                        <div class="flex items-center gap-3 mt-1">
+                                            <span class="text-accent font-bold text-[9px] uppercase tracking-widest">Client: ${req.customerName}</span>
+                                            <span class="w-1 h-1 bg-outline-variant/30 rounded-full"></span>
+                                            <span class="text-primary/40 font-bold text-[9px] uppercase tracking-widest">${req.size}</span>
+                                            <span class="w-1 h-1 bg-outline-variant/30 rounded-full"></span>
+                                            <span class="text-primary/30 font-bold text-[9px] uppercase tracking-widest italic">${req.createdAt ? new Date(req.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Awaiting Date'}</span>
+                                        </div>
+                                    </div>
+                                    <span class="px-3 py-1.5 rounded-full text-[8px] font-bold uppercase tracking-[0.1em] border shadow-sm shrink-0 ${getStatusColor(req.status)}">${req.status}</span>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 py-2">
+                                    <div>
+                                        <p class="text-[8px] font-bold uppercase tracking-widest text-secondary/40 mb-1">Design Brief</p>
+                                        <p class="text-[11px] text-primary/80 leading-relaxed">${req.message || 'N/A'}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[8px] font-bold uppercase tracking-widest text-secondary/40 mb-1">Toppings</p>
+                                        <p class="text-[11px] text-primary/80 font-semibold truncate">${req.toppings || 'None specified'}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-[8px] font-bold uppercase tracking-widest text-secondary/40 mb-1">Palette</p>
+                                        <div class="flex items-center gap-1.5">
+                                            <div class="w-3.5 h-3.5 rounded-full border border-white shadow-sm" style="background-color: ${req.themeColor || '#000'}"></div>
+                                            ${req.themeColor2 ? `<div class="w-3.5 h-3.5 rounded-full border border-white shadow-sm" style="background-color: ${req.themeColor2}"></div>` : ''}
+                                            ${req.themeColor3 ? `<div class="w-3.5 h-3.5 rounded-full border border-white shadow-sm" style="background-color: ${req.themeColor3}"></div>` : ''}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="text-[8px] font-bold uppercase tracking-widest text-secondary/40 mb-1">Details</p>
+                                        <div class="flex flex-col gap-1">
+                                            <span class="text-[9px] font-bold ${req.includeCandles ? 'text-green-600' : 'text-red-400'}">CANDLES: ${req.includeCandles ? 'YES' : 'NO'}</span>
+                                            ${req.neededDate ? `<span class="text-[9px] font-bold text-accent">DUE: ${new Date(req.neededDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric'})}</span>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pt-4 mt-4 border-t border-outline-variant/10">
+                                <div class="flex items-baseline gap-3">
+                                    ${req.quotedPrice ? `
+                                        <span class="text-[8px] font-bold text-secondary/40 uppercase tracking-widest">Valuation</span>
+                                        <span class="text-xl font-display font-bold text-primary">Rs. ${req.quotedPrice.toFixed(2)}</span>
+                                    ` : `<span class="text-[9px] font-bold text-accent uppercase tracking-widest animate-pulse italic">Awaiting Quote</span>`}
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="openModal(${req.id})" class="px-5 py-2.5 rounded-xl bg-primary text-white text-[9px] font-bold uppercase tracking-widest hover:bg-secondary transition-all shadow-md">Set Price</button>
+                                    <select onchange="updateStatus(${req.id}, this.value)" class="bg-white border border-outline-variant/20 rounded-xl px-4 py-2.5 text-[9px] font-bold uppercase tracking-widest outline-none cursor-pointer hover:bg-background transition-colors shadow-sm">
+                                        <option value="PENDING" ${req.status === 'PENDING' ? 'selected' : ''}>Pending</option>
+                                        <option value="QUOTED" ${req.status === 'QUOTED' ? 'selected' : ''}>Quoted</option>
+                                        <option value="ACCEPTED" ${req.status === 'ACCEPTED' ? 'selected' : ''}>Accepted</option>
+                                        <option value="APPROVED" ${req.status === 'APPROVED' ? 'selected' : ''}>Approved (Paid)</option>
+                                        <option value="CONFIRMED" ${req.status === 'CONFIRMED' ? 'selected' : ''}>Confirmed</option>
+                                        <option value="DELIVERED" ${req.status === 'DELIVERED' ? 'selected' : ''}>Delivered</option>
+                                        <option value="REJECTED" ${req.status === 'REJECTED' ? 'selected' : ''}>Rejected</option>
+                                        <option value="CANCELLED" ${req.status === 'CANCELLED' ? 'selected' : ''}>Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function getStatusColor(status) {
+            switch ((status || '').toUpperCase()) {
+                case 'PENDING': return 'bg-amber-50 text-amber-600 border-amber-200';
+                case 'QUOTED': return 'bg-blue-50 text-blue-600 border-blue-200';
+                case 'ACCEPTED': return 'bg-green-50 text-green-600 border-green-200';
+                case 'APPROVED': return 'bg-emerald-50 text-emerald-600 border-emerald-200';
+                case 'CONFIRMED': return 'bg-indigo-50 text-indigo-600 border-indigo-200';
+                case 'DELIVERED': return 'bg-teal-50 text-teal-700 border-teal-300';
+                case 'REJECTED': return 'bg-red-50 text-red-600 border-red-200';
+                case 'CANCELLED': return 'bg-gray-100 text-gray-500 border-gray-300';
+                default: return 'bg-gray-50 text-gray-600 border-gray-200';
+            }
+        }
+
+        window.openModal = function (id) {
+            currentRequestId = id;
+            document.getElementById('quote-modal').classList.remove('hidden');
+            document.getElementById('quote-modal').classList.add('flex');
+        }
+
+        window.closeModal = function () {
+            document.getElementById('quote-modal').classList.add('hidden');
+            document.getElementById('quote-modal').classList.remove('flex');
+        }
+
+        window.submitQuote = async function () {
+            const price = document.getElementById('quote-price').value;
+            if (!price) return;
+            try {
+                const res = await fetch(`/api/v1/admin/custom-cakes/${currentRequestId}/quote?price=${price}`, {
+                    method: 'PATCH',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    closeModal();
+                    loadRequests();
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        window.updateStatus = async function (id, status) {
+            try {
+                const res = await fetch(`/api/v1/admin/custom-cakes/${id}/status?status=${status}`, {
+                    method: 'PATCH',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) loadRequests();
+            } catch (err) { console.error(err); }
+        }
+
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            sessionStorage.removeItem('token');
+            window.location.href = '/auth.html';
+        });
+
+        window.showImage = function(url) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const downloadBtn = document.getElementById('modal-download-btn');
+            if (!modal || !modalImg) return;
+            modalImg.src = url;
+            downloadBtn.href = url;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                const wrapper = modal.querySelector('.relative');
+                if (wrapper) wrapper.classList.remove('scale-90');
+            }, 50);
+        };
+
+        window.closeImage = function() {
+            const modal = document.getElementById('image-modal');
+            if (!modal) return;
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            const wrapper = modal.querySelector('.relative');
+            if (wrapper) wrapper.classList.add('scale-90');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                document.getElementById('modal-img').src = '';
+            }, 300);
+        };
+
+        document.getElementById('image-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('image-modal')) window.closeImage();
+        });
+
+        loadRequests();
+    </script>
+</body>
+
+</html>

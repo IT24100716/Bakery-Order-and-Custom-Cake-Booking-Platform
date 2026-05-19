@@ -18,9 +18,19 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
 
+    @GetMapping("/public/categories/{id}")
+    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
+    }
+
     @PostMapping("/admin/categories")
     public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto) {
         return ResponseEntity.ok(categoryService.createCategory(categoryDto));
+    }
+
+    @PutMapping("/admin/categories/{id}")
+    public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long id, @RequestBody CategoryDto categoryDto) {
+        return ResponseEntity.ok(categoryService.updateCategory(id, categoryDto));
     }
 
     @DeleteMapping("/admin/categories/{id}")

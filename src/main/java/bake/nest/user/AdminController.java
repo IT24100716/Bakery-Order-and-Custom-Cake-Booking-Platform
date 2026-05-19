@@ -17,6 +17,9 @@ public class AdminController {
     private UserRepository userRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     // Only SUPER_ADMIN can view all users/admins
@@ -34,11 +37,14 @@ public class AdminController {
             return ResponseEntity.badRequest().body("Email is already in use!");
         }
 
+        RoleEntity role = roleRepository.findByName(request.getRole())
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+
         User newUser = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
+                .role(role)
                 .phone(request.getPhone())
                 .address(request.getAddress())
                 .build();
